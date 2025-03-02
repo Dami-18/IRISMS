@@ -1,6 +1,11 @@
 // Login Page
+"use client";
+
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -74,12 +79,14 @@ const Login = () => {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?{" "}
-            <a
-              href="#"
+            <button
               className="font-semibold text-indigo-600 hover:text-indigo-500"
+              onClick={() => {
+                router.push("/register");
+              }}
             >
               Register
-            </a>
+            </button>
           </p>
         </div>
       </div>
