@@ -13,7 +13,7 @@ const Home = () => {
         className="text-red-200 m-12 p-12"
         onClick={() => {
           // push and replace both methods are available, not yet decided what to choose
-          router.push("/login");
+          router.push("/login"); // this is for client-side navigation, not backend
         }}
       >
         Login
@@ -24,7 +24,7 @@ const Home = () => {
         className="text-blue-200 m-12 p-12 borderborder-amber-200"
         onClick={() => {
           // push and replace both methods are available, not yet decided what to choose
-          router.push("/register");
+          router.push("/register"); // this is for client-side navigation, not backend
         }}
       >
         Register
