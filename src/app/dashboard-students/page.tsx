@@ -53,6 +53,8 @@ export default function StudDashboard() {
             </tbody>
           </table>
         </div>
+
+        <div className="mt-15 flex justify-center items-center"><button className="font-semibold bg-blue-400 px-4 py-2 rounded">Explore Internships</button></div>
       </>
     );
   }
