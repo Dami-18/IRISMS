@@ -2,6 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Form from "next/form";
 
 const Login = () => {
   const router = useRouter();
@@ -21,7 +22,12 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <Form
+            // First Validation and then authentication
+            // action={/*this will invoke the function name i.e. loginuser which will perform the authentication in the server-side */}
+            action="/loginkarvadoisme"
+            className="space-y-6"
+          >
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium ">
                 Email address
@@ -75,7 +81,7 @@ const Login = () => {
                 Sign in
               </button>
             </div>
-          </form>
+          </Form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a member?{" "}
