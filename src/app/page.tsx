@@ -7,7 +7,7 @@ const Home = () => {
   const router = useRouter();
   return (
     //outer div
-    <div className="flex">
+    <div className="flex flex-col">
       {/* Login Button */}
       <button
         className="text-red-200 m-12 p-12"
@@ -39,6 +39,46 @@ const Home = () => {
         }}
       >
         Student's Dashboard
+      </button>
+
+      {/* button of particular internship */}
+      <button
+        className="text-blue-200 m-12 p-12 borderborder-amber-200"
+        onClick={() => {
+          router.push("/particular-internship");
+        }}
+      >
+        Particular Internship
+      </button>
+
+      {/* button of Past Projects of Fac internship */}
+      <button
+        className="text-blue-200 m-12 p-12 borderborder-amber-200"
+        onClick={() => {
+          router.push("/past-projects");
+        }}
+      >
+        Past Project's of Faculty
+      </button>
+
+      {/* button of dashboard-faculty */}
+      <button
+        className="text-blue-200 m-12 p-12 borderborder-amber-200"
+        onClick={() => {
+          router.push("/dashboard-faculty");
+        }}
+      >
+        DashBoard Faculty
+      </button>
+
+      {/* button of profile */}
+      <button
+        className="text-blue-200 m-12 p-12 borderborder-amber-200"
+        onClick={() => {
+          router.push("/profile");
+        }}
+      >
+        Profile
       </button>
     </div>
   );
