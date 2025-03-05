@@ -1,3 +1,3 @@
-// export const saltAndHashPassword{
+const saltAndHashPassword = (pwd: string) => {};
 
-// };
+export { saltAndHashPassword };
