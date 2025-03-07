@@ -1,7 +1,7 @@
 "use server";
 
 import { SignupFormSchema, FormState } from "@/lib/definitions";
-import bcrypt from "bcryptjs-react";
+import { hash } from "bcrypt-ts";
 
 export async function signup(formState: FormState, formData: FormData) {
   console.log(formData.get("username"));
@@ -24,9 +24,12 @@ export async function signup(formState: FormState, formData: FormData) {
   const { username, email, password } = validatedFields.data;
   // e.g. Hash the user's password before storing it
   let lol = null;
-  const hashedPassword = await bcrypt.hash(password, "10");
+  const hashedPassword = await hash(password, 10);
 
-  console.log(username, hashedPassword, email);
+  console.log(username);
+  console.log(hashedPassword);
+  console.log(email);
+  //  hashedPassword, email);
 
   // 3. Insert the user into the database or call an Auth Library's API
   // const data = await db
