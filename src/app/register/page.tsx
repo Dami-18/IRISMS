@@ -1,12 +1,15 @@
 // Register Page
-
+"use client";
+import { useActionState, useState } from "react";
 import Form from "next/form";
+import { signup } from "auth";
 
 const Register = () => {
+  const [state, action, pending] = useActionState(signup, undefined);
   return (
     // Basically action will be a function which will be server sided call it signup.ts we have to validate the data first, using zod library(my suggestion but can do regex method from the scratch)
     // in the same file if the user has entered all the data correctly then call the backend and create a new user so tbh isme bas ab registration info,design change hogi and action me function name aayega basssssss backend se bas we'll do one api call
-    <Form action="/todonai pata meko ki kya karna he abhi but figure out kr lenge vro">
+    <Form action={action}>
       <div className="space-y-12 p-20">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base/7 font-semibold">Profile</h2>
@@ -24,12 +27,16 @@ const Register = () => {
                     id="username"
                     name="username"
                     type="text"
-                    placeholder="janesmith"
+                    defaultValue="ewfuwehuf"
                     className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
                   />
                 </div>
               </div>
             </div>
+            {/*change the error style create a modal or something for it*/}
+            {state?.errors?.username && (
+              <p className="text-red-800">{state.errors.username}</p>
+            )}
 
             <div className="col-span-full">
               <label htmlFor="about" className="block text-sm/6 font-medium">
@@ -102,12 +109,17 @@ const Register = () => {
                 <input
                   id="email"
                   name="email"
-                  type="email"
                   autoComplete="email"
+                  defaultValue="feijfiwj2ga@gkakcp.com"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
+
+            {/*change the error style create a modal or something for it*/}
+            {state?.errors?.email && (
+              <p className="text-red-800">{state.errors.email}</p>
+            )}
 
             <div className="sm:col-span-3">
               <label htmlFor="country" className="block text-sm/6 font-medium">
@@ -176,21 +188,23 @@ const Register = () => {
             </div>
 
             <div className="sm:col-span-2">
-              <label
-                htmlFor="postal-code"
-                className="block text-sm/6 font-medium"
-              >
-                ZIP / Postal code
+              <label htmlFor="password" className="block text-sm/6 font-medium">
+                Password
               </label>
               <div className="mt-2">
                 <input
-                  id="postal-code"
-                  name="postal-code"
-                  type="text"
-                  autoComplete="postal-code"
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="password"
+                  defaultValue="fqkf2j3!31S"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
+              {/*change the error style create a modal or something for it*/}
+              {state?.errors?.password && (
+                <p className="text-red-800">{state.errors.password}</p>
+              )}
             </div>
           </div>
         </div>
