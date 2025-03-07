@@ -1,49 +1,48 @@
-import NextAuth, { User } from "next-auth";
-import { ZodError } from "zod";
-import Credentials from "next-auth/providers/credentials";
-import { signInSchema } from "./src/lib/zod";
-import { saltAndHashPassword } from "./src/utils/password"; // to write own logic for hashing and salting, don't know this path giving error
-import { getUserFromDb } from "./src/utils/db";
+"use server";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    Credentials({
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      credentials: {
-        email: {},
-        password: {},
-      },
-      // Type will be determined by the database
-      authorize: async (credentials) => {
-        try {
-          let user = null;
+import { SignupFormSchema, FormState } from "@/lib/definitions";
+import bcrypt from "bcryptjs-react";
 
-          const { email, password } = await signInSchema.parseAsync(
-            credentials
-          );
+export async function signup(formState: FormState, formData: FormData) {
+  console.log(formData.get("username"));
+  console.log(formData.get("email"));
+  console.log(formData.get("password"));
 
-          // logic to salt and hash password
-          const pwHash = saltAndHashPassword(password);
+  const validatedFields = SignupFormSchema.safeParse({
+    username: formData.get("username"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
 
-          // logic to verify if the user exists, these logics are yet to be implemented
-          user = await getUserFromDb(email, pwHash);
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
 
-          if (!user) {
-            // No user found, so this is their first attempt to login
-            // Optionally, this is also the place you could do a user registration
-            throw new Error("Invalid credentials.");
-          }
+  const { username, email, password } = validatedFields.data;
+  // e.g. Hash the user's password before storing it
+  let lol = null;
+  const hashedPassword = await bcrypt.hash(password, "10");
 
-          // return user object with their profile data
-          return user;
-        } catch (error) {
-          if (error instanceof ZodError) {
-            // Return `null` to indicate that the credentials are invalid
-            return null;
-          }
-        }
-      },
-    }),
-  ],
-});
+  console.log(username, hashedPassword, email);
+
+  // 3. Insert the user into the database or call an Auth Library's API
+  // const data = await db
+  //   .insert(users)
+  //   .values({
+  //     username,
+  //     email,
+  //     password: hashedPassword,
+  //   })
+  //   .returning({ id: users.id });
+
+  // const user = data[0];
+
+  // if (!user) {
+  //   return {
+  //     message: "An error occurred while creating your account.",
+  //   };
+  // }
+}
