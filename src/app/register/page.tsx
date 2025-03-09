@@ -311,7 +311,9 @@ const Register = () => {
               </div>
             </div>
 
-            {/* document upload */}
+            {/* document upload 
+            later change to better design, also uploading not yet handled in api
+            */}
 
             <div className="sm:col-span-3">
               <label htmlFor="cv" className="block text-sm/6 font-medium">

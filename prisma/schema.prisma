@@ -10,5 +10,37 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // to be added in env file and later as app-level env variable during server deployment
+}
+
+// user model
+
+model User {
+  id        Int    @id @default(autoincrement())
+  username  String @unique
+  password  String // stored after hashing
+  email     String @unique
+  firstName String
+  lastName  String
+  contact   String
+  address   String
+  city      String
+  state     String
+  country   String
+
+  // Academic Information
+  degree      String
+  gradyear    String
+  major       String
+  institution String
+
+  // File Uploads
+  // url of documents uploaded on cloud storage
+  cvUrl         String?
+  transcriptUrl String? 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([username]) // for frequently queried fields to improve performance
 }
