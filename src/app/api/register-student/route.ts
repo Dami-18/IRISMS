@@ -7,15 +7,15 @@ export async function POST(req: NextRequest) {
   const { username, email, password } = await req.json();
 
   // Explicitly define the type for the data object
-  const userData: Prisma.UserCreateInput = {
-    username,
-    email,
-    password,
-  };
+  // const userData: Prisma.UserCreateInput = {
+  //   username,
+  //   email,
+  //   password,
+  // };
 
   try {
     const result = await prisma.user.create({ // giving error in parsing connection string
-      data: userData,
+      data: {username, email, password}
     });
     return NextResponse.json(result);
   } catch (error) {
