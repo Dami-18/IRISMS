@@ -44,3 +44,5 @@ model User {
 
   @@index([username]) // for frequently queried fields to improve performance
 }
+
+// model for profs will also be added
