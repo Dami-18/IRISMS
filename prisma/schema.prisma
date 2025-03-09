@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // to be added in env file and later as app-level env variable during server deployment
+}
+
+// user model
+
+model User {
+  id        Int    @id @default(autoincrement())
+  username  String @unique
+  email     String @unique
+  password  String // stored after hashing
+  
+  // firstName String
+  // lastName  String
+  // contact   String
+  // address   String
+  // city      String
+  // state     String
+  // country   String
+
+  // // Academic Information
+  // degree      String
+  // gradyear    String
+  // major       String
+  // institution String
+
+  // // File Uploads
+  // // url of documents uploaded on cloud storage
+  // cvUrl         String?
+  // transcriptUrl String? 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([username]) // for frequently queried fields to improve performance
+}
+
+// model for profs will also be added

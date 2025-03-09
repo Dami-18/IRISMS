@@ -3,6 +3,7 @@ import {
   FormState,
   SigninFormSchema,
 } from "@/lib/definitions";
+
 import { hash } from "bcrypt-ts";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
@@ -22,9 +23,20 @@ export async function signup(formState: FormState, formData: FormData) {
   }
 
   const { username, email, password } = validatedFields.data;
-  // e.g. Hash the user's password before storing it
+  
   const hashedPassword = await hash(password, 10);
+  console.log("ok")
 
+  const res = await fetch("/api/register-student", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: formData.get("username"),
+      email: formData.get("email"),
+      password: hashedPassword,
+    })
+  }
+);
   // 3. Insert the user into the database or call an Auth Library's API
   // const data = await db
   //   .insert(users)
