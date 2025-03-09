@@ -3,8 +3,8 @@ import {
   FormState,
   SigninFormSchema,
 } from "@/lib/definitions";
-
-import { hash } from "bcrypt-ts";
+import { PrismaClient } from "@prisma/client";
+import { hash, compare } from "bcrypt-ts";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 
@@ -23,9 +23,9 @@ export async function signup(formState: FormState, formData: FormData) {
   }
 
   const { username, email, password } = validatedFields.data;
-  
+
   const hashedPassword = await hash(password, 10);
-  console.log("ok")
+  console.log("ok");
 
   const res = await fetch("/api/register-student", {
     method: "POST",
@@ -34,18 +34,8 @@ export async function signup(formState: FormState, formData: FormData) {
       username: formData.get("username"),
       email: formData.get("email"),
       password: hashedPassword,
-    })
-  }
-);
-  // 3. Insert the user into the database or call an Auth Library's API
-  // const data = await db
-  //   .insert(users)
-  //   .values({
-  //     username,
-  //     email,
-  //     password: hashedPassword,
-  //   })
-  //   .returning({ id: users.id });
+    }),
+  });
 
   // const user = data[0];
 
@@ -96,6 +86,25 @@ export async function signin(formState: FormState, formData: FormData) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
     };
+  }
+
+  const res = await fetch("/api/db", {
+    method: "POST",
+    headers: {
+      "content-type": "/application/json",
+    },
+    body: JSON.stringify({
+      email: formData.get("email"),
+    }),
+  });
+
+  // console.log(res.json());
+
+  const { hashedPass } = await res.json();
+  if (await compare(formData.get("password") as string, hashedPass)) {
+    console.log("login successful");
+  } else {
+    console.log("invalid pass");
   }
 }
 
