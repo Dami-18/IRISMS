@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
     // both type should be string
     if (storedOtp !== otp) {
-      return NextResponse.json({ message: "Invalid OTP" });
+      return NextResponse.json({ message: "Invalid OTP" }, { status: 401 });
     }
 
     await redis.del(email);

@@ -1,10 +1,14 @@
 // Login Page
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Form from "next/form";
+import { useActionState } from "react";
+import { signin } from "auth";
+import { FormState } from "@/lib/definitions";
 
 const Login = () => {
+  const [state, action, pending] = useActionState(signin, undefined);
   const router = useRouter();
 
   return (
@@ -25,10 +29,14 @@ const Login = () => {
           <Form
             // First Validation and then authentication
             // action={/*this will invoke the function name i.e. loginuser which will perform the authentication in the server-side */}
-            action="/loginkarvadoisme"
+            action={action}
             className="space-y-6"
           >
             <div>
+              {/*change the error style create a modal or something for it*/}
+              {state?.errors?.email && (
+                <p className="text-red-800">{state.errors.email}</p>
+              )}
               <label htmlFor="email" className="block text-sm/6 font-medium ">
                 Email address
               </label>
@@ -36,9 +44,10 @@ const Login = () => {
                 <input
                   id="email"
                   name="email"
-                  type="email"
+                  // type="email"
                   required
                   autoComplete="email"
+                  defaultValue="fwef2@gmail.com"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
@@ -52,14 +61,14 @@ const Login = () => {
                 >
                   Password
                 </label>
-                <div className="text-sm">
+                {/* <div className="text-sm">
                   <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
                   </a>
-                </div>
+                </div> */}
               </div>
               <div className="mt-2">
                 <input
@@ -68,6 +77,7 @@ const Login = () => {
                   type="password"
                   required
                   autoComplete="current-password"
+                  defaultValue="gwhguhr"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
