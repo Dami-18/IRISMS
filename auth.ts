@@ -1,11 +1,14 @@
-import { SignupFormSchema, FormState } from "@/lib/definitions";
+import {
+  SignupFormSchema,
+  FormState,
+  SigninFormSchema,
+} from "@/lib/definitions";
+
 import { hash } from "bcrypt-ts";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { redirect } from "next/navigation";
 
 export async function signup(formState: FormState, formData: FormData) {
-  console.log(formData.get("username"));
-  console.log(formData.get("email"));
-  console.log(formData.get("password"));
-
   const validatedFields = SignupFormSchema.safeParse({
     username: formData.get("username"),
     email: formData.get("email"),
@@ -20,8 +23,7 @@ export async function signup(formState: FormState, formData: FormData) {
   }
 
   const { username, email, password } = validatedFields.data;
-  // Hash the user's password before storing it
-
+  
   const hashedPassword = await hash(password, 10);
   console.log("ok")
 
@@ -35,8 +37,6 @@ export async function signup(formState: FormState, formData: FormData) {
     })
   }
 );
-
-
   // 3. Insert the user into the database or call an Auth Library's API
   // const data = await db
   //   .insert(users)
@@ -54,4 +54,66 @@ export async function signup(formState: FormState, formData: FormData) {
   //     message: "An error occurred while creating your account.",
   //   };
   // }
+  try {
+    localStorage.setItem("email", formData.get("email") as string);
+
+    const res = await fetch("/api/generateOTP", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.get("email"),
+        password: formData.get("password"),
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to generate OTP");
+    }
+
+    // Redirect after successful OTP generation
+    redirect("/verify");
+  } catch (error) {
+    console.error(error);
+
+    // Re-throw redirection errors to allow Next.js to handle them
+    if (isRedirectError(error)) {
+      throw error;
+    }
+
+    return { message: "Error during sign-in process" };
+  }
+}
+
+export async function signin(formState: FormState, formData: FormData) {
+  const validatedFields = SigninFormSchema.safeParse({
+    email: formData.get("email"),
+  });
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+}
+
+export async function verify(formData: FormData) {
+  const obj = {
+    method: "POST",
+    headers: {
+      "Content-type": "/application/verifyOTP",
+    },
+    body: JSON.stringify({
+      email: localStorage.getItem("email"),
+      otp: formData.get("otp"),
+    }),
+  };
+  const res = await fetch("/api/verifyOTP", obj);
+  const { message, status } = await res.json();
+
+  // do the user creation redirect whatever shit you wanna do
+  if (status == 200) {
+  }
 }
