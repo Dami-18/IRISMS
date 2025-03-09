@@ -23,12 +23,7 @@ export async function signup(formState: FormState, formData: FormData) {
 
   const { username, email, password } = validatedFields.data;
   // e.g. Hash the user's password before storing it
-  let lol = null;
   const hashedPassword = await hash(password, 10);
-
-  console.log(username);
-  console.log(hashedPassword);
-  console.log(email);
 
   // 3. Insert the user into the database or call an Auth Library's API
   // const data = await db
@@ -47,25 +42,14 @@ export async function signup(formState: FormState, formData: FormData) {
   //     message: "An error occurred while creating your account.",
   //   };
   // }
-}
-
-export async function signin(formState: FormState, formData: FormData) {
-  const validatedFields = SigninFormSchema.safeParse({
-    email: formData.get("email"),
-  });
-
-  // If any form fields are invalid, return early
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
   try {
     localStorage.setItem("email", formData.get("email") as string);
 
     const res = await fetch("/api/generateOTP", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         email: formData.get("email"),
         password: formData.get("password"),
@@ -87,6 +71,19 @@ export async function signin(formState: FormState, formData: FormData) {
     }
 
     return { message: "Error during sign-in process" };
+  }
+}
+
+export async function signin(formState: FormState, formData: FormData) {
+  const validatedFields = SigninFormSchema.safeParse({
+    email: formData.get("email"),
+  });
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
   }
 }
 
