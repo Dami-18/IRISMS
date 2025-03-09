@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/nodemailer": "^6.4.17"
+    "@types/nodemailer": "^6.4.17",
     "@prisma/client": "^6.4.1",
     "bcrypt-ts": "^6.0.0",
     "crypto": "^1.0.1",
