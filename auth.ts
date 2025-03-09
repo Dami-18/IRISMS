@@ -29,7 +29,6 @@ export async function signup(formState: FormState, formData: FormData) {
   console.log(username);
   console.log(hashedPassword);
   console.log(email);
-  //  hashedPassword, email);
 
   // 3. Insert the user into the database or call an Auth Library's API
   // const data = await db
