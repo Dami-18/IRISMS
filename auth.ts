@@ -4,6 +4,7 @@ import {
   SigninFormSchema,
 } from "@/lib/definitions";
 import { hash } from "bcrypt-ts";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 
 export async function signup(formState: FormState, formData: FormData) {
@@ -59,23 +60,34 @@ export async function signin(formState: FormState, formData: FormData) {
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
-
-  localStorage.setItem("email", formData.get("email") as string);
-
   try {
+    localStorage.setItem("email", formData.get("email") as string);
+
     const res = await fetch("/api/generateOTP", {
       method: "POST",
-      headers: { "Content-type": "/application/generateOTP" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: formData.get("email"),
         password: formData.get("password"),
       }),
     });
-  } catch (error) {
-    console.log(error);
-  }
 
-  redirect("/verify");
+    if (!res.ok) {
+      throw new Error("Failed to generate OTP");
+    }
+
+    // Redirect after successful OTP generation
+    redirect("/verify");
+  } catch (error) {
+    console.error(error);
+
+    // Re-throw redirection errors to allow Next.js to handle them
+    if (isRedirectError(error)) {
+      throw error;
+    }
+
+    return { message: "Error during sign-in process" };
+  }
 }
 
 export async function verify(formData: FormData) {

@@ -5,7 +5,6 @@ import { redirect, useRouter } from "next/navigation";
 import Form from "next/form";
 import { useActionState } from "react";
 import { signin } from "auth";
-import { FormState } from "@/lib/definitions";
 
 const Login = () => {
   const [state, action, pending] = useActionState(signin, undefined);
@@ -47,7 +46,7 @@ const Login = () => {
                   // type="email"
                   required
                   autoComplete="email"
-                  defaultValue="fwef2@gmail.com"
+                  defaultValue="krishcharniya.shaurya.iitkgp@gmail.com"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
