@@ -24,10 +24,20 @@ const Home = () => {
         className="text-blue-200 m-12 p-12 borderborder-amber-200"
         onClick={() => {
           // push and replace both methods are available, not yet decided what to choose
-          router.push("/register"); // this is for client-side navigation, not backend
+          router.push("/register-students"); // this is for client-side navigation, not backend
         }}
       >
-        Register
+        Register as student
+      </button>
+
+      <button
+        className="text-blue-200 m-12 p-12 borderborder-amber-200"
+        onClick={() => {
+          // push and replace both methods are available, not yet decided what to choose
+          router.push("/register-faculty"); // this is for client-side navigation, not backend
+        }}
+      >
+        Register as faculty
       </button>
 
       {/* button of student's dashboard for testing */}
