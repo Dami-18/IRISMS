@@ -2,10 +2,10 @@
 "use client";
 import { useActionState, useState } from "react";
 import Form from "next/form";
-import { signup } from "auth";
+import { signupStud } from "auth";
 
 const Register = () => {
-  const [state, action, pending] = useActionState(signup, undefined);
+  const [state, action, pending] = useActionState(signupStud, undefined);
   return (
     // Basically action will be a function which will be server sided call it signup.ts we have to validate the data first, using zod library(my suggestion but can do regex method from the scratch)
     // in the same file if the user has entered all the data correctly then call the backend and create a new user so tbh isme bas ab registration info,design change hogi and action me function name aayega basssssss backend se bas we'll do one api call

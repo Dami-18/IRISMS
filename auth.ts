@@ -3,12 +3,14 @@ import {
   FormState,
   SigninFormSchema,
 } from "@/lib/definitions";
-import { PrismaClient } from "@prisma/client";
+
+// import { PrismaClient } from "@prisma/client";
 import { hash, compare } from "bcrypt-ts";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 
-export async function signup(formState: FormState, formData: FormData) {
+export async function signupStud(formState: FormState, formData: FormData) {
+  // this signup function is only for students currently, we need to make another for profs
   const validatedFields = SignupFormSchema.safeParse({
     username: formData.get("username"),
     email: formData.get("email"),
@@ -27,23 +29,94 @@ export async function signup(formState: FormState, formData: FormData) {
   const hashedPassword = await hash(password, 10);
   console.log("ok");
 
-  const res = await fetch("/api/register-student", {
+  const res = await fetch("/api/createStudent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      username: formData.get("username"),
-      email: formData.get("email"),
+      username: username,
+      email: email,
       password: hashedPassword,
     }),
   });
 
-  // const user = data[0];
+  try {
+    localStorage.setItem("email", formData.get("email") as string);
 
-  // if (!user) {
-  //   return {
-  //     message: "An error occurred while creating your account.",
-  //   };
-  // }
+    const res = await fetch("/api/generateOTP", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.get("email"),
+        password: formData.get("password"),
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to generate OTP");
+    }
+
+    // Redirect after successful OTP generation
+    redirect("/verify");
+  } catch (error) {
+    console.error(error);
+
+    // Re-throw redirection errors to allow Next.js to handle them
+    if (isRedirectError(error)) {
+      throw error;
+    }
+
+    return { message: "Error during sign-in process" };
+  }
+}
+
+// function for register of prof
+export async function signupProf(formState: FormState, formData: FormData) {
+  // this signup function is only for students currently, we need to make another for profs
+  const validatedFields = SignupFormSchema.safeParse({
+    username: formData.get("username"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { username, email, password } = validatedFields.data;
+
+  const hashedPassword = await hash(password, 10);
+  // console.log("ok");
+
+  const data = {
+      username: username,
+      email: email,
+      password: hashedPassword,
+      firstName: formData.get("first-name"),
+      lastName: formData.get("last-name"),
+      contact: formData.get("contact"),
+      website: formData.get("website"),
+      gscholar: formData.get("gscholar"),
+      qualification: formData.get("highestDegree"),
+      degreeYear: formData.get("gradYear"),
+      specialization: formData.get("specialization"),
+      institution: formData.get("institution"),
+      teachingExp: formData.get("teachingExp"),
+      researchExp: formData.get("researchExp"),
+      researchInterns: formData.get("researchInterns"),
+      cvUrl: formData.get("cv") // need to handle this separately maybe in another api call for file uploads
+  };
+
+  const res = await fetch("/api/createFaculty", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
   try {
     localStorage.setItem("email", formData.get("email") as string);
 
@@ -88,7 +161,7 @@ export async function signin(formState: FormState, formData: FormData) {
     };
   }
 
-  const res = await fetch("/api/db", {
+  const res = await fetch("/api/getUserFromDb", {
     method: "POST",
     headers: {
       "content-type": "/application/json",
@@ -97,8 +170,6 @@ export async function signin(formState: FormState, formData: FormData) {
       email: formData.get("email"),
     }),
   });
-
-  // console.log(res.json());
 
   const { hashedPass } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
@@ -112,7 +183,7 @@ export async function verify(formData: FormData) {
   const obj = {
     method: "POST",
     headers: {
-      "Content-type": "/application/verifyOTP",
+      "Content-type": "/application/verifyOTP", // ye galat hai probably check karna padega
     },
     body: JSON.stringify({
       email: localStorage.getItem("email"),

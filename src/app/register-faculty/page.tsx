@@ -2,10 +2,10 @@
 "use client";
 import { useActionState, useState } from "react";
 import Form from "next/form";
-import { signup } from "auth";
+import { signupProf } from "auth";
 
 const Register = () => {
-    const [state, action, pending] = useActionState(signup, undefined);
+    const [state, action, pending] = useActionState(signupProf, undefined);
     return (
 
         <Form action={action}>
