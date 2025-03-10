@@ -20,6 +20,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     hashedPass: user?.password,
-    message: "API CREATED SUCCESSFULLY",
+    message: "user created successfully?",
   });
 }
