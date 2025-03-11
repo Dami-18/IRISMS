@@ -15,11 +15,11 @@ datasource db {
 
 // student model
 model User {
-  id        Int    @id @default(autoincrement())
-  username  String @unique
-  email     String @unique
-  password  String // stored after hashing
-  
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  email    String @unique
+  password String // stored after hashing
+
   // firstName String
   // lastName  String
   // contact   String
@@ -53,36 +53,36 @@ model User {
 
 // model for profs will also be added
 model Prof {
-  id                Int      @id @default(autoincrement())
-  username          String   @unique
-  email             String   @unique
-  password          String
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  email    String @unique
+  password String
 
-  firstName         String
-  lastName          String
-  contact           String
+  firstName String
+  lastName  String
+  contact   String
 
-  website           String?
-  gscholar          String?
+  website  String?
+  gscholar String?
 
-  qualification     String
-  degreeYear        String
-  specialization    String
-  institution       String
+  qualification  String
+  degreeYear     String
+  specialization String
+  institution    String
 
-  teachingExp       Float
-  researchExp       Float
+  teachingExp Float
+  researchExp Float
 
-  researchInterns   ResearchInternOption @default(MAYBE)
+  researchInterns ResearchInternOption @default(MAYBE)
 
-  cvUrl             String?
+  cvUrl String?
 
   // this is dynamic array where projects (id) will be added and remove as prof does accordingly
   // then display on dashboard
   // currentProjects Int[]
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum ResearchInternOption {
@@ -93,15 +93,15 @@ enum ResearchInternOption {
 
 // model for each research internship or project
 model Project {
-  id  Int      @id @default(autoincrement())
-  name String  @unique
-  topics String[] // will include topics like ML, AI, SDE, etc.
-  stipend String
-  duration Int // in months
-  mode String // remote or onsite
-  eligibility String // eligibility conditions as per by prof
+  id            Int      @id @default(autoincrement())
+  name          String   @unique
+  topics        String[] // will include topics like ML, AI, SDE, etc.
+  stipend       String
+  duration      Int // in months
+  mode          String // remote or onsite
+  eligibility   String // eligibility conditions as per by prof
   prerequisites String // any prerequisites or knowledge
-  students Int[] // ids of those students who have already applied for the internship, for prof to see, he will either accept or reject it
+  students      Int[] // ids of those students who have already applied for the internship, for prof to see, he will either accept or reject it
 }
 
 // create a new model just for internships, it will have id, prof name, stipend, etc.

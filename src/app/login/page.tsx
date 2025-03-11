@@ -26,8 +26,6 @@ const Login = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <Form
-            // First Validation and then authentication
-            // action={/*this will invoke the function name i.e. loginuser which will perform the authentication in the server-side */}
             action={action}
             className="space-y-6"
           >
