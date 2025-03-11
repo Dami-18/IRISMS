@@ -13,8 +13,7 @@ datasource db {
   url      = env("DATABASE_URL") // to be added in env file and later as app-level env variable during server deployment
 }
 
-// user model
-
+// student model
 model User {
   id        Int    @id @default(autoincrement())
   username  String @unique
@@ -39,6 +38,12 @@ model User {
   // // url of documents uploaded on cloud storage
   // cvUrl         String?
   // transcriptUrl String? 
+
+  // we can simply add id's of the internships which are accepted, rejected or under review
+  // the logic to add these ids will be written in api 
+  // accepted Int[]
+  // rejected Int[]
+  // inReview Int[] 
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -72,6 +77,10 @@ model Prof {
 
   cvUrl             String?
 
+  // this is dynamic array where projects (id) will be added and remove as prof does accordingly
+  // then display on dashboard
+  // currentProjects Int[]
+
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -80,6 +89,19 @@ enum ResearchInternOption {
   YES
   NO
   MAYBE
+}
+
+// model for each research internship or project
+model Project {
+  id  Int      @id @default(autoincrement())
+  name String  @unique
+  topics String[] // will include topics like ML, AI, SDE, etc.
+  stipend String
+  duration Int // in months
+  mode String // remote or onsite
+  eligibility String // eligibility conditions as per by prof
+  prerequisites String // any prerequisites or knowledge
+  students Int[] // ids of those students who have already applied for the internship, for prof to see, he will either accept or reject it
 }
 
 // create a new model just for internships, it will have id, prof name, stipend, etc.
