@@ -61,16 +61,6 @@ const Home = () => {
         Particular Internship
       </button>
 
-      {/* button of Past Projects of Fac internship */}
-      <button
-        className="text-blue-200 m-12 p-12 borderborder-amber-200"
-        onClick={() => {
-          router.push("/past-projects");
-        }}
-      >
-        Past Project's of Faculty
-      </button>
-
       {/* button of dashboard-faculty */}
       <button
         className="text-blue-200 m-12 p-12 borderborder-amber-200"

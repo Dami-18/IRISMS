@@ -25,10 +25,7 @@ const Internships = () => {
       <div className="flex flex-row-reverse">
         {/* Add Modals for adding projects and route for past projects*/}
         <button className="mr-12 mb-4 mt-4 ml-12 border-2 rounded-full p-4 hover:bg-green-500">
-          Add Projects
-        </button>
-        <button className="mr-12 mb-4 mt-4 ml-12 border-2 rounded-full p-4 hover:bg-red-500">
-          Past Projects
+          Add a Project
         </button>
       </div>
       {projects.map((project, index) => (
