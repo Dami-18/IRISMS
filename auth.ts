@@ -171,11 +171,13 @@ export async function signin(formState: FormState, formData: FormData) {
     }),
   });
 
-  const { hashedPass } = await res.json();
+  const { hashedPass, uname } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
     console.log("login successful");
+    redirect(`/dashboard-students/${uname}`); // dynamic route created
+    
   } else {
-    console.log("invalid pass");
+    console.log("invalid password!");
   }
 }
 
@@ -183,7 +185,7 @@ export async function verify(formData: FormData) {
   const obj = {
     method: "POST",
     headers: {
-      "Content-type": "/application/verifyOTP", // ye galat hai probably check karna padega
+      "Content-type": "application/json", // ye galat hai probably check karna padega
     },
     body: JSON.stringify({
       email: localStorage.getItem("email"),

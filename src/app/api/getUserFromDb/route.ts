@@ -15,11 +15,13 @@ export async function POST(req: NextRequest) {
     select: {
       email: true,
       password: true,
+      username: true,
     },
   });
 
   return NextResponse.json({
     hashedPass: user?.password,
+    uname: user?.username, // also return username to create dynamic route
     message: "user created successfully?",
   });
 }

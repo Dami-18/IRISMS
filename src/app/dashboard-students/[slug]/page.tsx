@@ -2,10 +2,13 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function StudDashboard() {
+export default function StudDashboard({ params }: { params: { slug: string } }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
+    {/* <h1>{params.slug}</h1> */}
+    {/* now we will fetch details of the user with username from db and display it on the page */}
+    
       <header className="bg-blue-500 p-2 text-white flex justify-between items-center">
         <h2 className="text-2xl font-bold">Student Dashboard</h2>
         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
