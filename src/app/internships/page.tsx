@@ -18,7 +18,6 @@ const internshipsData: Internship[] = [
     company: "Flipkart",
     location: "Bangalore",
   },
-  // Add more data as needed...
 ];
 
 export default function InternshipsPage() {
