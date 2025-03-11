@@ -81,3 +81,6 @@ enum ResearchInternOption {
   NO
   MAYBE
 }
+
+// create a new model just for internships, it will have id, prof name, stipend, etc.
+// then fetch from this table and display it
