@@ -164,7 +164,7 @@ export async function signin(formState: FormState, formData: FormData) {
   const res = await fetch("/api/getUserFromDb", {
     method: "POST",
     headers: {
-      "content-type": "/application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       email: formData.get("email"),
@@ -185,7 +185,7 @@ export async function verify(formData: FormData) {
   const obj = {
     method: "POST",
     headers: {
-      "Content-type": "application/json", // ye galat hai probably check karna padega
+      "Content-Type": "application/json", // ye galat hai probably check karna padega
     },
     body: JSON.stringify({
       email: localStorage.getItem("email"),
