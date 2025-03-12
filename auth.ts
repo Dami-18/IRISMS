@@ -174,7 +174,8 @@ export async function signin(formState: FormState, formData: FormData) {
   const { hashedPass, uname } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
     console.log("login successful");
-    redirect(`/dashboard-students/${uname}`); // dynamic route created
+    // redirect(`/dashboard-students/${uname}`); // dynamic route created
+    // here redirect after login, maybe store user id or username in cookies and then fetch his details on dashboard page
     
   } else {
     console.log("invalid password!");

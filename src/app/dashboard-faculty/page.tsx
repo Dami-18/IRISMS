@@ -19,7 +19,7 @@ const projects = [
   },
 ];
 
-const Internships = ({ params }: { params: { slug: string } }) => {
+const Internships = () => {
   return (
     <div>
       <div className="flex flex-row-reverse">
