@@ -66,7 +66,8 @@ export const signupProfFormSchema = z.object({
   scholar: z.string().url({ message: "provide a valid url" }),
 
   completeYear: z.number(),
-  exp: z.number(),
+  teachingExp: z.number(),
+  researchExp: z.number(),
 });
 
 export const SigninFormSchema = z.object({

@@ -133,7 +133,7 @@ const Register = () => {
           </div>
           {[
             {
-              id: "gradYear",
+              id: "completeYear",
               label: "Year of Degree Completion",
               type: "text",
               placeholder: "YYYY",
@@ -141,7 +141,16 @@ const Register = () => {
             { id: "majors", label: "Majors", type: "text" },
             { id: "insti", label: "Institution Name", type: "text" },
             { id: "special", label: "Area of Specialization", type: "text" },
-            { id: "exp", label: "Total Teaching Experience", type: "number" },
+            {
+              id: "teachingExp",
+              label: "Total Teaching Experience",
+              type: "number",
+            },
+            {
+              id: "researchExp",
+              label: "Total Research Experience",
+              type: "number",
+            },
           ].map((field) => (
             <div key={field.id}>
               <label htmlFor={field.id} className={`block text-sm font-medium`}>
