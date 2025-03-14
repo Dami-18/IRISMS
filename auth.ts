@@ -6,8 +6,13 @@ import {
 } from "@/lib/definitions";
 
 import { hash, compare } from "bcrypt-ts";
+import { log } from "console";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
+import { NextApiRequest } from "next"
+import jwt from 'jsonwebtoken';
+
+const secretKey = process.env.JWT_SECRET || 'secret_key'
 
 export async function signupStud(formState: FormState, formData: FormData) {
   // this signup function is only for students currently, we need to make another for profs
@@ -98,6 +103,10 @@ export async function signupProf(formState: FormState, formData: FormData) {
   // console.log("ok");
 
   const data = {
+<<<<<<< HEAD
+=======
+    username: username,
+>>>>>>> origin
     email: email,
     password: hashedPassword,
     firstName: formData.get("first-name"),
@@ -175,11 +184,35 @@ export async function signin(formState: FormState, formData: FormData) {
     }),
   });
 
-  const { hashedPass, uname } = await res.json();
+  const { id, hashedPass, uname } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
     console.log("login successful");
+<<<<<<< HEAD
     redirect("/dashboard-students"); // dynamic route created
     // here redirect after login, maybe store user id or username in cookies and then fetch his details on dashboard page
+=======
+
+    // for cookie and jwt from login api
+    const res = await fetch("api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+        username: uname,
+      }),
+    });
+
+    const { message, status } = await res.json();
+    if (status == 200) {
+      redirect("/dashboard-students");
+    }
+    else{
+      console.log("Internal Server Error!");
+      redirect("/login");
+    }
+>>>>>>> origin
   } else {
     console.log("invalid password!");
   }
@@ -201,5 +234,24 @@ export async function verify(formData: FormData) {
 
   // do the user creation redirect whatever shit you wanna do
   if (status == 200) {
+  }
+}
+
+export async function verifyToken(req: NextApiRequest){
+  const token = req.cookies.token
+
+  if(!token) return null
+
+  try{
+    const decoded = jwt.verify(token,secretKey)
+
+    if (typeof decoded === 'object' && decoded !== null) {
+      return decoded as jwt.JwtPayload // Explicitly cast to JwtPayload to avoid TS errors
+    }
+    
+  }
+  catch(error){
+    console.error("JWT error",error)
+    return null
   }
 }
