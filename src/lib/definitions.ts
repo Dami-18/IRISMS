@@ -76,7 +76,6 @@ export const SigninFormSchema = z.object({
 export type FormState =
   | {
       errors?: {
-        username?: string[];
         email?: string[];
         password?: string[];
       };

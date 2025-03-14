@@ -192,7 +192,6 @@ export async function signin(formState: FormState, formData: FormData) {
       },
       body: JSON.stringify({
         id: id,
-        username: uname,
       }),
     });
 

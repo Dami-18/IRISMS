@@ -9,7 +9,6 @@ export default function POST(req: NextApiRequest, res: NextApiResponse) {
 
   const jwtClaims = {
     userId,
-    username,
   } // store userId and username as jwtclaims with token
 
   const token = jwt.sign(jwtClaims, secretKey, {
