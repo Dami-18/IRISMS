@@ -189,7 +189,7 @@ export async function signin(formState: FormState, formData: FormData) {
     }),
   });
 
-  const { id, hashedPass, uname } = await res.json();
+  const { id, hashedPass } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
     console.log("login successful");
 
@@ -201,7 +201,6 @@ export async function signin(formState: FormState, formData: FormData) {
       },
       body: JSON.stringify({
         id: id,
-        username: uname,
       }),
     });
 
@@ -209,7 +208,7 @@ export async function signin(formState: FormState, formData: FormData) {
     if (status == 200) {
       redirect("/dashboard-students");
     } else {
-      console.log("Internal Server Error!");
+      console.log(message);
       redirect("/login");
     }
   } else {

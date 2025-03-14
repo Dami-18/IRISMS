@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const { username, email, password } = await req.json();
+  const { email, password } = await req.json();
 
   // Explicitly define the type for the data object
   // const userData: Prisma.UserCreateInput = {
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = await prisma.user.create({ // giving error in parsing connection string
-      data: {username, email, password}
+      data: {email, password}
     });
     return NextResponse.json(result);
   } catch (error) {
