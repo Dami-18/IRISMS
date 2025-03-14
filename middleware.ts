@@ -13,5 +13,4 @@
 //       res.status(401).json({ message: 'Unauthorized' });
 //     }
 //   }
-
 // export { auth as middleware } from "@/auth";

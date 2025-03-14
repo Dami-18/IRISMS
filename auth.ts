@@ -174,7 +174,7 @@ export async function signin(formState: FormState, formData: FormData) {
   const { hashedPass, uname } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
     console.log("login successful");
-    // redirect(`/dashboard-students/${uname}`); // dynamic route created
+    redirect("/dashboard-students"); // dynamic route created
     // here redirect after login, maybe store user id or username in cookies and then fetch his details on dashboard page
     
   } else {
@@ -186,7 +186,7 @@ export async function verify(formData: FormData) {
   const obj = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json", // ye galat hai probably check karna padega
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       email: localStorage.getItem("email"),
