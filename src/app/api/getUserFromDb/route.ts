@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
       email: email,
     },
     select: {
+      id: true,
       email: true,
       password: true,
       username: true,
@@ -20,6 +21,7 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json({
+    id: user?.id,
     hashedPass: user?.password,
     uname: user?.username, // also return username to create dynamic route
     message: "user created successfully?",

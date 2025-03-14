@@ -1,14 +1,12 @@
+// now in this page, we will fetch user details after logging in from the route /api/user and display details according to specific user
 "use client";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function StudDashboard({ params }: { params: { slug: string } }) {
+export default function StudDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
-    {/* <h1>{params.slug}</h1>  // for testing purpose */}
-    {/* now we will fetch details of the user with username from db and display it on the page */}
-
       <header className="bg-blue-500 p-2 text-white flex justify-between items-center">
         <h2 className="text-2xl font-bold">Student Dashboard</h2>
         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
