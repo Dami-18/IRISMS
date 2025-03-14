@@ -1,4 +1,4 @@
-// should be passed with a unique parameter so that it can fetch from db
+// in the onClick handler, we will first call api/user to get user details from token and then call another api/apply which adds the user id to the list of applied students in db
 
 // implement fetch Internship details from a unique id passed to internship function as a prop
 
