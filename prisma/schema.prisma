@@ -16,7 +16,8 @@ datasource db {
 // student model
 model User {
   id       Int    @id @default(autoincrement())
-  username String @unique
+  // commenting cuz no need for username
+  // username String @unique 
   email    String @unique
   password String // stored after hashing
 
@@ -48,13 +49,13 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([username]) // for frequently queried fields to improve performance
+  // @@index([username]) // for frequently queried fields to improve performance
 }
 
 // model for profs will also be added
 model Prof {
   id       Int    @id @default(autoincrement())
-  username String @unique
+  // username String @unique
   email    String @unique
   password String
 
