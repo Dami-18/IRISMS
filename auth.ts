@@ -88,6 +88,14 @@ export async function signupProf(formState: FormState, formData: FormData) {
   const validatedFields = signupProfFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    contact: formData.get("contact"),
+    linkedin: formData.get("linkedin"),
+    scholar: formData.get("scholar"),
+    completeYear: formData.get("completeYear"),
+    teachingExp: formData.get("teachingExp"),
+    researchExp: formData.get("researchExp"),
   });
 
   // If any form fields are invalid, return early
@@ -105,17 +113,18 @@ export async function signupProf(formState: FormState, formData: FormData) {
   const data = {
     email: email,
     password: hashedPassword,
-    firstName: formData.get("first-name"),
-    lastName: formData.get("last-name"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
     contact: formData.get("contact"),
-    website: formData.get("website"),
-    gscholar: formData.get("gscholar"),
-    qualification: formData.get("highestDegree"),
-    degreeYear: formData.get("gradYear"),
-    specialization: formData.get("specialization"),
-    institution: formData.get("institution"),
-    teachingExp: formData.get("teachingExp"),
+    website: formData.get("linkedin"),
+    gscholar: formData.get("scholar"),
+    qualification: formData.get("degree"),
+    degreeYear: formData.get("completeYear"),
+    specialization: formData.get("special"),
+    institution: formData.get("insti"),
+    teachingExp: formData.get("exp"),
     researchExp: formData.get("researchExp"),
+    // Research Intern query is baaki, database me kuch error aaye to sorry
     researchInterns: formData.get("researchInterns"),
     cvUrl: formData.get("cv"), // need to handle this separately maybe in another api call for file uploads
   };
