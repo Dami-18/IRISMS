@@ -4,12 +4,7 @@
 import { useActionState } from "react";
 import Form from "next/form";
 import { signupProf } from "auth";
-import Country from "@/../public/Country.json";
 import Link from "next/link";
-
-const CountryList = Country.map((obj) => {
-  return obj.name;
-});
 
 const Register = () => {
   const [state, action] = useActionState(signupProf, undefined);
@@ -138,17 +133,16 @@ const Register = () => {
               type: "text",
               placeholder: "YYYY",
             },
-            { id: "majors", label: "Majors", type: "text" },
             { id: "insti", label: "Institution Name", type: "text" },
             { id: "special", label: "Area of Specialization", type: "text" },
             {
               id: "teachingExp",
-              label: "Total Teaching Experience",
+              label: "Total Teaching Experience (Years)",
               type: "number",
             },
             {
               id: "researchExp",
-              label: "Total Research Experience",
+              label: "Total Research Experience (Years)",
               type: "number",
             },
           ].map((field) => (
@@ -175,6 +169,24 @@ const Register = () => {
             </div>
           ))}
 
+          <div>
+            <label
+              htmlFor="internchahiye"
+              className={`block text-sm font-medium`}
+            >
+              Are you looking for research interns?
+            </label>
+            <select
+              id="internchahiye"
+              name="internchahiye"
+              className="mt-1 pt-2 pb-2 pl-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600 sm:text-sm"
+            >
+              {["No", "Yes", "Maybe / Not Sure"].map((option) => (
+                <option key={option}>{option}</option>
+              ))}
+            </select>
+          </div>
+
           {/* File Uploads */}
           {["cv"].map((doc) => (
             <div key={doc}>
@@ -197,7 +209,7 @@ const Register = () => {
         </div>
 
         {/* Buttons */}
-        <div className={`mt–6 flex items-center justify-end gap-x–4`}>
+        <div className="mt–6 flex items-center justify-end gap-x–4">
           <Link
             type="button"
             href={"/"}
