@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         id: studentId,
       },
       data: {
-        inReview: {
+        inReview: { // currently this gives error because it is commented out in User schema
           push: projectId, // Push the project ID into the list of projects in review for the student
         },
       },

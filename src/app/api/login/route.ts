@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 const secretKey = process.env.JWT_SECRET || 'secret_key'
 
 export default function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { userId, username } = req.body 
+  const { userId } = req.body 
 
   const jwtClaims = {
     userId,
