@@ -1,329 +1,213 @@
-// Register Page
 "use client";
-import { useActionState, useState } from "react";
+
+// Comment out all the required in the inputs to get final submission form
+import { useActionState } from "react";
 import Form from "next/form";
 import { signupProf } from "auth";
+import Country from "@/../public/Country.json";
+import Link from "next/link";
+
+const CountryList = Country.map((obj) => {
+  return obj.name;
+});
 
 const Register = () => {
-    const [state, action, pending] = useActionState(signupProf, undefined);
-    return (
+  const [state, action] = useActionState(signupProf, undefined);
 
-        <Form action={action}>
-            <div className="space-y-12 p-20">
-                <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base/7 font-semibold">Profile</h2>
-                    <p className="mt-1 text-sm/6 text-gray-600"></p>
+  return (
+    <Form
+      action={action}
+      className="max-w-3xl mx-auto my-10 bg-white shadow-md rounded-lg p-8"
+    >
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        Faculty Registration
+      </h2>
 
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      {/* Profile Information */}
+      <section className="mb-8">
+        <h3 className="text-lg font-medium text-gray-700 mb-4">
+          Profile Information
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-600"
+            >
+              Email Address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              // required
+              className="mt-1 pt-2 pb-2 pl-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600"
+            />
+            {state?.errors?.email && (
+              <p className="mt-1 text-sm text-red-600">{state.errors.email}</p>
+            )}
+          </div>
 
-                        <div className="sm:col-span-3">
-                            <label htmlFor="username" className="block text-sm/6 font-medium">
-                                Username
-                            </label>
-                            <div className="mt-2">
-                                <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                                    <div className="shrink-0 text-base text-gray-500 select-none sm:text-sm/6"></div>
-                                    <input
-                                        id="username"
-                                        name="username"
-                                        type="text"
-                                        defaultValue="ewfuwehuf"
-                                        className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        {/*change the error style create a modal or something for it*/}
-                        {state?.errors?.username && (
-                            <p className="text-red-800">{state.errors.username}</p>
-                        )}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              // required
+              autoComplete="new-password"
+              className="mt-1 pt-2 pb-2 pl-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600"
+            />
+            {state?.errors?.password && (
+              <p className="mt-1 text-sm text-red-600">
+                {state.errors.password}
+              </p>
+            )}
+          </div>
+        </div>
+      </section>
 
-                        <div className="sm:col-span-3">
-                            <label htmlFor="password" className="block text-sm/6 font-medium">
-                                Password
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="password"
-                                    defaultValue="fqkf2j3!31S"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                            {/*change the error style create a modal or something for it*/}
-                            {state?.errors?.password && (
-                                <p className="text-red-800">{state.errors.password}</p>
-                            )}
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base/7 font-semibold">Personal Information</h2>
-                    <p className="mt-1 text-sm/6 text-gray-600">
-                        Use a permanent address where you can receive mail.
-                    </p>
-
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-                        <div className="sm:col-span-3">
-                            <label
-                                htmlFor="first-name"
-                                className="block text-sm/6 font-medium"
-                            >
-                                First name
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="first-name"
-                                    name="first-name"
-                                    type="text"
-                                    autoComplete="given-name"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-
-                        <div className="sm:col-span-3">
-                            <label
-                                htmlFor="last-name"
-                                className="block text-sm/6 font-medium"
-                            >
-                                Last name
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="last-name"
-                                    name="last-name"
-                                    type="text"
-                                    autoComplete="given-name"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="email" className="block text-sm/6 font-medium">
-                                Email address
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="email"
-                                    name="email"
-                                    autoComplete="email"
-                                    defaultValue="feijfiwj2ga@gkakcp.com"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="contact" className="block text-sm/6 font-medium">
-                                Contact number
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="contact"
-                                    name="contact"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="website" className="block text-sm/6 font-medium">
-                                Personal Website/Linkedin
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="website"
-                                    name="website"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="gscholar" className="block text-sm/6 font-medium">
-                                Google Scholar Profile
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="gscholar"
-                                    name="gscholar"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-
-                        {state?.errors?.email && (
-                            <p className="text-red-800">{state.errors.email}</p>
-                        )}
-
-                    </div>
-                </div>
-
-                {/* Academic info, here user will also upload CV and transcript */}
-
-                <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base/7 font-semibold">Academic and Professional Information</h2>
-                    <p className="mt-1 text-sm/6 text-gray-600">
-                        Provide details of your educational qualifications, teaching experience, research activities, and professional achievements.
-                    </p>
-
-
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="highestDegree" className="block text-sm/6 font-medium">
-                                Educational Qualification
-                            </label>
-                            <div className="mt-2 grid grid-cols-1">
-                                <select
-                                    id="highestDegree"
-                                    name="highestDegree"
-                                    className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                >
-                                    <option>Ph.D.</option>
-                                    <option>Master's</option>
-                                    <option>Postdoctoral Fellowship</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="degreeYear" className="block text-sm/6 font-medium">
-                                Year of Degree Completion
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="gradYear"
-                                    name="gradYear"
-                                    type="text"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="specialization" className="block text-sm/6 font-medium">
-                                Area of Specialization
-                            </label>
-                            <div className="mt-2 grid grid-cols-1">
-                                <input
-                                    id="specialization"
-                                    type="text"
-                                    name="specialization"
-                                    className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                >
-                                </input>
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label
-                                htmlFor="institution"
-                                className="block text-sm/6 font-medium"
-                            >
-                                Institution
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="institution"
-                                    name="institution"
-                                    type="text"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="teachingExp" className="block text-sm/6 font-medium">
-                                Total Teaching Experience (Years)
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="teachingExp"
-                                    name="teachingExp"
-                                    type="number"
-                                    min="0"
-                                    step="0.5"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="researchExp" className="block text-sm/6 font-medium">
-                                Total Research Experience (Years)
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="researchExp"
-                                    name="researchExp"
-                                    type="text"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="researchInterns" className="block text-sm/6 font-medium">
-                                Are you looking for research interns?
-                            </label>
-                            <div className="mt-2 grid grid-cols-1">
-                                <select
-                                    id="researchInterns"
-                                    name="researchInterns"
-                                    className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                >
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                    <option value="maybe">Maybe / Not Sure</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label htmlFor="cv" className="block text-sm/6 font-medium">
-                                Upload CV/Resume
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="cv"
-                                    name="cv"
-                                    type="file"
-                                    accept=".pdf,.docx,.doc"
-                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
+      {/* Personal Information */}
+      <section className="mb-8">
+        <h3 className="text-lg font-medium text-gray-700 mb-4">
+          Personal Information
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          {[
+            { id: "firstName", label: "First Name", type: "text" },
+            { id: "lastName", label: "Last Name", type: "text" },
+            { id: "contact", label: "Contact Number", type: "tel" },
+            { id: "linkedin", label: "Personal Website/Linkedin", type: "url" },
+            { id: "scholar", label: "Google Scholar Profile", type: "url" },
+          ].map((field) => (
+            <div key={field.id}>
+              <label htmlFor={field.id} className="block text-sm font-medium">
+                {field.label}
+              </label>
+              <input
+                id={field.id}
+                name={field.id}
+                type={field.type}
+                className="mt-1 pt-2 pb-2 pl-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600"
+              />
+              {/*@ts-ignore*/}
+              {state?.errors?.[field.id] && (
+                <p className="mt-1 text-sm text-red-600">
+                  {/*@ts-ignore*/}
+                  {state.errors[field.id]}
+                </p>
+              )}
             </div>
+          ))}
+        </div>
+      </section>
 
-            <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button type="button" className="text-sm/6 font-semibold">
-                    Cancel
-                </button>
-                <button
-                    type="submit"
-                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                    Save
-                </button>
+      {/* Academic Information */}
+      <section className="mb-8">
+        <h3 className="text-lg font-medium text-gray-700 mb-4">
+          Academic and Professional Information
+        </h3>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+          <div>
+            <label htmlFor="degree" className={`block text-sm font-medium`}>
+              Educational Qualification
+            </label>
+            <select
+              id="degree"
+              name="degree"
+              className="mt-1 pt-2 pb-2 pl-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600 sm:text-sm"
+            >
+              {["Master's", "Ph.D.", "Post Doctorial Fellowship"].map(
+                (option) => (
+                  <option key={option}>{option}</option>
+                )
+              )}
+            </select>
+          </div>
+          {[
+            {
+              id: "gradYear",
+              label: "Year of Degree Completion",
+              type: "text",
+              placeholder: "YYYY",
+            },
+            { id: "majors", label: "Majors", type: "text" },
+            { id: "insti", label: "Institution Name", type: "text" },
+            { id: "special", label: "Area of Specialization", type: "text" },
+            { id: "exp", label: "Total Teaching Experience", type: "number" },
+          ].map((field) => (
+            <div key={field.id}>
+              <label htmlFor={field.id} className={`block text-sm font-medium`}>
+                {field.label}
+              </label>
+
+              <input
+                id={field.id}
+                name={field.id}
+                type={field.type}
+                placeholder={field.placeholder || undefined}
+                // required
+                className="mt-1 pt-2 pb-2 pl-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600 text-sm"
+              />
+              {/*@ts-ignore*/}
+              {state?.errors?.[field.id] && (
+                <p className="mt-1 text-sm text-red-600">
+                  {/*@ts-ignore*/}
+                  {state.errors[field.id]}
+                </p>
+              )}
             </div>
-        </Form>
-    );
+          ))}
+
+          {/* File Uploads */}
+          {["cv"].map((doc) => (
+            <div key={doc}>
+              <label
+                htmlFor={doc}
+                className={`block text-sm font-medium capitalize`}
+              >
+                {"Upload CV/Resume"}
+              </label>
+              <input
+                id={doc}
+                name={doc}
+                type={`file`}
+                accept=".pdf,.docx,.doc"
+                // required
+                className="mt-1 pt-2 pb-2 pl-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600 text-sm"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div className={`mt–6 flex items-center justify-end gap-x–4`}>
+          <Link
+            type="button"
+            href={"/"}
+            className="mt-16 text-sm font-semibold text-gray-700 bg-gray-100 px-4 py-2 rounded-md shadow hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+          >
+            Cancel
+          </Link>
+
+          {/* Register Button */}
+          <button
+            type="submit"
+            className="mt-16 ml-6 text-sm font-semibold text-white bg-indigo-600 px-4 py-2 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Register
+          </button>
+        </div>
+      </section>
+    </Form>
+  );
 };
+
 export default Register;
