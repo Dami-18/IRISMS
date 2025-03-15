@@ -209,7 +209,12 @@ export async function signin(formState: FormState, formData: FormData) {
         console.log("yayy");
 
         try {
-          redirect("/dashboard-students");
+          if(uid[0]=='S'){
+            redirect("/dashboard-students");
+          }
+          else{
+            redirect("/dashboard-faculty");
+          }
         } catch (error) {
           console.error(error);
           if (isRedirectError(error)) {
