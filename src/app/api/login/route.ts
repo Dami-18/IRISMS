@@ -1,28 +1,40 @@
-import { serialize } from 'cookie'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import jwt from 'jsonwebtoken'
+"use server";
 
-const secretKey = process.env.JWT_SECRET || 'secret_key'
+import { serialize } from "cookie";
+import jwt from "jsonwebtoken";
+import { NextRequest, NextResponse } from "next/server";
 
-export default function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { userId } = req.body // this userId will be the uid
+const secretKey = process.env.JWT_SECRET || "secret_key";
 
-  const jwtClaims = {
-    userId,
-  } // store userId as jwtclaims with token
+export async function POST(req: NextRequest) {
+  try {
+    const { userId } = await req.json();
 
-  const token = jwt.sign(jwtClaims, secretKey, {
-    expiresIn: '3d', 
-  })
+    const jwtClaims = {
+      userId,
+    }; // store userId and username as jwtclaims with token
 
-  const cookie = serialize('token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 60 * 60 * 24 * 3, 
-    path: '/',
-    sameSite: 'strict',
-  })
+    const token = jwt.sign(jwtClaims, secretKey, {
+      expiresIn: "3d",
+    });
 
-  res.setHeader('Set-Cookie', cookie)
-  res.status(200).json({ message: 'Successfully logged in!' })
+    const cookie = serialize("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 3,
+      path: "/",
+      sameSite: "strict",
+    });
+
+    const response = NextResponse.json(
+      { message: "Successfully logged in!" },
+      { status: 200 }
+    );
+
+    // Set the cookie in the response header
+    response.headers.set("Set-Cookie", cookie);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
 }
