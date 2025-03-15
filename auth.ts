@@ -190,22 +190,38 @@ export async function signin(formState: FormState, formData: FormData) {
     console.log("login successful");
 
     // for cookie and jwt from login api
-    const res = await fetch("api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        uid: uid,
-      }),
-    });
 
-    const { message, status } = await res.json();
-    if (status == 200) {
-      redirect("/dashboard-students");
-    } else {
-      console.log(message);
-      redirect("/login");
+    try {
+      const res = await fetch("api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      });
+
+      console.log(await res.json(), res.status);
+
+      if (res.status == 200) {
+        // console.log(message);
+        console.log("yayy");
+
+        try {
+          redirect("/dashboard-students");
+        } catch (error) {
+          console.error(error);
+          if (isRedirectError(error)) {
+            throw error;
+          }
+        }
+      } else {
+        // console.log(message);
+        redirect("/login");
+      }
+    } catch (error) {
+      console.error(error);
     }
   } else {
     console.log("invalid password!");
@@ -227,7 +243,6 @@ export async function verify(formData: FormData, otp: string) {
   const hashedPassword = await hash(formData.get("password") as string, 10);
   const res = await fetch("/api/verifyOTP", obj);
 
-  // do the user creation redirect whatever shit you wanna do
   if (res.status == 200) {
     const res = await fetch("/api/createStudent", {
       method: "POST",
@@ -237,6 +252,9 @@ export async function verify(formData: FormData, otp: string) {
         password: hashedPassword,
       }),
     });
+    if (res.status == 200) {
+      redirect("/login");
+    }
   }
 }
 
