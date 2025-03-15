@@ -164,6 +164,9 @@ export async function signupProf(formState: FormState, formData: FormData) {
 }
 
 export async function signin(formState: FormState, formData: FormData) {
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+  await delay(2000);
   const validatedFields = SigninFormSchema.safeParse({
     email: formData.get("email"),
   });
@@ -209,10 +212,9 @@ export async function signin(formState: FormState, formData: FormData) {
         console.log("yayy");
 
         try {
-          if(uid[0]=='S'){
+          if (uid[0] == "S") {
             redirect("/dashboard-students");
-          }
-          else{
+          } else {
             redirect("/dashboard-faculty");
           }
         } catch (error) {
@@ -229,8 +231,12 @@ export async function signin(formState: FormState, formData: FormData) {
       console.error(error);
     }
   } else {
-    console.log("invalid password!");
+    return { invalid: true };
   }
+
+  return {
+    success: true,
+  };
 }
 
 export async function verify(formData: FormData, otp: string) {

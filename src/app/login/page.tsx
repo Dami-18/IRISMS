@@ -3,14 +3,32 @@
 
 import { redirect, useRouter } from "next/navigation";
 import Form from "next/form";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { signin } from "auth";
 import Modal from "@/Components/Modal"; // Import the Modal component
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [state, action, pending] = useActionState(signin, undefined);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+  const [toastId, setToastId] = useState<string>("");
+
+  useEffect(() => {
+    if (pending) {
+      const id = toast.loading("Signing in...");
+      setToastId(id);
+    } else if (toastId) {
+      if (state?.errors || state?.invalid) {
+        toast.error("Sign in failed. Please check your credentials.", {
+          id: toastId,
+        });
+      } else if (!state?.errors) {
+        toast.success("Signed in successfully!", { id: toastId });
+      }
+      setToastId("");
+    }
+  }, [pending, state]);
 
   return (
     <>
