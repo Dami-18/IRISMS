@@ -10,11 +10,11 @@ import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 import { NextApiRequest } from "next";
 import jwt from "jsonwebtoken";
+import { SetStateAction } from "react";
 
 const secretKey = process.env.JWT_SECRET || "secret_key";
 
-export async function signupStud(formState: FormState, formData: FormData) {
-  // this signup function is only for students currently, we need to make another for profs
+export async function validationStud(formData: FormData, setShowModal: any) {
   const validatedFields = signupStudentFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -36,23 +36,12 @@ export async function signupStud(formState: FormState, formData: FormData) {
     };
   }
 
-  const { email, password } = validatedFields.data;
+  setShowModal(true);
+  signupStud(validatedFields, formData);
+}
 
-  const hashedPassword = await hash(password, 10);
-  console.log("ok");
-
-  const res = await fetch("/api/createStudent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email: email,
-      password: hashedPassword,
-    }),
-  });
-
+async function signupStud(validatedFields: any, formData: FormData) {
   try {
-    localStorage.setItem("email", formData.get("email") as string);
-
     const res = await fetch("/api/generateOTP", {
       method: "POST",
       headers: {
@@ -60,24 +49,16 @@ export async function signupStud(formState: FormState, formData: FormData) {
       },
       body: JSON.stringify({
         email: formData.get("email"),
-        password: formData.get("password"),
       }),
     });
+
+    console.log(await res.json());
 
     if (!res.ok) {
       throw new Error("Failed to generate OTP");
     }
-
-    // Redirect after successful OTP generation
-    redirect("/verify");
   } catch (error) {
     console.error(error);
-
-    // Re-throw redirection errors to allow Next.js to handle them
-    if (isRedirectError(error)) {
-      throw error;
-    }
-
     return { message: "Error during sign-in process" };
   }
 }
@@ -232,22 +213,31 @@ export async function signin(formState: FormState, formData: FormData) {
   }
 }
 
-export async function verify(formData: FormData) {
+export async function verify(formData: FormData, otp: string) {
   const obj = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: localStorage.getItem("email"),
-      otp: formData.get("otp"),
+      email: formData.get("email"),
+      otp: otp,
     }),
   };
+
+  const hashedPassword = await hash(formData.get("password") as string, 10);
   const res = await fetch("/api/verifyOTP", obj);
-  const { message, status } = await res.json();
 
   // do the user creation redirect whatever shit you wanna do
-  if (status == 200) {
+  if (res.status == 200) {
+    const res = await fetch("/api/createStudent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: formData.get("email"),
+        password: hashedPassword,
+      }),
+    });
   }
 }
 
