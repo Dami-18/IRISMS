@@ -1,87 +1,75 @@
-// Welcome Screen
-
 "use client";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Modal from "@/Components/Modal"; // Import the Modal component
 
-const Home = () => {
+const WelcomePage = () => {
   const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+
   return (
-    //outer div
-    <div className="flex flex-col">
-      {/* Login Button */}
-      <button
-        className="text-red-200 m-12 p-12"
-        onClick={() => {
-          // push and replace both methods are available, not yet decided what to choose
-          router.push("/login"); // this is for client-side navigation, not backend
-        }}
-      >
-        Login
-      </button>
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{
+        backgroundImage: `url('https://picsum.photos/1920/1080')`,
+      }}
+    >
+      {/* Main Container */}
+      <div className="bg-white bg-opacity-80 p-10 rounded-lg shadow-lg text-center">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          Welcome to Integrated Research Internship and Scholarship Management
+          System
+        </h1>
+        <p className="text-lg text-gray-600 mb-6">
+          Streamlining research internships and scholarships for students and
+          professors.
+        </p>
 
-      {/* Register Button */}
-      <button
-        className="text-blue-200 m-12 p-12 borderborder-amber-200"
-        onClick={() => {
-          // push and replace both methods are available, not yet decided what to choose
-          router.push("/register-students"); // this is for client-side navigation, not backend
-        }}
-      >
-        Register as student
-      </button>
+        {/* Buttons */}
+        <div className="flex justify-center space-x-4">
+          {/* Login Button */}
+          <button
+            onClick={() => router.push("/login")}
+            className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+          >
+            Login
+          </button>
 
-      <button
-        className="text-blue-200 m-12 p-12 borderborder-amber-200"
-        onClick={() => {
-          // push and replace both methods are available, not yet decided what to choose
-          router.push("/register-faculty"); // this is for client-side navigation, not backend
-        }}
-      >
-        Register as faculty
-      </button>
+          {/* Register Button */}
+          <button
+            onClick={() => setShowModal(true)}
+            className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition duration-300"
+          >
+            Register
+          </button>
+        </div>
+      </div>
 
-      {/* button of student's dashboard for testing */}
-      <button
-        className="text-blue-200 m-12 p-12 borderborder-amber-200"
-        onClick={() => {
-          // push and replace both methods are available, not yet decided what to choose
-          router.push("/dashboard-students"); // this is for client-side navigation, not backend
-        }}
-      >
-        Student's Dashboard
-      </button>
-
-      {/* button of particular internship */}
-      <button
-        className="text-blue-200 m-12 p-12 borderborder-amber-200"
-        onClick={() => {
-          router.push("/particular-internship");
-        }}
-      >
-        Particular Internship
-      </button>
-
-      {/* button of dashboard-faculty */}
-      <button
-        className="text-blue-200 m-12 p-12 borderborder-amber-200"
-        onClick={() => {
-          router.push("/dashboard-faculty");
-        }}
-      >
-        DashBoard Faculty
-      </button>
-
-      {/* button of profile */}
-      <button
-        className="text-blue-200 m-12 p-12 borderborder-amber-200"
-        onClick={() => {
-          router.push("/profile");
-        }}
-      >
-        Profile
-      </button>
+      {/* Registration Modal */}
+      {showModal && (
+        <Modal
+          title="Register As:"
+          options={[
+            {
+              label: "Student",
+              onClick: () => {
+                setShowModal(false);
+                router.push("/register-students");
+              },
+            },
+            {
+              label: "Professor",
+              onClick: () => {
+                setShowModal(false);
+                router.push("/register-faculty");
+              },
+            },
+          ]}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };
 
-export default Home;
+export default WelcomePage;

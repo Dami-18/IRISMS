@@ -3,11 +3,13 @@
 
 import { redirect, useRouter } from "next/navigation";
 import Form from "next/form";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { signin } from "auth";
+import Modal from "@/Components/Modal"; // Import the Modal component
 
 const Login = () => {
   const [state, action, pending] = useActionState(signin, undefined);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
   return (
@@ -25,10 +27,7 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <Form
-            action={action}
-            className="space-y-6"
-          >
+          <Form action={action} className="space-y-6">
             <div>
               {/*change the error style create a modal or something for it*/}
               {state?.errors?.email && (
@@ -95,7 +94,7 @@ const Login = () => {
             <button
               className="font-semibold text-indigo-600 hover:text-indigo-500"
               onClick={() => {
-                router.push("/register");
+                setShowModal(true);
               }}
             >
               Register
@@ -103,6 +102,28 @@ const Login = () => {
           </p>
         </div>
       </div>
+      {showModal && (
+        <Modal
+          title="Register As:"
+          options={[
+            {
+              label: "Student",
+              onClick: () => {
+                setShowModal(false);
+                router.push("/register-students");
+              },
+            },
+            {
+              label: "Professor",
+              onClick: () => {
+                setShowModal(false);
+                router.push("/register-faculty");
+              },
+            },
+          ]}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </>
   );
 };

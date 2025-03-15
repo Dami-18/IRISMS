@@ -1,0 +1,1 @@
+// api to delete cookies
