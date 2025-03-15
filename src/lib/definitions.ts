@@ -24,7 +24,11 @@ export const signupStudentFormSchema = z.object({
     message: "Name should contain alphabetic letters only",
   }),
 
-  contact: z.number().min(10).max(10, { message: "Enter valid Phone Number" }),
+  contact: z
+    .string()
+    .regex(/[0-9]{10}/, { message: "Enter valid Phone Number" })
+    .min(10)
+    .max(10, { message: "Enter valid Phone Number" }),
 
   address: z.string(),
 
@@ -32,7 +36,9 @@ export const signupStudentFormSchema = z.object({
     message: "State should contain alphabetic letters only",
   }),
 
-  gradYear: z.number(),
+  gradYear: z
+    .string()
+    .regex(/[0-9]{4}/, { message: "Enter a valid Graduation Year" }),
 });
 
 export const signupProfFormSchema = z.object({
