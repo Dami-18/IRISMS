@@ -1,11 +1,13 @@
 "use client";
 
 // Comment out all the required in the inputs to get final submission form
-import { useActionState, useState, useRef } from "react";
+import { useActionState, useState, useRef, useEffect } from "react";
 import Form from "next/form";
 import { validationStud, verify } from "auth";
 import Country from "@/../public/Country.json";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 const CountryList = Country.map((obj) => {
   return obj.name;
@@ -21,12 +23,33 @@ const Register = () => {
     const res = await validationStud(formdata, setShowModal);
     return res;
   };
-  const [state, action] = useActionState(validationAction, undefined);
+  const [state, action, pending] = useActionState(validationAction, undefined);
 
   // Handle modal close
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const [toastId, setToastId] = useState<string>("");
+
+  useEffect(() => {
+    if (pending) {
+      const id = toast.loading("Loading ...");
+      setToastId(id);
+    } else if (toastId) {
+      if (state)
+        if ("errors" in state) {
+          toast.error("Registration failed. Please check your credentials.", {
+            id: toastId,
+          });
+        } else if ("ok" in state) {
+          if (!state.ok)
+            toast.error("Error while sending the OTP!", { id: toastId });
+          else toast.success("OTP sent successfully!", { id: toastId });
+        }
+      setToastId("");
+    }
+  }, [pending, state]);
 
   return (
     <div className="relative">
@@ -61,7 +84,7 @@ const Register = () => {
                 // required
                 className="mt-1 pt-2 pb-2 pl-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600"
               />
-              {state?.errors?.email && (
+              {state && "errors" in state && state?.errors?.email && (
                 <p className="mt-1 text-sm text-red-600">
                   {state.errors.email}
                 </p>
@@ -84,7 +107,7 @@ const Register = () => {
                 autoComplete="new-password"
                 className="mt-1 pt-2 pb-2 pl-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600"
               />
-              {state?.errors?.password && (
+              {state && "errors" in state && state?.errors?.password && (
                 <p className="mt-1 text-sm text-red-600">
                   {state.errors.password}
                 </p>
@@ -329,8 +352,16 @@ const Register = () => {
                 Close
               </button>
               <button
-                onClick={() => {
-                  if (ref) verify(ref, otp);
+                onClick={async () => {
+                  if (ref) {
+                    const res = await verify(ref, otp);
+                    if (res?.success) {
+                      toast.success("Registered Successfully");
+                      redirect("/login");
+                    } else {
+                      toast.error("Invalid OTP ");
+                    }
+                  }
                 }}
                 className="text-sm text-white bg-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none"
               >

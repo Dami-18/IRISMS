@@ -36,7 +36,7 @@ export async function validationStud(formData: FormData, setShowModal: any) {
   }
 
   setShowModal(true);
-  signupStud(validatedFields, formData);
+  return signupStud(validatedFields, formData);
 }
 
 async function signupStud(validatedFields: any, formData: FormData) {
@@ -54,12 +54,12 @@ async function signupStud(validatedFields: any, formData: FormData) {
     console.log(await res.json());
 
     if (!res.ok) {
-      throw new Error("Failed to generate OTP");
+      return { ok: false };
     }
   } catch (error) {
     console.error(error);
-    return { message: "Error during sign-in process" };
   }
+  return { ok: true };
 }
 
 // function for register of prof
@@ -255,15 +255,21 @@ export async function verify(formData: FormData, otp: string) {
   const res = await fetch("/api/verifyOTP", obj);
 
   if (res.status == 200) {
-    const res = await fetch("/api/createStudent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: formData.get("email"),
-        password: hashedPassword,
-      }),
-    });
-    redirect("/login");
+    try {
+      const res = await fetch("/api/createStudent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.get("email"),
+          password: hashedPassword,
+        }),
+      });
+    } catch (err) {
+      console.error(err);
+      return { success: false };
+    }
+
+    return { success: true };
   }
 }
 
