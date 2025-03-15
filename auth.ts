@@ -175,7 +175,8 @@ export async function signin(formState: FormState, formData: FormData) {
     };
   }
 
-  const res = await fetch("/api/getUserFromDb", {
+  // search in both tables
+  const res = await fetch("/api/getDetails", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
