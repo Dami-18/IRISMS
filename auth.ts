@@ -213,19 +213,14 @@ export async function signin(formState: FormState, formData: FormData) {
 
         try {
           if (uid[0] == "S") {
-            redirect("/dashboard-students");
+            return { student: true, success: true };
           } else {
-            redirect("/dashboard-faculty");
+            return { student: false, success: true };
           }
         } catch (error) {
           console.error(error);
-          if (isRedirectError(error)) {
-            throw error;
-          }
+          return { error: error };
         }
-      } else {
-        // console.log(message);
-        redirect("/login");
       }
     } catch (error) {
       console.error(error);
@@ -233,10 +228,6 @@ export async function signin(formState: FormState, formData: FormData) {
   } else {
     return { invalid: true };
   }
-
-  return {
-    success: true,
-  };
 }
 
 export async function verify(formData: FormData, otp: string) {

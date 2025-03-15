@@ -9,10 +9,15 @@ import Modal from "@/Components/Modal"; // Import the Modal component
 import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
-  const [state, action, pending] = useActionState(signin, undefined);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const [toastId, setToastId] = useState<string>("");
+  const validationAction = async (previousState: any, formData: FormData) => {
+    const res = await signin(previousState, formData);
+    return res;
+  };
+
+  const [state, action, pending] = useActionState(validationAction, undefined);
 
   useEffect(() => {
     if (pending) {
@@ -23,8 +28,10 @@ const Login = () => {
         toast.error("Sign in failed. Please check your credentials.", {
           id: toastId,
         });
-      } else if (!state?.errors) {
+      } else if (state?.success) {
         toast.success("Signed in successfully!", { id: toastId });
+        if (state.student === true) router.push("/dashboard-students");
+        else router.push("/dashboard-faculty");
       }
       setToastId("");
     }
