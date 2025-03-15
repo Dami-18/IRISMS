@@ -17,6 +17,8 @@ const Verify = () => {
     <div>
       <h1>Verify OTP</h1>
       <Form action={verify}>
+        {/* Include email as a hidden input */}
+        <input type="hidden" name="email" value={email} />
         <label htmlFor="otp">OTP: </label>
         <input
           type="text"
@@ -27,6 +29,7 @@ const Verify = () => {
           onChange={(e) => setOtp(e.target.value)}
           required
         />
+        {/* bro where is password ?? ya fir purane form se cascading hota kya data ka? */}
         <button type="submit">Verify OTP</button>
       </Form>
     </div>
