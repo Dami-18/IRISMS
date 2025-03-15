@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
       location,
       eligibility,
       prerequisites,
+      projectDesc
     } = await req.json();
 
     // Validate required fields
@@ -26,7 +27,8 @@ export async function POST(req: NextRequest) {
       !mode ||
       !location ||
       !eligibility ||
-      !prerequisites
+      !prerequisites ||
+      !projectDesc
     ) {
       return NextResponse.json(
         { message: "All fields are required!", missingFields: { name, topics, stipend, duration, mode, location, eligibility, prerequisites } },
@@ -52,6 +54,7 @@ export async function POST(req: NextRequest) {
         location,
         eligibility,
         prerequisites,
+        projectDesc,
         students: [], // Initialize as empty array
         approved: [],
         rejected: [],

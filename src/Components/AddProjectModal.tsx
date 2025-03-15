@@ -17,6 +17,7 @@ const AddProjectModal = ({ onClose, onProjectAdded }: AddProjectModalProps) => {
     location: "",
     eligibility: "",
     prerequisites: "",
+    projectDesc: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -116,6 +117,15 @@ const AddProjectModal = ({ onClose, onProjectAdded }: AddProjectModalProps) => {
             name="prerequisites"
             placeholder="Prerequisites"
             value={formData.prerequisites}
+            onChange={handleChange}
+            className="border p-2 w-full rounded h-[80px]"
+          />
+
+          <textarea
+            required
+            name="projectDesc"
+            placeholder="Description of the Project"
+            value={formData.projectDesc}
             onChange={handleChange}
             className="border p-2 w-full rounded h-[80px]"
           />

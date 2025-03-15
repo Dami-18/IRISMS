@@ -71,12 +71,6 @@ const Internship = () => {
         >
           Apply
         </button>
-        <button // reset for what??
-          type="reset"
-          className="pt-1 pb-1 pl-8 pr-8 m-12 rounded-2xl border hover:bg-red-500"
-        >
-          Reset
-        </button>
       </div>
       {/* onclick should trigger the logic that passes a request to db that user has applied and should appear that request in the faculty's  */}
       {/*also the logic to gray out the apply button or whatever tf we want to do with it */}

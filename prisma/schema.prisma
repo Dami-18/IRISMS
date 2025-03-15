@@ -102,6 +102,7 @@ model Project {
   location      String
   eligibility   String // eligibility conditions as per by prof
   prerequisites String // any prerequisites or knowledge
+  projectDesc   String
   students      String[] // ids of those students who have already applied for the internship, for prof to see, he will either accept or reject it
   approved      String[] // ids of those students who got approved for the internship
   rejected      String[] // ids of those students who got rejected for the internship
