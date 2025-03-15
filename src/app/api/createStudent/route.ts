@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -14,12 +14,17 @@ export async function POST(req: NextRequest) {
   // };
 
   try {
-    const result = await prisma.user.create({ // giving error in parsing connection string
-      data: {email, password}
+    // ERROR SOLVED BY KRISH: npx prisma generate (if you're worried about the red underline error on the "data")
+    const result = await prisma.user.create({
+      // giving error in parsing connection string
+      data: { email, password },
     });
     return NextResponse.json(result);
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Failed to create user' }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to create user" },
+      { status: 500 }
+    );
   }
 }
