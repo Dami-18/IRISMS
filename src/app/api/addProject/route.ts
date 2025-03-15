@@ -43,10 +43,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "Unauthorized access. Please log in." }, { status: 401 });
     }
 
+    const facultyName = `${profData.firstName} ${profData.lastName}`;
+
     // Create a new project in the database
     const newProject = await prisma.project.create({
       data: {
         name,
+        facultyName: facultyName,
         topics,
         stipend,
         duration,

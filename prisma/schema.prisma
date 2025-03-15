@@ -95,11 +95,12 @@ enum ResearchInternOption {
 model Project {
   id            Int      @id @default(autoincrement())
   name          String   @unique
+  facultyName   String // faculty under which research intern is there
   topics        String[] // will include topics like ML, AI, SDE, etc.
   stipend       String
   duration      Int // in months
   mode          String // remote or onsite
-  location      String
+  location      String // here include organization name
   eligibility   String // eligibility conditions as per by prof
   prerequisites String // any prerequisites or knowledge
   projectDesc   String
