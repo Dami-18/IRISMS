@@ -1,85 +1,44 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import AddProjectModal from "@/Components/AddProjectModal";
+import { useRouter } from "next/navigation";
 
-
-// const projects = [
-//   {
-//     name: "ML INTERNSHIP",
-//     faculty_name: "Alakh Pande",
-//     email: "leslie.alexander@example.com",
-//     description: " This is the project description",
-//   },
-//   {
-//     name: "ML INTERNSHIP",
-//     faculty_name: "Alakh Pande",
-//     email: "leslie.alexander@example.com",
-//     description: " This is the project description",
-//   },
-//   {
-//     name: "ML INTERNSHIP",
-//     faculty_name: "Alakh Pande",
-//     email: "leslie.alexander@example.com",
-//     description: " This is the project description",
-//   },
-// ];
+const router = useRouter();
 
 const Dashboard = () => {
   const [profDetails, setProfDetails] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    const fetchProfDetails = async () => {
-      try {
-        const res = await fetch("/api/prof", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
+  const fetchProfDetails = async () => {
+    try {
+      const res = await fetch("/api/prof", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include" });
+      if (!res.ok) throw new Error("Failed to fetch professor details");
+      const data = await res.json();
+      setProfDetails(data.data);
 
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.message || "Failed to fetch professor details");
-        }
-
-        const data = await res.json();
-        setProfDetails(data.data);
-
-        if (data.data.currentProjects && data.data.currentProjects.length > 0) {
-          const projectPromises = data.data.currentProjects.map((projectId: number) =>
-            fetch("/api/getProjectDetails", {
+      if (data.data.currentProjects?.length > 0) {
+        const projectPromises = data.data.currentProjects.map((projectId: number) =>
+          fetch("/api/getProjectDetails", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ id: projectId }),
-            })
-              .then((response) => {
-                if (!response.ok) throw new Error("Failed to fetch project details");
-                return response.json();
-              })
-              .then((projectData) => projectData.data)
-          );
+          }).then((res) => res.json()).then((data) => data.data)
+        );
 
-          const fetchedProjects = await Promise.all(projectPromises);
-          setProjects(fetchedProjects); // Set all fetched projects in state
-        }
+        setProjects(await Promise.all(projectPromises));
       }
-      catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Error of unknown type occurred");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchProfDetails();
-  }, []);
+  useEffect(() => { fetchProfDetails(); }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -88,7 +47,8 @@ const Dashboard = () => {
     <div>
       <div className="flex flex-row-reverse">
         {/* Add Modals for adding projects and route for past projects*/}
-        <button className="mr-12 mb-4 mt-4 ml-12 border-2 rounded-full p-4 hover:bg-green-500">
+        <button onClick={() => setShowModal(true)}
+          className="mr-12 mb-4 mt-4 ml-12 border-2 rounded-full p-4 hover:bg-green-500">
           Add a Project
         </button>
       </div>
@@ -109,6 +69,14 @@ const Dashboard = () => {
           </li>
         </div>
       ))}
+
+      {showModal && (
+        <AddProjectModal
+          onClose={() => setShowModal(false)}
+          onProjectAdded={() => fetchProfDetails()}
+        />
+      )}
+
     </div>
   );
 };
