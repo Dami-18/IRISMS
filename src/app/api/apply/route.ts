@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     const addInReview = await prisma.user.update({
       where: {
-        id: studentId,
+        email: email,
       },
       data: {
         inReview: { // currently this gives error because it is commented out in User schema

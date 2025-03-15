@@ -6,18 +6,26 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
-  // Explicitly define the type for the data object
-  // const userData: Prisma.UserCreateInput = {
-  //   username,
-  //   email,
-  //   password,
-  // };
+  const lastStud = await prisma.user.findFirst({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  let studUid = null
+  if (!lastStud) {
+    console.log('The table is empty.');
+    studUid = "S" + "1"
+  } else {
+    console.log('Latest record:', lastStud);
+    studUid = "S" + (lastStud.id + 1).toString() // creating uid for newly added prof
+  }
 
   try {
     // ERROR SOLVED BY KRISH: npx prisma generate (if you're worried about the red underline error on the "data")
     const result = await prisma.user.create({
       // giving error in parsing connection string
-      data: { email, password },
+      data: { email, password, uid: studUid },
     });
     return NextResponse.json(result);
   } catch (error) {

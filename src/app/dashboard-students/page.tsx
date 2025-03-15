@@ -14,7 +14,7 @@ export default function StudDashboard() {
     const fetchUserDetails = async () => {
       try {
         const res = await fetch('/api/user', {
-          method: 'POST',
+          method: 'POST', // here GET or POST, need to see that
           headers: {
             'Content-Type': 'application/json'
           },
@@ -76,7 +76,7 @@ export default function StudDashboard() {
         <nav className="bg-blue-400 p-4">
           <ul className="space-y-2">
             <li><Link href="/" className="text-white hover:text-blue-100">Home</Link></li>
-            <li><Link href="/profile" className="text-white hover:text-blue-100">Profile</Link></li>
+            <li><Link href="/profile-students" className="text-white hover:text-blue-100">Profile</Link></li>
             <li><Link href="/settings" className="text-white hover:text-blue-100">Settings</Link></li>
           </ul>
         </nav>

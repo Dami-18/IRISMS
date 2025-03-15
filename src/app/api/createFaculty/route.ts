@@ -23,10 +23,26 @@ export async function POST(req: NextRequest) {
       } = await req.json();
 
   try {
+    const lastProf = await prisma.prof.findFirst({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    let profUid = null
+    if (!lastProf) {
+      console.log('The table is empty.');
+      profUid = "P" + "1"
+    } else {
+      console.log('Latest record:', lastProf);
+      profUid = "P" + (lastProf.id + 1).toString() // creating uid for newly added prof
+    }
+
     const result = await prisma.prof.create({
         data: {
             email,
             password,
+            uid: profUid,
             firstName,
             lastName,
             contact,

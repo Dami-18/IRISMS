@@ -22,6 +22,6 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     id: user?.id,
     hashedPass: user?.password,
-    message: "user created successfully?",
+    message: "user found",
   });
 }
