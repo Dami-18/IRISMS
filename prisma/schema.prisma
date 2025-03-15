@@ -96,6 +96,7 @@ model Project {
   id            Int      @id @default(autoincrement())
   name          String   @unique
   facultyName   String // faculty under which research intern is there
+  // poc           String // point of contact or supervisor ya phd ke details
   topics        String[] // will include topics like ML, AI, SDE, etc.
   stipend       String
   duration      Int // in months
