@@ -105,6 +105,9 @@ model Project {
   students      String[] // ids of those students who have already applied for the internship, for prof to see, he will either accept or reject it
   approved      String[] // ids of those students who got approved for the internship
   rejected      String[] // ids of those students who got rejected for the internship
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // create a new model just for internships, it will have id, prof name, stipend, etc.

@@ -36,7 +36,7 @@ const AddProjectModal = ({ onClose, onProjectAdded }: AddProjectModalProps) => {
       const res = await fetch("/api/addProject", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        credentials: "include", // also send cookies to know which prof hehe
         body: JSON.stringify(payload),
       });
 
