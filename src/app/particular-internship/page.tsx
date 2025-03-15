@@ -1,32 +1,37 @@
-// in the onClick handler, we will first call api/user to get user details from token and then call another api/apply which adds the user id to the list of applied students in db
+"use client";
 
-// implement fetch Internship details from a unique id passed to internship function as a prop
-"use client"
+import { useState } from "react";
 
 const ExampleInternship = {
-  title: "ML INTERNSHiP",
-  name: "Jibby",
-  organization: "kgpkgpggkpgkpgk",
-  description: "This is the description",
-  skills_req: ["ML", "Coding", "etc etc"],
-  email: "krehguwhefu2@edu.com",
-  type: "onsite",
-  funded: "yes",
-  duration: "3 Months",
+  id: 1,
+  name: "AI Research Internship",
+  facultyName: "Dr. Jibby Patra",
+  topics: ["AI", "ML", "Data Science"],
+  stipend: "$1000/month",
+  duration: 6,
+  mode: "remote",
+  location: "Online - XYZ Organization",
+  eligibility: "Undergraduate students with knowledge of Python",
+  prerequisites: "Basic understanding of machine learning concepts",
+  projectDesc:
+    "This internship focuses on cutting-edge AI research, including neural networks and deep learning.",
 };
 
 const Internship = () => {
-  const applyOnClick = async() => {
+  const [showModal, setShowModal] = useState(false);
+  const [extraDetails, setExtraDetails] = useState("");
+
+  const applyOnClick = async () => {
     try {
       const res = await fetch("/api/user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include', // for including cookies
-      })
+        credentials: "include", // for including cookies
+      });
 
-      const {message, data} = await res.json();
+      const { message, data } = await res.json();
 
       const result = await fetch("/api/apply", {
         method: "POST",
@@ -34,46 +39,104 @@ const Internship = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          projectId: 1, // hardcoding it for now, need some handling of internship to do this also
+          projectId: ExampleInternship.id, // Hardcoding the project ID for now
           studentId: data.id,
           email: data.email,
-        })
+          extraDetails, // Include the extra details entered in the modal
+        }),
       });
 
-      if(result.status==200){
-        // show some react hot toast for success and change the apply buttton appearance
+      if (result.status === 200) {
+        alert("Successfully applied for the internship!");
+        setShowModal(false); // Close modal after successful submission
       }
-    }
-    catch(error){
+    } catch (error) {
       console.error("Unexpected error:", error);
-      // or show some react hot toast for error
+      alert("Failed to apply for the internship.");
     }
-  }
+  };
+
   return (
-    <div className="m-12  bg-yellow-100 hover:bg-green-100 hover:rounded-4xl transition-all rounded-2xl">
-      {/* MY SUGGESTION: upon submitting, send a request to backend to update the details but set action attribute to /dashboard  and pop up a modal on dashboard called Thank you for Applying (in green color must) */}
-      <div className="text-2xl p-8">
-        Project Title: {ExampleInternship.title}
-      </div>{" "}
-      <div className="text-xl p-8">Faculty Name: {ExampleInternship.name}</div>{" "}
-      <div className="text-xl p-8">
-        Organization: {ExampleInternship.organization}
-      </div>{" "}
-      <div className="p-8">
-        Project Description: {ExampleInternship.description}
-      </div>
-      <div>
-        CV BULLSHIT
-        <button
-          onClick={applyOnClick}
-          type="button"
-          className="pt-1 pb-1 pl-8 pr-8 m-12 rounded-2xl block border hover:bg-green-300"
-        >
-          Apply
-        </button>
-      </div>
-      {/* onclick should trigger the logic that passes a request to db that user has applied and should appear that request in the faculty's  */}
-      {/*also the logic to gray out the apply button or whatever tf we want to do with it */}
+    <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">{ExampleInternship.name}</h1>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Faculty Name:</strong> {ExampleInternship.facultyName}
+      </p>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Organization:</strong> {ExampleInternship.location}
+      </p>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Mode:</strong> {ExampleInternship.mode}
+      </p>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Stipend:</strong> {ExampleInternship.stipend}
+      </p>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Duration:</strong> {ExampleInternship.duration} months
+      </p>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Topics:</strong> {ExampleInternship.topics.join(", ")}
+      </p>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Eligibility:</strong> {ExampleInternship.eligibility}
+      </p>
+      <p className="text-lg text-gray-700 mb-2">
+        <strong>Prerequisites:</strong> {ExampleInternship.prerequisites}
+      </p>
+      <p className="text-lg text-gray-700 mb-4">
+        <strong>Description:</strong> {ExampleInternship.projectDesc}
+      </p>
+
+      {/* Apply Button */}
+      <button
+        onClick={() => setShowModal(true)}
+        className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600"
+      >
+        Apply Now
+      </button>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-[500px] max-h-[90vh] overflow-auto">
+            <h2 className="text-xl font-bold mb-4">Apply for Internship</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                applyOnClick(); // Call applyOnClick when form is submitted
+              }}
+              className="space-y-4"
+            >
+              {/* Extra Details Input */}
+              <textarea
+                required
+                name="extraDetails"
+                placeholder="Write statement of purpose in around 100-150 words"
+                value={extraDetails}
+                onChange={(e) => setExtraDetails(e.target.value)}
+                className="border p-2 w-full rounded h-[100px]"
+              />
+
+              {/* Submit and Cancel Buttons */}
+              <div className="flex justify-end gap-4">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                >
+                  Apply
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
