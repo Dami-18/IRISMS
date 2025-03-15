@@ -201,7 +201,7 @@ const Register = () => {
                 id={doc}
                 name={doc}
                 type={`file`}
-                accept=".pdf,.docx,.doc"
+                accept=".pdf"
                 // required
                 className="mt-1 pt-2 pb-2 pl-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none caret-indigo-600 text-sm"
               />
