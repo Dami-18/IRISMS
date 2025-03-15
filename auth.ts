@@ -8,8 +8,8 @@ import {
 import { hash, compare } from "bcrypt-ts";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
-import { NextApiRequest } from "next";
 import jwt from "jsonwebtoken";
+import { NextRequest } from "next/server";
 
 const secretKey = process.env.JWT_SECRET || "secret_key";
 
@@ -190,7 +190,6 @@ export async function signin(formState: FormState, formData: FormData) {
     console.log("login successful");
 
     // for cookie and jwt from login api
-
     try {
       const res = await fetch("api/login", {
         method: "POST",
@@ -198,7 +197,7 @@ export async function signin(formState: FormState, formData: FormData) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id,
+          uid: uid,
         }),
       });
 
@@ -252,14 +251,12 @@ export async function verify(formData: FormData, otp: string) {
         password: hashedPassword,
       }),
     });
-    if (res.status == 200) {
-      redirect("/login");
-    }
+    redirect("/login");
   }
 }
 
-export async function verifyToken(req: NextApiRequest) {
-  const token = req.cookies.token;
+export async function verifyToken(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
 
   if (!token) return null;
 

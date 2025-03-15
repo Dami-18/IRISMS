@@ -8,10 +8,10 @@ const secretKey = process.env.JWT_SECRET || "secret_key";
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId } = await req.json();
+    const { uid } = await req.json();
 
     const jwtClaims = {
-      userId,
+      uid,
     }; // store userId and username as jwtclaims with token
 
     const token = jwt.sign(jwtClaims, secretKey, {
