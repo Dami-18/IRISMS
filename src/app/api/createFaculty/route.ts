@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
     const {
-        username,
         email,
         password,
         firstName,
@@ -26,7 +25,6 @@ export async function POST(req: NextRequest) {
   try {
     const result = await prisma.prof.create({
         data: {
-            username,
             email,
             password,
             firstName,
