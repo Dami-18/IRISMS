@@ -26,6 +26,7 @@
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
     "redis": "^4.7.0",
     "zod": "^3.24.2"
   },
