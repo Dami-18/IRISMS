@@ -65,15 +65,25 @@ export const signupProfFormSchema = z.object({
     message: "Name should contain alphabetic letters only",
   }),
 
-  contact: z.number().min(10).max(10, { message: "Enter valid Phone Number" }),
+  contact: z
+    .string()
+    .regex(/[0-9]{10}/, { message: "Enter valid Phone Number" })
+    .min(10)
+    .max(10, { message: "Enter valid Phone Number" }),
 
   linkedin: z.string().url({ message: "Provide a valid url" }),
 
-  scholar: z.string().url({ message: "provide a valid url" }),
+  scholar: z.string().url({ message: "Provide a valid url" }),
 
-  completeYear: z.number(),
-  teachingExp: z.number(),
-  researchExp: z.number(),
+  completeYear: z
+    .string()
+    .regex(/[0-9]{4}/, { message: "Enter a valid Complete Year" }),
+  teachingExp: z
+    .string()
+    .regex(/[0-9]/, { message: "Enter valid teaching exp" }),
+  researchExp: z
+    .string()
+    .regex(/[0-9]/, { message: "Enter valid research exp" }),
 });
 
 export const SigninFormSchema = z.object({

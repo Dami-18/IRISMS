@@ -3,7 +3,7 @@
 // Comment out all the required in the inputs to get final submission form
 import { useActionState, useState, useRef, useEffect } from "react";
 import Form from "next/form";
-import { validationStud, verify } from "auth";
+import { validationStud, verifyStud } from "auth";
 import Country from "@/../public/Country.json";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -354,7 +354,7 @@ const Register = () => {
               <button
                 onClick={async () => {
                   if (ref) {
-                    const res = await verify(ref, otp);
+                    const res = await verifyStud(ref, otp);
                     if (res?.success) {
                       toast.success("Registered Successfully");
                       redirect("/login");

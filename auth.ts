@@ -6,8 +6,6 @@ import {
 } from "@/lib/definitions";
 
 import { hash, compare } from "bcrypt-ts";
-import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { redirect } from "next/navigation";
 import jwt from "jsonwebtoken";
 import { NextRequest } from "next/server";
 
@@ -36,10 +34,10 @@ export async function validationStud(formData: FormData, setShowModal: any) {
   }
 
   setShowModal(true);
-  return signupStud(validatedFields, formData);
+  return signupStud(formData);
 }
 
-async function signupStud(validatedFields: any, formData: FormData) {
+async function signupStud(formData: FormData) {
   try {
     const res = await fetch("/api/generateOTP", {
       method: "POST",
@@ -62,8 +60,7 @@ async function signupStud(validatedFields: any, formData: FormData) {
   return { ok: true };
 }
 
-// function for register of prof
-export async function signupProf(formState: FormState, formData: FormData) {
+export async function validationProf(formData: FormData, setShowModal: any) {
   const validatedFields = signupProfFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -76,7 +73,6 @@ export async function signupProf(formState: FormState, formData: FormData) {
     teachingExp: formData.get("teachingExp"),
     researchExp: formData.get("researchExp"),
   });
-
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return {
@@ -84,56 +80,29 @@ export async function signupProf(formState: FormState, formData: FormData) {
     };
   }
 
+  setShowModal(true);
+  return signupProf(formData);
+}
+
+async function signupProf(formData: FormData) {
   const fd = new FormData();
   fd.append("file", formData.get("cv") as File);
 
   try {
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: fd,
-    });
-
-    const { fileLink } = await res.json();
-
-    if (!res.ok) {
-      alert(`Upload failed`);
-    }
+    // const res = await fetch("/api/upload", {
+    //   method: "POST",
+    //   body: fd,
+    // });
+    // const { fileLink } = await res.json();
+    // if (!res.ok) {
+    //   alert(`Upload failed`);
+    // }
   } catch (error) {
     console.error("Error uploading file:", error);
     alert("Error uploading file.");
   }
 
-  const { email, password } = validatedFields.data;
-
-  const hashedPassword = await hash(password, 10);
-
-  const data = {
-    email: email,
-    password: hashedPassword,
-    firstName: formData.get("firstName"),
-    lastName: formData.get("lastName"),
-    contact: formData.get("contact"),
-    website: formData.get("linkedin"),
-    gscholar: formData.get("scholar"),
-    qualification: formData.get("degree"),
-    degreeYear: formData.get("completeYear"),
-    specialization: formData.get("special"),
-    institution: formData.get("insti"),
-    teachingExp: formData.get("exp"),
-    researchExp: formData.get("researchExp"),
-    researchInterns: formData.get("internchahiye"),
-    cvUrl: formData.get("cv"), // need to handle this separately maybe in another api call for file uploads
-  };
-
-  const res = await fetch("/api/createFaculty", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-
   try {
-    localStorage.setItem("email", formData.get("email") as string);
-
     const res = await fetch("/api/generateOTP", {
       method: "POST",
       headers: {
@@ -141,26 +110,16 @@ export async function signupProf(formState: FormState, formData: FormData) {
       },
       body: JSON.stringify({
         email: formData.get("email"),
-        password: formData.get("password"),
       }),
     });
 
     if (!res.ok) {
-      throw new Error("Failed to generate OTP");
+      return { ok: false };
     }
-
-    // Redirect after successful OTP generation
-    redirect("/verify");
   } catch (error) {
     console.error(error);
-
-    // Re-throw redirection errors to allow Next.js to handle them
-    if (isRedirectError(error)) {
-      throw error;
-    }
-
-    return { message: "Error during sign-in process" };
   }
+  return { ok: true };
 }
 
 export async function signin(formState: FormState, formData: FormData) {
@@ -230,7 +189,7 @@ export async function signin(formState: FormState, formData: FormData) {
   }
 }
 
-export async function verify(formData: FormData, otp: string) {
+export async function verifyStud(formData: FormData, otp: string) {
   const obj = {
     method: "POST",
     headers: {
@@ -254,6 +213,54 @@ export async function verify(formData: FormData, otp: string) {
           email: formData.get("email"),
           password: hashedPassword,
         }),
+      });
+    } catch (err) {
+      console.error(err);
+      return { success: false };
+    }
+
+    return { success: true };
+  }
+}
+
+export async function verifyProf(formData: FormData, otp: string) {
+  const obj = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: formData.get("email"),
+      otp: otp,
+    }),
+  };
+
+  const hashedPassword = await hash(formData.get("password") as string, 10);
+  const res = await fetch("/api/verifyOTP", obj);
+
+  if (res.status == 200) {
+    const data = {
+      email: formData.get("email"),
+      password: hashedPassword,
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      contact: formData.get("contact"),
+      website: formData.get("linkedin"),
+      gscholar: formData.get("scholar"),
+      qualification: formData.get("degree"),
+      degreeYear: formData.get("completeYear"),
+      specialization: formData.get("special"),
+      institution: formData.get("insti"),
+      teachingExp: formData.get("teachingExp"),
+      researchExp: formData.get("researchExp"),
+      researchInterns: formData.get("internchahiye"),
+      // cvUrl: formData.get("cv"), // need to handle this separately maybe in another api call for file uploads
+    };
+    try {
+      const res = await fetch("/api/createFaculty", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
     } catch (err) {
       console.error(err);

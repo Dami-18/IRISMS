@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import AddProjectModal from "@/Components/AddProjectModal";
 import { useRouter } from "next/navigation";
 
-const router = useRouter();
-
 const Dashboard = () => {
+  const router = useRouter();
   const [profDetails, setProfDetails] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -15,18 +14,25 @@ const Dashboard = () => {
 
   const fetchProfDetails = async () => {
     try {
-      const res = await fetch("/api/prof", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include" });
+      const res = await fetch("/api/prof", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
       if (!res.ok) throw new Error("Failed to fetch professor details");
       const data = await res.json();
       setProfDetails(data.data);
 
       if (data.data.currentProjects?.length > 0) {
-        const projectPromises = data.data.currentProjects.map((projectId: number) =>
-          fetch("/api/getProjectDetails", {
+        const projectPromises = data.data.currentProjects.map(
+          (projectId: number) =>
+            fetch("/api/getProjectDetails", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ id: projectId }),
-          }).then((res) => res.json()).then((data) => data.data)
+            })
+              .then((res) => res.json())
+              .then((data) => data.data)
         );
 
         setProjects(await Promise.all(projectPromises));
@@ -38,7 +44,9 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => { fetchProfDetails(); }, []);
+  useEffect(() => {
+    fetchProfDetails();
+  }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -47,8 +55,10 @@ const Dashboard = () => {
     <div>
       <div className="flex flex-row-reverse">
         {/* Add Modals for adding projects and route for past projects*/}
-        <button onClick={() => setShowModal(true)}
-          className="mr-12 mb-4 mt-4 ml-12 border-2 rounded-full p-4 hover:bg-green-500">
+        <button
+          onClick={() => setShowModal(true)}
+          className="mr-12 mb-4 mt-4 ml-12 border-2 rounded-full p-4 hover:bg-green-500"
+        >
           Add a Project
         </button>
       </div>
@@ -76,7 +86,6 @@ const Dashboard = () => {
           onProjectAdded={() => fetchProfDetails()}
         />
       )}
-
     </div>
   );
 };

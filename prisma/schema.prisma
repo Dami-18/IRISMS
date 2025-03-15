@@ -73,7 +73,7 @@ model Prof {
   teachingExp Float
   researchExp Float
 
-  researchInterns ResearchInternOption @default(MAYBE)
+  researchInterns String
 
   cvUrl String?
 
