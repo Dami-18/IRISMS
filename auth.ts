@@ -212,7 +212,7 @@ export async function signin(formState: FormState, formData: FormData) {
   }
 }
 
-export async function verify(formData: FormData) {
+export async function verify(formData: FormData, otp: string) {
   const obj = {
     method: "POST",
     headers: {
@@ -220,7 +220,7 @@ export async function verify(formData: FormData) {
     },
     body: JSON.stringify({
       email: formData.get("email"),
-      otp: formData.get("otp"),
+      otp: otp,
     }),
   };
 
