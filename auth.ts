@@ -10,7 +10,6 @@ import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 import { NextApiRequest } from "next";
 import jwt from "jsonwebtoken";
-import { SetStateAction } from "react";
 
 const secretKey = process.env.JWT_SECRET || "secret_key";
 
