@@ -185,7 +185,7 @@ export async function signin(formState: FormState, formData: FormData) {
     }),
   });
 
-  const { id, hashedPass } = await res.json();
+  const { id, uid, hashedPass } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
     console.log("login successful");
 
@@ -196,7 +196,7 @@ export async function signin(formState: FormState, formData: FormData) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: id,
+        uid: uid,
       }),
     });
 

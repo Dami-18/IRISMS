@@ -14,7 +14,7 @@ export async function POST(req:NextApiRequest, res:NextApiResponse) {
 
     const user = await prisma.user.findUnique({
         where: {
-          id: userData.userId,
+          uid: userData.userId,
         },
       });
 

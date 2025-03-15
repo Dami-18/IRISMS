@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
     },
     select: {
       id: true,
+      uid: true,
       email: true,
       password: true,
     },
@@ -21,6 +22,7 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     id: user?.id,
+    uid: user?.uid,
     hashedPass: user?.password,
     message: "user found",
   });

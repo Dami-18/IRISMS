@@ -41,7 +41,7 @@ model User {
 
   // we can simply add id's of the internships which are accepted, rejected or under review
   // the logic to add these ids will be written in api 
-  // accepted Int[]
+  // accepted Int[] // to be initialized with empty arrays while creation
   // rejected Int[]
   // inReview Int[] 
 
