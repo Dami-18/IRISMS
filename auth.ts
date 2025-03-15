@@ -6,7 +6,6 @@ import {
 } from "@/lib/definitions";
 
 import { hash, compare } from "bcrypt-ts";
-import { log } from "console";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
 import { NextApiRequest } from "next";
@@ -103,6 +102,25 @@ export async function signupProf(formState: FormState, formData: FormData) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
     };
+  }
+
+  const fd = new FormData();
+  fd.append("file", formData.get("cv") as File);
+
+  try {
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: fd,
+    });
+
+    const { fileLink } = await res.json();
+
+    if (!res.ok) {
+      alert(`Upload failed`);
+    }
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    alert("Error uploading file.");
   }
 
   const { email, password } = validatedFields.data;
