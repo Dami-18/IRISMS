@@ -1,90 +1,114 @@
 "use client";
 
-import { useState } from "react";
-
-const ExampleInternship = {
-  id: 1,
-  name: "AI Research Internship",
-  facultyName: "Dr. Jibby Patra",
-  topics: ["AI", "ML", "Data Science"],
-  stipend: "$1000/month",
-  duration: 6,
-  mode: "remote",
-  location: "Online - XYZ Organization",
-  eligibility: "Undergraduate students with knowledge of Python",
-  prerequisites: "Basic understanding of machine learning concepts",
-  projectDesc:
-    "This internship focuses on cutting-edge AI research, including neural networks and deep learning.",
-};
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const Internship = () => {
+  const router = useRouter();
+  const { slug } = router.query; // Extract project ID (slug) from URL parameters
+
+  const [projectDetails, setProjectDetails] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [extraDetails, setExtraDetails] = useState("");
 
+  // Fetch project details using the API
+  useEffect(() => {
+    if (!slug) return; // Wait for slug to be available
+
+    const fetchProjectDetails = async () => {
+      try {
+        const res = await fetch("/api/getProjectDetails", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: slug }), // Pass project ID as body
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.message || "Failed to fetch project details");
+        }
+
+        const data = await res.json();
+        setProjectDetails(data.data); // Set project details in state
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjectDetails();
+  }, [slug]);
+
+  // Apply for internship
   const applyOnClick = async () => {
     try {
       const res = await fetch("/api/user", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // for including cookies
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // Include cookies
       });
 
       const { message, data } = await res.json();
 
       const result = await fetch("/api/apply", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          projectId: ExampleInternship.id, // Hardcoding the project ID for now
+          projectId: slug, // Use the project ID from the URL
           studentId: data.id,
           email: data.email,
-          extraDetails, // Include the extra details entered in the modal
+          extraDetails, // Include extra details entered in the modal
         }),
       });
 
       if (result.status === 200) {
-        alert("Successfully applied for the internship!");
+        console.log("Successfully applied for the internship!");
         setShowModal(false); // Close modal after successful submission
       }
     } catch (error) {
-      console.error("Unexpected error:", error);
-      alert("Failed to apply for the internship.");
+      console.log("Unexpected error:", error);
     }
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{ExampleInternship.name}</h1>
+      <h1 className="text-3xl font-bold mb-4">{projectDetails?.name}</h1>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Faculty Name:</strong> {ExampleInternship.facultyName}
+        <strong>Faculty Name:</strong> {projectDetails?.facultyName}
       </p>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Organization:</strong> {ExampleInternship.location}
+        <strong>Organization:</strong> {projectDetails?.location}
       </p>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Mode:</strong> {ExampleInternship.mode}
+        <strong>Mode:</strong> {projectDetails?.mode}
       </p>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Stipend:</strong> {ExampleInternship.stipend}
+        <strong>Stipend:</strong> {projectDetails?.stipend}
       </p>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Duration:</strong> {ExampleInternship.duration} months
+        <strong>Duration:</strong> {projectDetails?.duration} months
       </p>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Topics:</strong> {ExampleInternship.topics.join(", ")}
+        <strong>Topics:</strong> {projectDetails?.topics.join(", ")}
       </p>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Eligibility:</strong> {ExampleInternship.eligibility}
+        <strong>Eligibility:</strong> {projectDetails?.eligibility}
       </p>
       <p className="text-lg text-gray-700 mb-2">
-        <strong>Prerequisites:</strong> {ExampleInternship.prerequisites}
+        <strong>Prerequisites:</strong> {projectDetails?.prerequisites}
       </p>
       <p className="text-lg text-gray-700 mb-4">
-        <strong>Description:</strong> {ExampleInternship.projectDesc}
+        <strong>Description:</strong> {projectDetails?.projectDesc}
       </p>
 
       {/* Apply Button */}
@@ -107,17 +131,16 @@ const Internship = () => {
               }}
               className="space-y-4"
             >
-              {/* Extra Details Input */}
+
               <textarea
                 required
                 name="extraDetails"
-                placeholder="Write statement of purpose in around 100-150 words"
+                placeholder="Enter any additional details (e.g., why you're interested in this internship)"
                 value={extraDetails}
                 onChange={(e) => setExtraDetails(e.target.value)}
                 className="border p-2 w-full rounded h-[100px]"
               />
 
-              {/* Submit and Cancel Buttons */}
               <div className="flex justify-end gap-4">
                 <button
                   type="button"

@@ -15,81 +15,78 @@ datasource db {
 
 // student model
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String // stored after hashing
-  uid      String @unique // 'S' + id, for e.g. S12
-
-  // firstName String
-  // lastName  String
-  // contact   String
-  // address   String
-  // city      String
-  // state     String
-  // country   String
-
-  // // Academic Information
-  // degree      String
-  // gradyear    String
-  // major       String
-  // institution String
-
-  // // File Uploads
-  // // url of documents uploaded on cloud storage
-  // cvUrl         String?
-  // transcriptUrl String? 
-
-  // we can simply add id's of the internships which are accepted, rejected or under review
-  // the logic to add these ids will be written in api 
-  // accepted Int[] // to be initialized with empty arrays while creation
-  // rejected Int[]
-  // inReview Int[] 
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // @@index([username]) // for frequently queried fields to improve performance
-}
-
-// model for profs will also be added
-model Prof {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  uid      String @unique // 'P' + id, for e.g. P12
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String    // hashed password
+  uid       String    @unique // 'S' + id, for example, S12
 
   firstName String
   lastName  String
-  contact   String
+  contact   String?
+  address   String?
+  city      String?
+  state     String?
+  country   String?
 
-  website  String?
-  gscholar String?
+  // Academic Information
+  degree      String?
+  gradYear    String?
+  major       String?
+  institution String?
 
-  qualification  String
-  degreeYear     String
-  specialization String
-  institution    String
+  // File Uploads
+  cvUrl         String? // URL for CV document
+  transcriptUrl String? // URL for transcript document
 
-  teachingExp Float
-  researchExp Float
+  applications Application[] // Relation to applications submitted by the user
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email,uid,id]) // Index to improve query performance for frequently queried fields
+}
+
+
+// prof model
+model Prof {
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  password       String    // hashed password
+  uid            String    @unique // 'P' + id, for example, P12
+
+  firstName      String
+  lastName       String
+  contact        String?
+  
+  website        String?
+  gscholar       String?
+
+  qualification   String?
+  degreeYear      String?
+  specialization  String?
+  institution     String?
+
+  teachingExp     Float?   // in years
+  researchExp     Float?  
 
   researchInterns String
 
-  cvUrl String?
+  cvUrl           String?
 
-  // this is dynamic array where projects (id) will be added and remove as prof does accordingly
-  // then display on dashboard
-  // currentProjects Int[]
+  // Relationships
+  projectsCurrent Project[] @relation("CurrentProjects")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+// Enum for research internship options
 enum ResearchInternOption {
   YES
   NO
   MAYBE
 }
+
 
 // model for each research internship or project
 model Project {
@@ -105,13 +102,36 @@ model Project {
   eligibility   String // eligibility conditions as per by prof
   prerequisites String // any prerequisites or knowledge
   projectDesc   String
-  students      String[] // ids of those students who have already applied for the internship, for prof to see, he will either accept or reject it
-  approved      String[] // ids of those students who got approved for the internship
-  rejected      String[] // ids of those students who got rejected for the internship
+
+  applications Application[] // Relation to applications for this project
+
+  currentProf Prof? @relation("CurrentProjects", fields: [currentProfId], references: [id])
+  currentProfId Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-// create a new model just for internships, it will have id, prof name, stipend, etc.
-// then fetch from this table and display it
+model Application {
+  id         Int      @id @default(autoincrement())
+  
+  sop        String   // Unique SOP written by the student for this application
+  
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int      // Foreign key linking to the User model
+  
+  project    Project  @relation(fields: [projectId], references: [id])
+  projectId  Int      // Foreign key linking to the Project model
+
+  status     ApplicationStatus @default(PENDING) // Status of application (enum defined below)
+
+  createdAt DateTime @default(now())
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+
