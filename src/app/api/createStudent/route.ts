@@ -6,7 +6,23 @@ const prisma = new PrismaClient();
 const redis = new Redis(6379, "localhost");
 
 export async function POST(req: NextRequest) {
-  const { email, password } = await req.json();
+  const { 
+    email, 
+    password,
+    firstName, // will have to check these all fields from the mapping of names with html elements
+    lastName,
+    contact,
+    address,
+    city,
+    state,
+    country,
+    degree,
+    gradYear,
+    major,
+    institution,
+    cvUrl,
+    transcriptUrl,
+   } = await req.json();
 
   const lastStud = await prisma.user.findFirst({
     orderBy: {
@@ -37,8 +53,24 @@ export async function POST(req: NextRequest) {
       );
     }
     const result = await prisma.user.create({
-      // giving error in parsing connection string
-      data: { email, password, uid: studUid },
+      data: { 
+        email, 
+        password, 
+        uid: studUid,
+        firstName: firstName,
+        lastName: lastName,
+        contact: contact,
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        degree: degree,
+        gradYear: gradYear,
+        major: major,
+        institution: institution,
+        cvUrl: cvUrl,
+        transcriptUrl: transcriptUrl,
+       },
     });
     await redis.del(email);
     return NextResponse.json(result);

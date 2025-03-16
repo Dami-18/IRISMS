@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     const jwtClaims = {
       uid,
-    }; // store userId and username as jwtclaims with token
+    }; // store uid as jwtclaims with token
 
     const token = jwt.sign(jwtClaims, secretKey, {
       expiresIn: "3d",

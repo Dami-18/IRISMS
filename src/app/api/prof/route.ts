@@ -6,27 +6,35 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const userData = await verifyToken(req);
+  try {
+    const profData = await verifyToken(req);
 
-  if (!userData) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
-  const user = await prisma.prof.findUnique({
-    where: {
-      uid: userData.uid,
-    },
-  });
+    if (!profData) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    const prof = await prisma.prof.findUnique({
+      where: {
+        uid: profData.uid,
+      },
+      include: {
+        projectsCurrent: true, // This includes all related projects
+      },
+    });
 
-  if (!user) {
-    return NextResponse.json({ message: "User not found" }, { status: 404 });
+    if (!prof) {
+      return NextResponse.json({ message: "Prof not found" }, { status: 404 });
+    }
+    return NextResponse.json(
+      {
+        message: "Prof details fetched successfully",
+        data: prof, // send whole user object
+      },
+      { status: 200 }
+    );
   }
-  return NextResponse.json(
-    {
-      message: "User details fetched successfully",
-      data: user, // send whole user object
-    },
-    { status: 200 }
-  );
+  catch(error){
+    NextResponse.json({error: "internal server error"}, {status: 500});
+  }
   // using above userData we fetch all the details of user from database and then send it as json
   // then further with this api call, all such details can be displayed on dahsboard or whatever
 }

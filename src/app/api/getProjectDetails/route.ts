@@ -12,6 +12,10 @@ export async function POST(req: NextRequest) {
     where: {
       id: id,
     },
+    include: {
+      applications: true, // explicitly include to return related fields also
+      currentProf: true,
+    }
   });
 
   
