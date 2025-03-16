@@ -5,8 +5,9 @@ import { useState, useEffect } from "react";
 import Header from "@/Components/Header";
 
 export default function StudDashboard() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const [user, setUser] = useState(null);
+  const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
@@ -27,13 +28,15 @@ export default function StudDashboard() {
         }
 
         const result = await res.json();
+        setApplications(result.data.applications || []);
         // ye result me password kyu included he demiyaaaaaaaaaaaaaa
+        // lmao
 
-        if (result.data.uid[0] == "S") {
-          setIsStudent(true);
-        } else setIsStudent(false);
+        setIsStudent(true);
+
         console.log(result);
         setUser(result.data);
+
         setLoading(false);
       } catch (err) {
         if (err instanceof Error) {
@@ -64,42 +67,45 @@ export default function StudDashboard() {
 
       {user && (
         <div className="container mx-auto mt-8">
-
           {/* Internship Status */}
           <table className="w-full border-collapse border border-gray-300">
             <thead>
               <tr className="bg-blue-400">
                 <th className="border border-gray-300 p-2 text-left">
-                  Internship
+                  Internship Name
                 </th>
-                <th className="border border-gray-300 p-2 text-left">Status</th>
+                <th className="border border-gray-300 p-2 text-left">
+                  Status
+                </th>
               </tr>
             </thead>
 
             <tbody>
-              {/* Render Accepted Internships */}
-              {/* {user.accepted.map((id) => (
-                <tr key={`accepted-${id}`}>
-                  <td className="border border-gray-300 p-2">Internship ID: {id}</td>
-                  <td className="border border-gray-300 p-2"><button className="font-semibold bg-green-600 px-2 py-1 rounded text-white">Accepted</button></td>
+              {/* Render Applications */}
+              {applications.map((application) => (
+                <tr key={application.id}>
+                  <td className="border border-gray-300 p-2">
+                    {application.project.name}
+                  </td>
+                  <td className="border border-gray-300 p-2">
+                    {application.status === "APPROVED" && (
+                      <button className="font-semibold bg-green-600 px-2 py-1 rounded text-white">
+                        Approved
+                      </button>
+                    )}
+                    {application.status === "REJECTED" && (
+                      <button className="font-semibold bg-red-600 px-2 py-1 rounded text-white">
+                        Rejected
+                      </button>
+                    )}
+                    {application.status === "PENDING" && (
+                      <button className="font-semibold bg-yellow-600 px-2 py-1 rounded text-white">
+                        Pending
+                      </button>
+                    )}
+                  </td>
                 </tr>
-              ))} */}
-
-              {/* Render Rejected Internships */}
-              {/* {user.rejected.map((id) => (
-                <tr key={id}>
-                  <td className="border border-gray-300 p-2">Internship ID #{id}</td>
-                  <td className="border border-gray-300 p-2"><button className="font-semibold bg-red-600 px-2 py-1 rounded text-white">Rejected</button></td>
-                </tr>
-              ))} */}
-
-              {/* Render Internships in Review */}
-              {/* {user.inReview.map((id) => (
-                <tr key={id}>
-                  <td className="border border-gray-300 p-2">Internship ID #{id}</td>
-                  <td className="border border-gray-300 p-2"><button className="font-semibold bg-yellow-600 px-2 py-1 rounded text-white">In Review</button></td>
-                </tr>
-              ))} */}
+              ))}
             </tbody>
           </table>
 
