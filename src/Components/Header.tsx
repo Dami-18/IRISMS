@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Menu } from "@headlessui/react";
+import { logout } from "auth";
 
 export default function Header({ isStudent }: { isStudent?: boolean }) {
   if (isStudent === undefined) return <></>;
@@ -40,6 +41,9 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
                   className={`w-full text-left px-4 py-2 ${
                     active ? "bg-gray-100" : ""
                   }`}
+                  onClick={() => {
+                    logout();
+                  }}
                 >
                   Logout
                 </button>
