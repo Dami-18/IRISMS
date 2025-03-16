@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import AddProjectModal from "@/Components/AddProjectModal";
-import { useRouter } from "next/navigation";
+import Link from "next/link"
 
 const Dashboard = () => {
-  const router = useRouter();
+  
   const [profDetails, setProfDetails] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -20,23 +20,12 @@ const Dashboard = () => {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Failed to fetch professor details");
+
       const data = await res.json();
       setProfDetails(data.data);
 
-      if (data.data.currentProjects?.length > 0) {
-        const projectPromises = data.data.currentProjects.map(
-          (projectId: number) =>
-            fetch("/api/getProjectDetails", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ id: projectId }),
-            })
-              .then((res) => res.json())
-              .then((data) => data.data)
-        );
+      setProjects(data.data.projectsCurrent || []);
 
-        setProjects(await Promise.all(projectPromises));
-      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
@@ -62,8 +51,10 @@ const Dashboard = () => {
           Add a Project
         </button>
       </div>
+
       {projects.map((project, index) => (
-        <div key={index + 1} className="flex">
+        <Link key={project.id} href={`/particular-internship-faculty/${project.id}`}>
+          <div className="cursor-pointer flex">
           <li
             key={project.id}
             className="flex justify-between gap-x-6 py-5 bg-amber-100 border-2 rounded-xl p-12 m-12 hover:bg-green-200"
@@ -78,6 +69,7 @@ const Dashboard = () => {
             </div>
           </li>
         </div>
+        </Link>
       ))}
 
       {showModal && (

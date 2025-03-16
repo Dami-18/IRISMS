@@ -102,24 +102,6 @@ export default function StudDashboard() {
 
       {user && (
         <div className="container mx-auto mt-8">
-          {/*    <h3 className="text-xl font-semibold mb-4">Welcome, {user.firstName} {user.lastName}</h3>
-
-           <div className="mb-6">
-             <h4 className="font-semibold">Personal Information:</h4>
-             <p>Email: {user.email}</p>
-             <p>Contact: {user.contact}</p>
-             <p>Address: {user.address}, {user.city}, {user.state}, {user.country}</p>
-           </div>
-
-           <div className="mb-6">
-             <h4 className="font-semibold">Academic Information:</h4>
-             <ul>
-               <li>Degree: {user.degree}</li>
-               <li>Graduation Year: {user.gradyear}</li>
-               <li>Major: {user.major}</li>
-               <li>Institution: {user.institution}</li>
-             </ul>
-           </div> */}
 
           {/* Internship Status */}
           <table className="w-full border-collapse border border-gray-300">

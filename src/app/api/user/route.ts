@@ -15,6 +15,9 @@ export async function POST(req: NextRequest) {
     where: {
       uid: userData.uid,
     },
+    include: {
+      applications: true,
+    }
   });
 
   if (!user) {
