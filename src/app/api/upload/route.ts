@@ -23,12 +23,13 @@ const drive = google.drive({
   auth: oauth2Client,
 });
 
-async function uploadFile(filePath: string, fileName: string) {
+async function uploadFile(filePath: string, fileName: string, type: string) {
   try {
     const res = await drive.files.create({
       requestBody: {
         name: fileName,
         mimeType: "application/pdf",
+        parents: process.env[type],
       },
       media: {
         mimeType: "application/pdf",
@@ -89,7 +90,19 @@ export async function POST(req: NextRequest) {
 
     await writeFile(filePath, buffer);
 
-    const res = await uploadFile(filePath, file.name);
+    console.log(req.headers.get("X-Type"));
+
+    const res = await uploadFile(
+      filePath,
+      file.name,
+      req.headers.get("X-Type") as string
+    );
+
+    if (res?.ok) {
+      fs.unlink(filePath, (err) => {
+        console.log(err);
+      });
+    }
 
     const { fileLink } = await res?.json();
 
@@ -98,6 +111,8 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    console.error(error);
+
     return NextResponse.json({ error: "File upload failed" }, { status: 500 });
   }
 }

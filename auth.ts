@@ -85,23 +85,6 @@ export async function validationProf(formData: FormData, setShowModal: any) {
 }
 
 async function signupProf(formData: FormData) {
-  const fd = new FormData();
-  fd.append("file", formData.get("cv") as File);
-
-  try {
-    // const res = await fetch("/api/upload", {
-    //   method: "POST",
-    //   body: fd,
-    // });
-    // const { fileLink } = await res.json();
-    // if (!res.ok) {
-    //   alert(`Upload failed`);
-    // }
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    alert("Error uploading file.");
-  }
-
   try {
     const res = await fetch("/api/generateOTP", {
       method: "POST",
@@ -147,6 +130,10 @@ export async function signin(formState: FormState, formData: FormData) {
       email: formData.get("email"),
     }),
   });
+
+  if (res.status !== 200) {
+    return { registerFirst: true };
+  }
 
   const { id, uid, hashedPass } = await res.json();
   if (await compare(formData.get("password") as string, hashedPass)) {
@@ -205,34 +192,54 @@ export async function verifyStud(formData: FormData, otp: string) {
   const res = await fetch("/api/verifyOTP", obj);
 
   if (res.status == 200) {
-    const data = {
-      email: formData.get("email"),
-      password: hashedPassword,
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
-      contact: formData.get("contact"),
-      address: formData.get("address"),
-      city: formData.get("city"),
-      state: formData.get("state"),
-      country: formData.get("country"),
-      degree: formData.get("degree"),
-      gradYear: formData.get("gradYear"),
-      major: formData.get("majors"),
-      institution: formData.get("insti"),
+    const fd = new FormData();
+    fd.append("file", formData.get("cv") as File);
 
-      //cvUrl : formData.get("cv"),
-      //transcriptUrl : formData.get("transcript"),
-      // need to handle this separately maybe in another api call for file uploads
-    };
     try {
-      const res = await fetch("/api/createStudent", {
+      const res = await fetch("/api/upload", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: fd,
+        headers: {
+          "X-Type": "SCV", // custom header for `type`
+        },
       });
-    } catch (err) {
-      console.error(err);
-      return { success: false };
+      const { fileLink } = await res.json();
+
+      if (!res.ok) {
+        alert(`Upload failed`);
+      }
+      const data = {
+        email: formData.get("email"),
+        password: hashedPassword,
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+        contact: formData.get("contact"),
+        address: formData.get("address"),
+        city: formData.get("city"),
+        state: formData.get("state"),
+        country: formData.get("country"),
+        degree: formData.get("degree"),
+        gradYear: formData.get("gradYear"),
+        major: formData.get("majors"),
+        institution: formData.get("insti"),
+        cvUrl: fileLink,
+        //transcriptUrl : formData.get("transcript"),
+        // need to handle this separately maybe in another api call for file uploads
+      };
+
+      try {
+        const res = await fetch("/api/createStudent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+      } catch (err) {
+        console.error(err);
+        return { success: false };
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Error uploading file.");
     }
 
     return { success: true };
