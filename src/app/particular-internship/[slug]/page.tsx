@@ -50,7 +50,7 @@ const Internship = () => {
   const applyOnClick = async () => {
     try {
       const res = await fetch("/api/user", {
-        method: "GET",
+        method: "GET", // if gives error, accordingly change in api to GET() or change here to POST
         headers: { "Content-Type": "application/json" },
         credentials: "include", // Include cookies
       });
@@ -64,7 +64,7 @@ const Internship = () => {
           projectId: slug, // Use the project ID from the URL
           studentId: data.id,
           email: data.email,
-          extraDetails, // Include extra details entered in the modal
+          sop: extraDetails, // Include sop entered in the modal
         }),
       });
 
@@ -127,7 +127,7 @@ const Internship = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                applyOnClick(); // Call applyOnClick when form is submitted
+                applyOnClick(); // Call applyOnClick when form is submitted, maybe show some react hot toast on clicking this
               }}
               className="space-y-4"
             >
@@ -135,7 +135,7 @@ const Internship = () => {
               <textarea
                 required
                 name="extraDetails"
-                placeholder="Enter any additional details (e.g., why you're interested in this internship)"
+                placeholder="Write a statement of purpose in around 100-150 words (including why you're interested in this internship, what learnings will you get, what do you expect)"
                 value={extraDetails}
                 onChange={(e) => setExtraDetails(e.target.value)}
                 className="border p-2 w-full rounded h-[100px]"
