@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { Menu } from "@headlessui/react";
 import { logout } from "auth";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Header({ isStudent }: { isStudent?: boolean }) {
   if (isStudent === undefined) return <></>;
@@ -41,8 +43,17 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
                   className={`w-full text-left px-4 py-2 ${
                     active ? "bg-gray-100" : ""
                   }`}
-                  onClick={() => {
-                    logout();
+                  onClick={async () => {
+                    const id = toast.loading("Logging out ... ");
+                    const res = await logout();
+                    if (res.success === true) {
+                      toast.remove(id);
+                      toast.success("Logged out successfully");
+                      redirect("/login");
+                    } else {
+                      toast.remove(id);
+                      toast.error("Logging out failed");
+                    }
                   }}
                 >
                   Logout

@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -10,14 +11,7 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    response.cookies.set("token", "", {
-      httpOnly: true,
-      secure: true,
-      expires: new Date(0), // Immediately expire the cookie
-      sameSite: "strict",
-      path: "/",
-    });
-
+    response.cookies.delete("token");
     return response;
   } catch (error) {
     console.error("Logout server error:", error);
