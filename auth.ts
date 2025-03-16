@@ -287,3 +287,25 @@ export async function verifyToken(req: NextRequest) {
     return null;
   }
 }
+
+export async function logout() {
+  try {
+    const res = await fetch("/api/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 200) {
+      console.log("Logged out successfully");
+      return { success: true };
+    } else {
+      console.error("Logout failed");
+      return { success: false };
+    }
+  } catch (error) {
+    console.error("Logout error:", error);
+    return { success: false, error };
+  }
+}
