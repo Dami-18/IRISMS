@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       location,
       eligibility,
       prerequisites,
-      projectDesc
+      projectDesc,
     } = await req.json();
 
     // Validate required fields
@@ -31,7 +31,19 @@ export async function POST(req: NextRequest) {
       !projectDesc
     ) {
       return NextResponse.json(
-        { message: "All fields are required!", missingFields: { name, topics, stipend, duration, mode, location, eligibility, prerequisites } },
+        {
+          message: "All fields are required!",
+          missingFields: {
+            name,
+            topics,
+            stipend,
+            duration,
+            mode,
+            location,
+            eligibility,
+            prerequisites,
+          },
+        },
         { status: 400 }
       );
     }
@@ -40,7 +52,10 @@ export async function POST(req: NextRequest) {
     const profData = await verifyToken(req);
 
     if (!profData) {
-      return NextResponse.json({ message: "Unauthorized access. Please log in." }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized access. Please log in." },
+        { status: 401 }
+      );
     }
 
     const facultyName = `${profData.firstName} ${profData.lastName}`;
@@ -58,45 +73,17 @@ export async function POST(req: NextRequest) {
         eligibility,
         prerequisites,
         projectDesc,
-        students: [], // Initialize as empty array
-        approved: [],
-        rejected: [],
-      },
-    });
-
-    // Fetch the latest project ID
-    const lastProj = await prisma.project.findFirst({
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
-    if (!lastProj) {
-      throw new Error("Failed to retrieve the latest project.");
-    }
-
-    // Update professor's current projects list
-    const updateProfProjects = await prisma.prof.update({
-      where: {
-        uid: profData.uid,
-      },
-      data: {
-        currentProjects: {
-          push: lastProj.id, // Push the project ID into the list of professor's current projects
+        currentProf: {
+          connect: { id: profData.id }, // one to one relationship
         },
       },
     });
-
-    if (!updateProfProjects) {
-      throw new Error("Failed to update professor's project list.");
-    }
 
     // Return success response with the created project details
     return NextResponse.json({
       message: "Project added successfully!",
       projectDetails: newProject,
     });
-
   } catch (error) {
     console.error("Error adding project:", error);
 
@@ -108,18 +95,9 @@ export async function POST(req: NextRequest) {
 
       if (error.message.includes("Unauthorized")) {
         statusCode = 401;
-      } else if (error.message.includes("Failed to retrieve the latest project")) {
-        statusCode = 404;
-        errorMessage = "Could not find the latest project.";
-      } else if (error.message.includes("Failed to update professor's project list")) {
-        statusCode = 500;
-        errorMessage = "Could not update professor's project list.";
       }
     }
 
-    return NextResponse.json(
-      { message: errorMessage },
-      { status: statusCode }
-    );
+    return NextResponse.json({ message: errorMessage }, { status: statusCode });
   }
 }

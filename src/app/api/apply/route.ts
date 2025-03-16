@@ -5,36 +5,56 @@ const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
   try {
-    const { projectId, studentId, email } = await req.json();
+    const { projectId, studentId, email, sop } = await req.json();
 
-    if (!projectId || !studentId || !email) {
+    if (!projectId || !studentId || !email || !sop) {
       return NextResponse.json(
         { message: "Missing required fields", status: 400 },
         { status: 400 }
       );
     }
 
-    const updateAppliedStudentList = await prisma.project.update({
-      where: {
-        id: projectId,
-      },
+    const createApplication = await prisma.application.create({
       data: {
-        students: {
-          push: studentId, // Push the student ID into the list of applied students
+        sop: sop,
+        user: {
+          connect: {
+            id: studentId,
+          }
+        },
+        project: {
+          connect: {
+            id: projectId,
+          }
         },
       },
     });
 
-    const addInReview = await prisma.user.update({
-      where: {
-        email: email,
-      },
-      data: {
-        inReview: { // currently this gives error because it is commented out in User schema
-          push: projectId, // Push the project ID into the list of projects in review for the student
-        },
-      },
-    });
+    // const updateAppliedStudentList = await prisma.project.update({
+    //   where: {
+    //     id: projectId,
+    //   },
+    //   data: {
+    //     applications: {
+    //       connect:{
+    //         id: createApplication.id,
+    //       }, // Push the student ID into the list of applied students
+    //     },
+    //   },
+    // });
+
+    // const updateUserApplications = await prisma.user.update({
+    //   where: {
+    //     email: email,
+    //   },
+    //   data: {
+    //     applications: {
+    //       connect: {
+    //         id: createApplication.id,
+    //       },
+    //     }
+    //   },
+    // });
 
     return NextResponse.json(
       { message: "Applied successfully", status: 200 },

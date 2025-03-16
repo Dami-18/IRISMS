@@ -105,8 +105,8 @@ model Project {
 
   applications Application[] // Relation to applications for this project
 
-  currentProf Prof? @relation("CurrentProjects", fields: [currentProfId], references: [id])
   currentProfId Int?
+  currentProf Prof? @relation("CurrentProjects", fields: [currentProfId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -117,13 +117,13 @@ model Application {
   
   sop        String   // Unique SOP written by the student for this application
   
+  userId     Int     // Foreign key linking to the User model
   user       User     @relation(fields: [userId], references: [id])
-  userId     Int      // Foreign key linking to the User model
   
+  projectId  Int    // Foreign key linking to the Project model
   project    Project  @relation(fields: [projectId], references: [id])
-  projectId  Int      // Foreign key linking to the Project model
-
-  status     ApplicationStatus @default(PENDING) // Status of application (enum defined below)
+  
+  status     ApplicationStatus? @default(PENDING) // Status of application (enum defined below)
 
   createdAt DateTime @default(now())
 }
