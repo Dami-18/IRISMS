@@ -48,6 +48,24 @@ const InternshipApplications = () => {
     fetchApplications();
   }, [slug]);
 
+  const deleteProject = async () => {
+    if(!confirm("Are you sure you want to delete this project?")) return; // maybe here we can show a modal box, will do it later 
+
+    try {
+      const res = await fetch("/api/deleteProject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: slug }),
+      });
+
+      if (!res.ok) throw new Error("Failed to delete project");
+
+      router.push("/dashboard-faculty");
+    } catch (err) {
+      console.error("Error deleting project:", err);
+    }
+  };
+
   // Update application status
   const updateApplicationStatus = async (applicationId: number, newStatus: string) => {
     try {
@@ -77,7 +95,17 @@ const InternshipApplications = () => {
 
   return (
     <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Applications for `${project.name}`</h1>
+      <h1 className="text-3xl font-bold mb-6">Applications for {project.name}</h1>
+
+      {/* delete project button */}
+      <div className="flex justify-end mb-6">
+        <button
+          onClick={deleteProject}
+          className="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700"
+        >
+          Remove Project
+        </button>
+      </div>
 
       {applications.length === 0 ? (
         <p className="text-gray-600">No applications have been submitted yet.</p>
