@@ -205,14 +205,30 @@ export async function verifyStud(formData: FormData, otp: string) {
   const res = await fetch("/api/verifyOTP", obj);
 
   if (res.status == 200) {
+    const data = {
+      email: formData.get("email"),
+      password: hashedPassword,
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      contact: formData.get("contact"),
+      address: formData.get("address"),
+      city: formData.get("city"),
+      state: formData.get("state"),
+      country: formData.get("country"),
+      degree: formData.get("degree"),
+      gradYear: formData.get("gradYear"),
+      major: formData.get("majors"),
+      institution: formData.get("insti"),
+
+      //cvUrl : formData.get("cv"),
+      //transcriptUrl : formData.get("transcript"),
+      // need to handle this separately maybe in another api call for file uploads
+    };
     try {
       const res = await fetch("/api/createStudent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.get("email"),
-          password: hashedPassword,
-        }),
+        body: JSON.stringify(data),
       });
     } catch (err) {
       console.error(err);
