@@ -3,20 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-// interface Application {
-//   id: number;
-//   sop: string;
-//   status: string;
-//   createdAt: string;
-//   user: {
-//     firstName: string;
-//     lastName: string;
-//     email: string;
-//     contact?: string;
-//     cvUrl?: string;
-//     transcriptUrl?: string;
-//   };
-// }
 
 const InternshipApplications = () => {
   const router = useRouter();
