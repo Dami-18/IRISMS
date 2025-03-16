@@ -14,7 +14,7 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
       </div>
       <nav className="flex items-center gap-6">
         <Link
-          href={isStudent ? "/dashboard-students" : "dashboard-faculty"}
+          href={isStudent ? "/dashboard-students" : "/dashboard-faculty"}
           className="hover:text-gray-300"
         >
           Home
