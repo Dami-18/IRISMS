@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const { email } = await req.json();
 
   // Search in the `User` table first
-  let user = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email: email,
     },
@@ -20,6 +20,8 @@ export async function POST(req: NextRequest) {
       password: true,
     },
   });
+
+  console.log(user);
 
   // If not found in `User`, search in the `Prof` table
   if (!user) {
@@ -34,25 +36,35 @@ export async function POST(req: NextRequest) {
         password: true,
       },
     });
+    console.log(prof);
 
     if (prof) {
-      return NextResponse.json({
-        id: prof.id,
-        uid: prof.uid,
-        hashedPass: prof.password,
-        message: "Details found in Prof table",
-      });
+      return NextResponse.json(
+        {
+          id: prof.id,
+          uid: prof.uid,
+          hashedPass: prof.password,
+          message: "Details found in Prof table",
+        },
+        { status: 200 }
+      );
     }
 
     // If not found in either table, return a 404 response
-    return NextResponse.json({ message: "No user found in either table" }, { status: 404 });
+    return NextResponse.json(
+      { message: "No user found in either table" },
+      { status: 404 }
+    );
   }
 
   // If found in `User`, return the details
-  return NextResponse.json({
-    id: user.id,
-    uid: user.uid,
-    hashedPass: user.password,
-    message: "Details found in User table",
-  });
+  return NextResponse.json(
+    {
+      id: user.id,
+      uid: user.uid,
+      hashedPass: user.password,
+      message: "Details found in User table",
+    },
+    { status: 200 }
+  );
 }

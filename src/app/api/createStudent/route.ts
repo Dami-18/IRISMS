@@ -6,8 +6,8 @@ const prisma = new PrismaClient();
 const redis = new Redis(6379, "localhost");
 
 export async function POST(req: NextRequest) {
-  const { 
-    email, 
+  const {
+    email,
     password,
     firstName, // will have to check these all fields from the mapping of names with html elements
     lastName,
@@ -22,21 +22,19 @@ export async function POST(req: NextRequest) {
     institution,
     cvUrl,
     transcriptUrl,
-   } = await req.json();
+  } = await req.json();
 
   const lastStud = await prisma.user.findFirst({
     orderBy: {
-      createdAt: 'desc',
+      createdAt: "desc",
     },
   });
 
-  let studUid = null
+  let studUid = null;
   if (!lastStud) {
-    console.log('The table is empty.');
-    studUid = "S" + "1"
+    studUid = "S" + "1";
   } else {
-    console.log('Latest record:', lastStud);
-    studUid = "S" + (lastStud.id + 1).toString() // creating uid for newly added prof
+    studUid = "S" + (lastStud.id + 1).toString(); // creating uid for newly added Student
   }
 
   try {
@@ -53,9 +51,9 @@ export async function POST(req: NextRequest) {
       );
     }
     const result = await prisma.user.create({
-      data: { 
-        email, 
-        password, 
+      data: {
+        email,
+        password,
         uid: studUid,
         firstName: firstName,
         lastName: lastName,
@@ -70,7 +68,7 @@ export async function POST(req: NextRequest) {
         institution: institution,
         cvUrl: cvUrl,
         transcriptUrl: transcriptUrl,
-       },
+      },
     });
     await redis.del(email);
     return NextResponse.json(result);

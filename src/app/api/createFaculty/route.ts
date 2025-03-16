@@ -31,10 +31,8 @@ export async function POST(req: NextRequest) {
 
     let profUid = null;
     if (!lastProf) {
-      console.log("The table is empty.");
       profUid = "P" + "1";
     } else {
-      console.log("Latest record:", lastProf);
       profUid = "P" + (lastProf.id + 1).toString(); // creating uid for newly added prof
     }
 

@@ -19,9 +19,11 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
         >
           Home
         </Link>
-        <Link href="/internships" className="hover:text-gray-300">
-          Internships
-        </Link>
+        {isStudent && (
+          <Link href="/internships" className="hover:text-gray-300">
+            Internships
+          </Link>
+        )}
         <Menu as="div" className="relative inline-block text-left">
           <Menu.Button className="px-3 py-2 bg-gray-700 rounded">
             Profile ▾
