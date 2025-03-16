@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import AddProjectModal from "@/Components/AddProjectModal";
-import Link from "next/link"
+import Link from "next/link";
+import Header from "@/Components/Header";
 
 const Dashboard = () => {
-  
   const [profDetails, setProfDetails] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,6 @@ const Dashboard = () => {
       setProfDetails(data.data);
 
       setProjects(data.data.projectsCurrent || []);
-
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
@@ -42,6 +41,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <Header isStudent={false} />
       <div className="flex flex-row-reverse">
         {/* Add Modals for adding projects and route for past projects*/}
         <button
@@ -53,21 +53,27 @@ const Dashboard = () => {
       </div>
 
       {projects.map((project, index) => (
-        <Link key={project.id} href={`/particular-internship-faculty/${project.id}`}> {/* redirect to particular internship page from faculty point of view */}
+        <Link
+          key={project.id}
+          href={`/particular-internship-faculty/${project.id}`}
+        >
+          {" "}
+          {/* redirect to particular internship page from faculty point of view */}
           <div className="cursor-pointer flex">
-          <li
-            key={project.id}
-            className="flex justify-between gap-x-6 py-5 bg-amber-100 border-2 rounded-xl p-12 m-12 hover:bg-green-200">
-            <div className="flex min-w-0 gap-x-4">
-              <div className="min-w-0 flex-auto">
-                <p className="text-xl font-semibold">Project {index + 1}</p>
-                <p className="text-xl font-semibold">{project.name}</p>
-                <p className="">{project.mode}</p>
-                <p className="">{project.stipend}</p>
+            <li
+              key={project.id}
+              className="flex justify-between gap-x-6 py-5 bg-amber-100 border-2 rounded-xl p-12 m-12 hover:bg-green-200"
+            >
+              <div className="flex min-w-0 gap-x-4">
+                <div className="min-w-0 flex-auto">
+                  <p className="text-xl font-semibold">Project {index + 1}</p>
+                  <p className="text-xl font-semibold">{project.name}</p>
+                  <p className="">{project.mode}</p>
+                  <p className="">{project.stipend}</p>
+                </div>
               </div>
-            </div>
-          </li>
-        </div>
+            </li>
+          </div>
         </Link>
       ))}
 
