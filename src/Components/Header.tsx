@@ -2,14 +2,18 @@
 import Link from "next/link";
 import { Menu } from "@headlessui/react";
 
-export default function Header() {
+export default function Header({ isStudent }: { isStudent?: boolean }) {
+  if (isStudent === undefined) return <></>;
   return (
     <header className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center">
       <div className="font-bold text-xl">
         <Link href="/">IRISMS</Link>
       </div>
       <nav className="flex items-center gap-6">
-        <Link href="/student-homepage" className="hover:text-gray-300">
+        <Link
+          href={isStudent ? "/dashboard-students" : "dashboard-faculty"}
+          className="hover:text-gray-300"
+        >
           Home
         </Link>
         <Link href="/internships" className="hover:text-gray-300">
@@ -27,16 +31,6 @@ export default function Header() {
                   className={`block px-4 py-2 ${active ? "bg-gray-100" : ""}`}
                 >
                   My Profile
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/past-projects"
-                  className={`block px-4 py-2 ${active ? "bg-gray-100" : ""}`}
-                >
-                  Past Projects
                 </Link>
               )}
             </Menu.Item>

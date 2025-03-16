@@ -2,12 +2,14 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Header from "@/Components/Header";
 
 export default function StudDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -25,6 +27,12 @@ export default function StudDashboard() {
         }
 
         const result = await res.json();
+        // ye result me password kyu included he demiyaaaaaaaaaaaaaa
+
+        if (result.data.uid[0] == "S") {
+          setIsStudent(true);
+        } else setIsStudent(false);
+        console.log(result);
         setUser(result.data);
         setLoading(false);
       } catch (err) {
@@ -46,53 +54,7 @@ export default function StudDashboard() {
 
   return (
     <>
-      <header className="bg-blue-500 p-2 text-white flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Student Dashboard</h2>
-        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <div className="space-y-2">
-            <span
-              className={`block w-7 h-0.5 bg-white transition-all duration-300 ease-out ${
-                isMenuOpen ? "rotate-45 translate-y-2.5" : ""
-              }`}
-            ></span>
-            <span
-              className={`block w-7 h-0.5 bg-white transition-all duration-300 ease-out ${
-                isMenuOpen ? "opacity-0" : ""
-              }`}
-            ></span>
-            <span
-              className={`block w-7 h-0.5 bg-white transition-all duration-300 ease-out ${
-                isMenuOpen ? "-rotate-45 -translate-y-2.5" : ""
-              }`}
-            ></span>
-          </div>
-        </button>
-      </header>
-
-      {isMenuOpen && (
-        <nav className="bg-blue-400 p-4">
-          <ul className="space-y-2">
-            <li>
-              <Link href="/" className="text-white hover:text-blue-100">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/profile-students"
-                className="text-white hover:text-blue-100"
-              >
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link href="/settings" className="text-white hover:text-blue-100">
-                Settings
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      )}
+      <Header isStudent={isStudent} />
 
       {error && (
         <div className="container mx-auto mt-8 text-red-500">

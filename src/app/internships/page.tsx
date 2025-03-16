@@ -32,7 +32,7 @@ export default function InternshipsPage() {
 
   return (
     <>
-      <Header />
+      <Header isStudent={true} />
       <main className="max-w-screen-xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-4">Explore Internships</h1>
 
