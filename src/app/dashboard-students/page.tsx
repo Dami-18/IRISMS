@@ -5,12 +5,10 @@ import { useState, useEffect } from "react";
 import Header from "@/Components/Header";
 
 export default function StudDashboard() {
-  
   const [user, setUser] = useState(null);
   const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isStudent, setIsStudent] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -31,9 +29,6 @@ export default function StudDashboard() {
         setApplications(result.data.applications || []);
         // ye result me password kyu included he demiyaaaaaaaaaaaaaa
         // lmao
-
-        setIsStudent(true);
-
         console.log(result);
         setUser(result.data);
 
@@ -57,7 +52,7 @@ export default function StudDashboard() {
 
   return (
     <>
-      <Header isStudent={isStudent} />
+      <Header isStudent={true} />
 
       {error && (
         <div className="container mx-auto mt-8 text-red-500">
@@ -74,9 +69,7 @@ export default function StudDashboard() {
                 <th className="border border-gray-300 p-2 text-left">
                   Internship Name
                 </th>
-                <th className="border border-gray-300 p-2 text-left">
-                  Status
-                </th>
+                <th className="border border-gray-300 p-2 text-left">Status</th>
               </tr>
             </thead>
 
