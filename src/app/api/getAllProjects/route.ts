@@ -12,12 +12,15 @@ export async function GET(req: NextRequest) {
   const searchQuery = searchParams.get('search') || '';
   const locationFilter = searchParams.get('location') || '';
 
-  
 
   // maybe can optimize this, use fuzzy search also if possible
   const projects = await prisma.project.findMany({
     where: {
-      name: { contains: searchQuery || '', mode: 'insensitive' },
+      OR: [
+        { name: { contains: searchQuery, mode: 'insensitive' } },
+        { facultyName: { contains: searchQuery, mode: 'insensitive' } },
+        { location: { contains: searchQuery, mode: 'insensitive' } }
+      ],
       ...(locationFilter && { location: locationFilter }),
     },
   });
