@@ -1,33 +1,24 @@
+// this one is not yet tested, testing to be done
+
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/Components/Header";
-
-interface Internship {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-}
-
-const internshipsData: Internship[] = [
-  { id: 1, title: "Frontend Developer", company: "Google", location: "Remote" },
-  { id: 2, title: "Backend Developer", company: "Amazon", location: "Mumbai" },
-  {
-    id: 3,
-    title: "UI/UX Designer",
-    company: "Flipkart",
-    location: "Bangalore",
-  },
-];
+import Link from "next/link";
 
 export default function InternshipsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
+  const [projects, setProjects] = useState<any[]>([]);
+  
+  useEffect(() => {
+    fetch(`/api/getAllProjects?search=${searchQuery}`)
+      .then((res) => res.json())
+      .then((data) => setProjects(data.data));
+  }, [searchQuery]);
 
-  const filteredInternships = internshipsData.filter(
-    (internship) =>
-      internship.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (locationFilter ? internship.location === locationFilter : true)
+  const filteredProjects = projects.filter(
+    (project) =>
+      (locationFilter ? project.location === locationFilter : true)
   );
 
   return (
@@ -51,7 +42,7 @@ export default function InternshipsPage() {
             className="border border-gray-300 rounded p-2"
           >
             <option value="">All Locations</option>
-            {[...new Set(internshipsData.map((i) => i.location))].map((loc) => (
+            {[...new Set(projects.map((i) => i.location))].map((loc) => (
               <option key={loc} value={loc}>
                 {loc}
               </option>
@@ -60,21 +51,29 @@ export default function InternshipsPage() {
         </div>
 
         {/* Internship Cards */}
-        {filteredInternships.length > 0 ? (
+        {projects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredInternships.map((internship) => (
-              <div
-                key={internship.id}
-                className="border rounded-lg shadow-sm p-4 hover:bg-gray-50 transition"
-              >
-                <h3 className="text-lg font-semibold">{internship.title}</h3>
-                <p>{internship.company}</p>
-                <p>{internship.location}</p>
-                <button className="mt-2 bg-blue-500 text-white px-3 py-1 rounded">
-                  Apply Now
-                </button>
-              </div>
-            ))}
+            {projects
+              .filter(
+                (project) =>
+                  project.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+                  (locationFilter ? project.location === locationFilter : true)
+              )
+              .map((project) => (
+                <div
+                  key={project.id}
+                  className="border rounded-lg shadow-sm p-4 hover:bg-gray-50 transition"
+                >
+                  <h3 className="text-lg font-semibold">{project.name}</h3>
+                  <p>{project.facultyName}</p>
+                  <p>{project.location}</p>
+                  <Link href={`/particular-internship/${project.id}`}>
+                    <button className="mt-2 bg-blue-500 text-white px-3 py-1 rounded">
+                      Show Details
+                    </button>
+                  </Link>
+                </div>
+              ))}
           </div>
         ) : (
           <p>No internships found.</p>
