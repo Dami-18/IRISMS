@@ -16,6 +16,7 @@ export default function InternshipsPage() {
       .then((data) => setProjects(data.data));
   }, [searchQuery]);
 
+  
   const filteredProjects = projects.filter(
     (project) =>
       (locationFilter ? project.location === locationFilter : true)
@@ -42,11 +43,13 @@ export default function InternshipsPage() {
             className="border border-gray-300 rounded p-2"
           >
             <option value="">All Locations</option>
-            {[...new Set(projects.map((i) => i.location))].map((loc) => (
+            {/* don't do this, keep a json file for organizations along with place */}
+            
+            {/* {[...new Set(projects.map((i) => i.location))].map((loc) => (
               <option key={loc} value={loc}>
                 {loc}
               </option>
-            ))}
+            ))} */}
           </select>
         </div>
 
