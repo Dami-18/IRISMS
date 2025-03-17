@@ -9,7 +9,7 @@ export default function InternshipsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [projects, setProjects] = useState<any[]>([]);
-  
+
   useEffect(() => {
     fetch(`/api/getAllProjects?search=${searchQuery}`)
       .then((res) => res.json())
@@ -67,6 +67,19 @@ export default function InternshipsPage() {
                   <h3 className="text-lg font-semibold">{project.name}</h3>
                   <p>{project.facultyName}</p>
                   <p>{project.location}</p>
+                  
+                  {/* skill/topic tagging */}
+                  <div className="flex flex-wrap gap-2 my-2">
+                    {project.topics && project.topics.map((topic: string, index: number) => (
+                      <span
+                        key={index}
+                        className="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full"
+                      >
+                        {topic}
+                      </span>
+                    ))}
+                  </div>
+
                   <Link href={`/particular-internship/${project.id}`}>
                     <button className="mt-2 bg-blue-500 text-white px-3 py-1 rounded">
                       Show Details
