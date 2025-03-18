@@ -49,7 +49,18 @@ export async function POST(req: NextRequest) {
     }
 
     // Verify professor authentication
-    const profData = await verifyToken(req);
+    const tmpData = await verifyToken(req);
+
+    const profData = await prisma.prof.findUnique({
+      where: {
+        uid: tmpData?.uid,
+      },
+      select: {
+        firstName: true,
+        lastName: true,
+        id: true,
+      },
+    });
 
     if (!profData) {
       return NextResponse.json(
