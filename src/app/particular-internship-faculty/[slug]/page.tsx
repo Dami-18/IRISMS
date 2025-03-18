@@ -124,10 +124,10 @@ const InternshipApplications = () => {
             {applications.map((app) => (
               <div key={app.id} className="bg-white p-4 rounded-lg shadow-md">
                 <h2 className="text-xl font-semibold">
-                  Applicant: {app.user.firstName} {app.user.lastName}
+                  Applicant: {app.user?.firstName} {app.user?.lastName}
                 </h2>
                 <p>
-                  <strong>Email:</strong> {app.user.email}
+                  <strong>Email:</strong> {app.user?.email}
                 </p>
                 <p>
                   <strong>SOP:</strong> {app.sop}
@@ -144,9 +144,9 @@ const InternshipApplications = () => {
 
                 {/* Links to CV and Transcript */}
                 <div className="flex gap-4 mt-2">
-                  {app.user.cvUrl && (
+                  {app.user?.cvUrl && (
                     <a
-                      href={app.user.cvUrl}
+                      href={app.user?.cvUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-500 underline"
@@ -154,9 +154,9 @@ const InternshipApplications = () => {
                       View CV
                     </a>
                   )}
-                  {app.user.transcriptUrl && (
+                  {app.user?.transcriptUrl && (
                     <a
-                      href={app.user.transcriptUrl}
+                      href={app.user?.transcriptUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-500 underline"
