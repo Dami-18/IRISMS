@@ -14,7 +14,12 @@ export async function POST(req: NextRequest) {
         id: parseInt(id),
       },
       include: {
-        applications: true, // explicitly include to return related fields also
+        applications: {
+          include: {
+            user: true,
+            project: true, // include explicitly to also return non scalar fields
+          },
+        }, 
         currentProf: true,
       },
     });
