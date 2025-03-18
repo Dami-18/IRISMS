@@ -19,13 +19,13 @@ export async function POST(req: NextRequest) {
         sop: sop,
         user: {
           connect: {
-            id: studentId,
-          }
+            id: parseInt(studentId),
+          },
         },
         project: {
           connect: {
-            id: projectId,
-          }
+            id: parseInt(projectId),
+          },
         },
       },
     });
@@ -60,12 +60,11 @@ export async function POST(req: NextRequest) {
       { message: "Applied successfully", status: 200 },
       { status: 200 }
     );
-
   } catch (error) {
     console.error("Unexpected error:", error);
     return NextResponse.json(
       { message: "An unexpected error occurred", status: 500 },
       { status: 500 }
     );
-  } 
+  }
 }
