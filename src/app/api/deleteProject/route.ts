@@ -28,16 +28,17 @@ export async function POST(req: NextRequest) {
     }
 
     // Delete related applications first
-    await prisma.application.deleteMany({ // on doing this, send a mail, optional
+    await prisma.application.deleteMany({
+      // on doing this, send a mail, optional
       where: {
-        projectId: projectId,
+        projectId: parseInt(projectId),
       },
     });
 
     // Delete the project
-    const deletedProject = await prisma.project.delete({ 
+    const deletedProject = await prisma.project.delete({
       where: {
-        id: projectId,
+        id: parseInt(projectId),
       },
     });
 
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Error deleting project:", error);
     return NextResponse.json(
-      { message: "Failed to delete project"},
+      { message: "Failed to delete project" },
       { status: 500 }
     );
   }
