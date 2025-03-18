@@ -27,7 +27,9 @@ const Internship = () => {
 
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(errorData.message || "Failed to fetch project details");
+          throw new Error(
+            errorData.message || "Failed to fetch project details"
+          );
         }
 
         const data = await res.json();
@@ -131,7 +133,6 @@ const Internship = () => {
               }}
               className="space-y-4"
             >
-
               <textarea
                 required
                 name="extraDetails"
