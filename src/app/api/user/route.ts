@@ -35,3 +35,32 @@ export async function GET(req: NextRequest) {
   // using above userData we fetch all the details of user from database and then send it as json
   // then further with this api call, all such details can be displayed on dahsboard or whatever
 }
+
+export async function POST(req: NextRequest) {
+  const userData = await verifyToken(req);
+
+  if (!userData) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+  const user = await prisma.user.findUnique({
+    where: {
+      uid: userData.uid,
+    },
+    include: {
+      applications: true,
+    },
+  });
+
+  if (!user) {
+    return NextResponse.json({ message: "User not found" }, { status: 404 });
+  }
+  return NextResponse.json(
+    {
+      message: "User details fetched successfully",
+      data: user, // send whole user object
+    },
+    { status: 200 }
+  );
+  // using above userData we fetch all the details of user from database and then send it as json
+  // then further with this api call, all such details can be displayed on dahsboard or whatever
+}
