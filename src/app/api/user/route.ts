@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
   // then further with this api call, all such details can be displayed on dahsboard or whatever
 }
 
+// 2 methods just to debug in case one doesn't work
 export async function POST(req: NextRequest) {
   const userData = await verifyToken(req);
 
