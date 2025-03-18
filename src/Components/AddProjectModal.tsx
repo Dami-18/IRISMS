@@ -20,7 +20,11 @@ const AddProjectModal = ({ onClose, onProjectAdded }: AddProjectModalProps) => {
     projectDesc: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -50,7 +54,9 @@ const AddProjectModal = ({ onClose, onProjectAdded }: AddProjectModalProps) => {
       onClose();
       onProjectAdded(); // To refresh projects
     } catch (err) {
-      console.log(err instanceof Error ? err.message : "Unknown error occurred");
+      console.log(
+        err instanceof Error ? err.message : "Unknown error occurred"
+      );
     }
   };
 
@@ -92,7 +98,13 @@ const AddProjectModal = ({ onClose, onProjectAdded }: AddProjectModalProps) => {
             onChange={handleChange}
             className="border p-2 w-full rounded"
           />
-          <select required name="mode" value={formData.mode} onChange={handleChange} className="border p-2 w-full rounded">
+          <select
+            required
+            name="mode"
+            value={formData.mode}
+            onChange={handleChange}
+            className="border p-2 w-full rounded"
+          >
             <option value="remote">Remote</option>
             <option value="onsite">Onsite</option>
           </select>
@@ -131,18 +143,25 @@ const AddProjectModal = ({ onClose, onProjectAdded }: AddProjectModalProps) => {
           />
 
           <div className="flex justify-end gap-4">
-            <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+            >
               Cancel
             </button>
-            
-             <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+
+            <button
+              type="submit"
+              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+            >
               Submit
-             </button>
-           </div>
-         </form>
-       </div>
-     </div>
-   );
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default AddProjectModal;
