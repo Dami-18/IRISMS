@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
+import { useParams, useRouter } from "next/navigation";
 
 const InternshipApplications = () => {
   const router = useRouter();
-  const { slug } = router.query;
+  const Params = useParams();
+  const slug = Params.slug;
 
   const [project, setProject] = useState<any>(null);
   const [applications, setApplications] = useState<any[]>([]);
@@ -22,7 +22,7 @@ const InternshipApplications = () => {
         const res = await fetch("/api/getProjectDetails", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ projectId: slug }),
+          body: JSON.stringify({ id: slug }),
         });
 
         if (!res.ok) {
@@ -33,7 +33,6 @@ const InternshipApplications = () => {
         const result = await res.json();
         setApplications(result.data.applications); // Populate applications state
         setProject(result.data);
-
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -49,7 +48,7 @@ const InternshipApplications = () => {
   }, [slug]);
 
   const deleteProject = async () => {
-    if(!confirm("Are you sure you want to delete this project?")) return; // maybe here we can show a modal box, will do it later 
+    if (!confirm("Are you sure you want to delete this project?")) return; // maybe here we can show a modal box, will do it later
 
     try {
       const res = await fetch("/api/deleteProject", {
@@ -67,9 +66,13 @@ const InternshipApplications = () => {
   };
 
   // Update application status
-  const updateApplicationStatus = async (applicationId: number, newStatus: string) => {
+  const updateApplicationStatus = async (
+    applicationId: number,
+    newStatus: string
+  ) => {
     try {
-      const res = await fetch("/api/updateApplicationStatus", { // ye api banana baaki hai
+      const res = await fetch("/api/updateApplicationStatus", {
+        // ye api banana baaki hai
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ applicationId, status: newStatus }),
@@ -95,7 +98,9 @@ const InternshipApplications = () => {
 
   return (
     <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Applications for {project.name}</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        Applications for {project.name}
+      </h1>
 
       {/* delete project button */}
       <div className="flex justify-end mb-6">
@@ -108,7 +113,9 @@ const InternshipApplications = () => {
       </div>
 
       {applications.length === 0 ? (
-        <p className="text-gray-600">No applications have been submitted yet.</p>
+        <p className="text-gray-600">
+          No applications have been submitted yet.
+        </p>
       ) : (
         <div className="space-y-6">
           {applications.map((app) => (
@@ -124,7 +131,8 @@ const InternshipApplications = () => {
               </p>
               <p>
                 <strong>Status:</strong>{" "}
-                {app.status.charAt(0).toUpperCase() + app.status.slice(1).toLowerCase()}
+                {app.status.charAt(0).toUpperCase() +
+                  app.status.slice(1).toLowerCase()}
               </p>
               <p>
                 <strong>Applied On:</strong>{" "}
@@ -179,7 +187,6 @@ const InternshipApplications = () => {
                   Reject
                 </button>
               </div>
-
             </div>
           ))}
         </div>
