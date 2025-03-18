@@ -1,3 +1,5 @@
+"use server";
+
 // this api will fetch user details and then we will call on frontend to display user details on dashboard
 import { verifyToken } from "@/../auth"; // probably we can move auth.ts in lib folder
 import { PrismaClient } from "@prisma/client";
@@ -5,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   const userData = await verifyToken(req);
 
   if (!userData) {
@@ -17,7 +19,7 @@ export async function POST(req: NextRequest) {
     },
     include: {
       applications: true,
-    }
+    },
   });
 
   if (!user) {
