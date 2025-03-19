@@ -18,7 +18,12 @@ export async function GET(req: NextRequest) {
       uid: userData.uid,
     },
     include: {
-      applications: true,
+      applications: {
+        include: {
+          user: true,
+          project: true, // include explicitly to also return non scalar fields
+        },
+      }, 
     },
   });
 
@@ -48,7 +53,12 @@ export async function POST(req: NextRequest) {
       uid: userData.uid,
     },
     include: {
-      applications: true,
+      applications: {
+        include: {
+          user: true,
+          project: true, // include explicitly to also return non scalar fields
+        },
+      }, 
     },
   });
 
