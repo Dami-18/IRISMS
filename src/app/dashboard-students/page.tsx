@@ -27,7 +27,7 @@ export default function StudDashboard() {
 
         const result = await res.json();
         setApplications(result.data.applications || []);
-        // ye result me password kyu included he demiyaaaaaaaaaaaaaa
+        // ye result me password kyu included he demiyaaaaa
         // lmao
         console.log(result);
         setUser(result.data);

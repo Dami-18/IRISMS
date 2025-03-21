@@ -15,10 +15,10 @@ datasource db {
 
 // student model
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  password  String    // hashed password
-  uid       String    @unique // 'S' + id, for example, S12
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String // hashed password
+  uid      String @unique // 'S' + id, for example, S12
 
   firstName String
   lastName  String
@@ -38,40 +38,40 @@ model User {
   cvUrl         String? // URL for CV document
   transcriptUrl String? // URL for transcript document
 
-  applications Application[] // Relation to applications submitted by the user
-  
+  applications            Application[] // Relation to applications submitted by the user
+  scholarshipApplications ScholarshipApplication[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([email,uid,id]) // Index to improve query performance for frequently queried fields
+  @@index([email, uid, id]) // Index to improve query performance for frequently queried fields
 }
-
 
 // prof model
 model Prof {
-  id             Int       @id @default(autoincrement())
-  email          String    @unique
-  password       String    // hashed password
-  uid            String    @unique // 'P' + id, for example, P12
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String // hashed password
+  uid      String @unique // 'P' + id, for example, P12
 
-  firstName      String
-  lastName       String
-  contact        String?
-  
-  website        String?
-  gscholar       String?
+  firstName String
+  lastName  String
+  contact   String?
 
-  qualification   String?
-  degreeYear      String?
-  specialization  String?
-  institution     String?
+  website  String?
+  gscholar String?
 
-  teachingExp     Float?   // in years
-  researchExp     Float?  
+  qualification  String?
+  degreeYear     String?
+  specialization String?
+  institution    String?
+
+  teachingExp Float? // in years
+  researchExp Float?
 
   researchInterns String
 
-  cvUrl           String?
+  cvUrl String?
 
   // Relationships
   projectsCurrent Project[] @relation("CurrentProjects")
@@ -86,7 +86,6 @@ enum ResearchInternOption {
   NO
   MAYBE
 }
-
 
 // model for each research internship or project
 model Project {
@@ -106,24 +105,54 @@ model Project {
   applications Application[] // Relation to applications for this project
 
   currentProfId Int?
-  currentProf Prof? @relation("CurrentProjects", fields: [currentProfId], references: [id])
+  currentProf   Prof? @relation("CurrentProjects", fields: [currentProfId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Application {
-  id         Int      @id @default(autoincrement())
-  
-  sop        String   // Unique SOP written by the student for this application
-  
-  userId     Int     // Foreign key linking to the User model
-  user       User     @relation(fields: [userId], references: [id])
-  
-  projectId  Int    // Foreign key linking to the Project model
-  project    Project  @relation(fields: [projectId], references: [id])
-  
-  status     ApplicationStatus? @default(PENDING) // Status of application (enum defined below)
+  id Int @id @default(autoincrement())
+
+  sop String // Unique SOP written by the student for this application
+
+  userId Int // Foreign key linking to the User model
+  user   User @relation(fields: [userId], references: [id])
+
+  projectId Int // Foreign key linking to the Project model
+  project   Project @relation(fields: [projectId], references: [id])
+
+  status ApplicationStatus? @default(PENDING) // Status of application (enum defined below)
+
+  createdAt DateTime @default(now())
+}
+
+// Scholarship model
+model Scholarship {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  provider    String // Organization or institution offering the scholarship
+  amount      Float // Scholarship amount
+  eligibility String // Eligibility criteria
+  duration    Int? // Duration of the scholarship in months (optional)
+
+  applications ScholarshipApplication[] // Relation to applications submitted for the scholarship
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Scholarship Application model
+model ScholarshipApplication {
+  id Int @id @default(autoincrement())
+
+  userId Int // Foreign key linking to the User model
+  user   User @relation(fields: [userId], references: [id])
+
+  scholarshipId Int // Foreign key linking to the Scholarship model
+  scholarship   Scholarship @relation(fields: [scholarshipId], references: [id])
+
+  status ApplicationStatus? @default(PENDING) // Status of application
 
   createdAt DateTime @default(now())
 }
@@ -133,5 +162,3 @@ enum ApplicationStatus {
   APPROVED
   REJECTED
 }
-
-

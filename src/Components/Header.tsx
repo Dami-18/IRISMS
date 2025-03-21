@@ -24,6 +24,13 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
             Internships
           </Link>
         )}
+        
+        {isStudent &&
+          <Link href="/scholarship" className="hover:text-gray-300">
+            Scholarships
+          </Link>
+        }
+
         <Menu as="div" className="relative inline-block text-left">
           <Menu.Button className="px-3 py-2 bg-gray-700 rounded">
             Profile ▾
@@ -42,9 +49,8 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
             <Menu.Item>
               {({ active }) => (
                 <button
-                  className={`w-full text-left px-4 py-2 ${
-                    active ? "bg-gray-100" : ""
-                  }`}
+                  className={`w-full text-left px-4 py-2 ${active ? "bg-gray-100" : ""
+                    }`}
                   onClick={async () => {
                     const id = toast.loading("Logging out ... ");
                     const res = await logout();
