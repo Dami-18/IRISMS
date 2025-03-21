@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     // await transporter.sendMail({
     //   from: process.env.usr,
     //   to: email,
-    //   subject: "Your OTP Code",
+    //   subject: "OTP for registration on IRISMS",
     //   text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
     // });
 
