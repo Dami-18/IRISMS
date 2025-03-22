@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/Components/Header";
 
-const InternshipApplications = () => {
+const ScholarshipApplications = () => {
   const router = useRouter();
   const Params = useParams();
   const slug = Params.slug;
@@ -56,7 +56,7 @@ const InternshipApplications = () => {
     newStatus: string
   ) => {
     try {
-      const res = await fetch("/api/updateApplicationStatus", {
+      const res = await fetch("/api/updateScholarshipStatus", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ applicationId, status: newStatus }),
@@ -104,9 +104,6 @@ const InternshipApplications = () => {
                   <strong>Email:</strong> {app.user?.email}
                 </p>
                 <p>
-                  <strong>SOP:</strong> {app.sop}
-                </p>
-                <p>
                   <strong>Status:</strong>{" "}
                   {app.status.charAt(0).toUpperCase() +
                     app.status.slice(1).toLowerCase()}
@@ -142,7 +139,7 @@ const InternshipApplications = () => {
 
                 <div className="flex gap-4 mt-4">
                   <button
-                    onClick={() => updateApplicationStatus(app.id, "APPROVED")} // or can call different api for reject and approve
+                    onClick={() => updateApplicationStatus(app.id, "APPROVED")} 
                     disabled={app.status === "APPROVED"}
                     className={`px-4 py-2 rounded ${
                       app.status === "APPROVED"
@@ -173,4 +170,4 @@ const InternshipApplications = () => {
   );
 };
 
-export default InternshipApplications;
+export default ScholarshipApplications;
