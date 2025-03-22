@@ -20,7 +20,7 @@ const ScholarshipApplications = () => {
 
     const fetchApplications = async () => {
       try {
-        const res = await fetch("/api/getScholarshipDetails", {
+        const res = await fetch("/api/getScholarshipDetails", { // api done
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: slug }),
