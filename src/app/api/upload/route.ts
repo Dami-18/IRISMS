@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
     const cvLink = process.cwd() + "/public/uploads/Student/CV/" + cvName;
 
     const tsLink =
-      process.cwd() + "/public/uploads/Student/Transcript" + tsName;
+      process.cwd() + "/public/uploads/Student/Transcript/" + tsName;
 
     return NextResponse.json(
       { message: "file uploaded successfully", cvLink: cvLink, tsLink: tsLink },
