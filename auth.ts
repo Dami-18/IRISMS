@@ -123,8 +123,10 @@ export async function signin(formState: FormState, formData: FormData) {
     };
   }
 
-
-  if(formData.get("email")==adminEmail && formData.get("password")==adminPass){
+  if (
+    formData.get("email") == adminEmail &&
+    formData.get("password") == adminPass
+  ) {
     try {
       const res = await fetch("api/login", {
         method: "POST",
@@ -146,7 +148,6 @@ export async function signin(formState: FormState, formData: FormData) {
       console.error(error);
     }
   }
-
 
   // search in both tables
   const res = await fetch("/api/getDetails", {
@@ -221,21 +222,26 @@ export async function verifyStud(formData: FormData, otp: string) {
 
   if (res.status == 200) {
     const fd = new FormData();
-    fd.append("file", formData.get("cv") as File);
+    fd.append("cv", formData.get("cv") as File);
+    fd.append("ts", formData.get("ts") as File);
 
     try {
       const res = await fetch("/api/upload", {
         method: "POST",
         body: fd,
         headers: {
-          "X-Type": "SCV", // custom header for `type`
+          "X-Type": formData.get("email") + "student_cv.pdf",
+          "Y-Type": formData.get("email") + "student_ts.pdf",
         },
       });
-      const { fileLink } = await res.json();
 
       if (!res.ok) {
         alert(`Upload failed`);
+        return { success: false };
       }
+
+      const { cvLink, tsLink } = await res.json();
+
       const data = {
         email: formData.get("email"),
         password: hashedPassword,
@@ -250,9 +256,8 @@ export async function verifyStud(formData: FormData, otp: string) {
         gradYear: formData.get("gradYear"),
         major: formData.get("majors"),
         institution: formData.get("insti"),
-        cvUrl: fileLink,
-        //transcriptUrl : formData.get("transcript"),
-        // need to handle this separately maybe in another api call for file uploads
+        cvUrl: cvLink,
+        transcriptUrl: tsLink,
       };
 
       try {
@@ -290,36 +295,57 @@ export async function verifyProf(formData: FormData, otp: string) {
   const res = await fetch("/api/verifyOTP", obj);
 
   if (res.status == 200) {
-    const data = {
-      email: formData.get("email"),
-      password: hashedPassword,
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
-      contact: formData.get("contact"),
-      website: formData.get("linkedin"),
-      gscholar: formData.get("scholar"),
-      qualification: formData.get("degree"),
-      degreeYear: formData.get("completeYear"),
-      specialization: formData.get("special"),
-      institution: formData.get("insti"),
-      teachingExp: formData.get("teachingExp"),
-      researchExp: formData.get("researchExp"),
-      researchInterns: formData.get("internchahiye"),
-      // cvUrl: formData.get("cv"), // need to handle this separately maybe in another api call for file uploads
-    };
+    const fd = new FormData();
+    fd.append("cv", formData.get("cv") as File);
+
     try {
-      const res = await fetch("/api/createFaculty", {
+      const res = await fetch("/api/uploadprof", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: fd,
+        headers: {
+          "X-Type": formData.get("email") + "prof_cv.pdf",
+        },
       });
+      const { cvLink } = await res.json();
+
+      if (!res.ok) {
+        alert(`Upload failed`);
+        return { success: false };
+      }
+
+      const data = {
+        email: formData.get("email"),
+        password: hashedPassword,
+        firstName: formData.get("firstName"),
+        lastName: formData.get("lastName"),
+        contact: formData.get("contact"),
+        website: formData.get("linkedin"),
+        gscholar: formData.get("scholar"),
+        qualification: formData.get("degree"),
+        degreeYear: formData.get("completeYear"),
+        specialization: formData.get("special"),
+        institution: formData.get("insti"),
+        teachingExp: formData.get("teachingExp"),
+        researchExp: formData.get("researchExp"),
+        researchInterns: formData.get("internchahiye"),
+        cvUrl: cvLink,
+      };
+      try {
+        const res = await fetch("/api/createFaculty", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+      } catch (err) {
+        console.error(err);
+        return { success: false };
+      }
     } catch (err) {
       console.error(err);
       return { success: false };
     }
-
-    return { success: true };
   }
+  return { success: true };
 }
 
 export async function verifyToken(req: NextRequest) {
