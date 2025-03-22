@@ -138,8 +138,8 @@ model Scholarship {
 
   applications ScholarshipApplication[] // Relation to applications submitted for the scholarship
 
-  adminId Int
-  admin AdminUser @relation(fields: [adminId], references: [id])
+  // adminId Int
+  // admin AdminUser @relation(fields: [adminId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -160,11 +160,11 @@ model ScholarshipApplication {
   createdAt DateTime @default(now())
 }
 
-model AdminUser {
-  id Int @id @default(autoincrement())
+// model AdminUser {
+//   id Int @id @default(autoincrement())
 
-  scholarships Scholarship[]
-}
+//   scholarships Scholarship[]
+// }
 
 enum ApplicationStatus {
   PENDING
