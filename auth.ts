@@ -106,6 +106,9 @@ async function signupProf(formData: FormData) {
 }
 
 export async function signin(formState: FormState, formData: FormData) {
+  const adminEmail = process.env.usr;
+  const adminPass = process.env.pass;
+
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
   await delay(2000);
@@ -119,6 +122,31 @@ export async function signin(formState: FormState, formData: FormData) {
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
+
+
+  if(formData.get("email")==adminEmail && formData.get("password")==adminPass){
+    try {
+      const res = await fetch("api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: "admin", // store this as uid for admin
+        }),
+      });
+
+      console.log(await res.json(), res.status);
+
+      if (res.status == 200) {
+        console.log("yayy");
+        return { student: false, success: true };
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 
   // search in both tables
   const res = await fetch("/api/getDetails", {

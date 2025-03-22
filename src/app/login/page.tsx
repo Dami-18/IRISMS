@@ -1,7 +1,7 @@
 // Login Page
 "use client";
 
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Form from "next/form";
 import { useActionState, useEffect, useState } from "react";
 import { signin } from "auth";
