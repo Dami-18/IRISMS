@@ -30,32 +30,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // const updateAppliedStudentList = await prisma.project.update({
-    //   where: {
-    //     id: projectId,
-    //   },
-    //   data: {
-    //     applications: {
-    //       connect:{
-    //         id: createApplication.id,
-    //       }, // Push the student ID into the list of applied students
-    //     },
-    //   },
-    // });
-
-    // const updateUserApplications = await prisma.user.update({
-    //   where: {
-    //     email: email,
-    //   },
-    //   data: {
-    //     applications: {
-    //       connect: {
-    //         id: createApplication.id,
-    //       },
-    //     }
-    //   },
-    // });
-
     return NextResponse.json(
       { message: "Applied successfully", status: 200 },
       { status: 200 }
