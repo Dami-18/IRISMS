@@ -8,8 +8,7 @@ const Dashboard = () => {
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
-
+  
   const fetchScholarshipDetails = async () => {
     try {
       const res = await fetch("/api/getScholarships", {
