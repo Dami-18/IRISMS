@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AddProjectModal from "@/Components/AddProjectModal";
 import Link from "next/link";
-import Header from "@/Components/Header";
 
 const Dashboard = () => {
   const [scholarships, setScholarships] = useState<any[]>([]);
