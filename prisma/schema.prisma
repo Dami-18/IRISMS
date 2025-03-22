@@ -132,7 +132,7 @@ model Scholarship {
   id          Int    @id @default(autoincrement())
   name        String @unique
   provider    String // Organization or institution offering the scholarship
-  amount      Float // Scholarship amount
+  amount      String // Scholarship amount
   eligibility String // Eligibility criteria
   duration    Int? // Duration of the scholarship in months (optional)
 
