@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
         },
         end: {
           //error in this upon entering 2 o clock cuz the time should be 03 but it's 3
-          dateTime: `${date}T${parseInt(time.split(":")[0]) + 1}:00`,
+          dateTime: `${date}T${parseInt(time.split(":")[0]) + 1}:00:00`,
           timeZone: "Asia/Kolkata",
         },
         attendees: [{ email }],
