@@ -7,3 +7,4 @@ dump*
 prisma/migrations*
 
 public/uploads*
+credentials.json
