@@ -13,6 +13,45 @@ const InternshipApplications = () => {
   const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const [studentEmail, setStudentEmail] = useState("");
+  const [interviewDate, setInterviewDate] = useState("");
+  const [interviewTime, setInterviewTime] = useState("");
+
+
+  const scheduleInterview = async () => {
+    if (!studentEmail || !interviewDate || !interviewTime) {
+      console.log("Please fill in all fields");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await fetch("/api/scheduleInterview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: studentEmail,
+          date: interviewDate,
+          time: interviewTime,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to schedule interview");
+
+      const result = await res.json();
+      console.log(`Interview scheduled! Meeting Link: ${result.meetingLink}`);
+      setShowModal(false);
+    } catch (err) {
+
+      console.log("Error scheduling interview:", err);
+      console.log("Failed to schedule interview. Please try again.");
+
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Fetch applications for the specific project
   useEffect(() => {
@@ -105,6 +144,14 @@ const InternshipApplications = () => {
           Applications for {project.name}
         </h1>
 
+        <button
+          onClick={() => setShowModal(true)}
+          className="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700"
+        >
+          Schedule Interview
+        </button>
+
+
         {/* delete project button */}
         <div className="flex justify-end mb-6">
           <button
@@ -170,22 +217,20 @@ const InternshipApplications = () => {
                   <button
                     onClick={() => updateApplicationStatus(app.id, "APPROVED")} // or can call different api for reject and approve
                     disabled={app.status === "APPROVED"}
-                    className={`px-4 py-2 rounded ${
-                      app.status === "APPROVED"
+                    className={`px-4 py-2 rounded ${app.status === "APPROVED"
                         ? "bg-green-300 cursor-not-allowed"
                         : "bg-green-500 text-white hover:bg-green-600"
-                    }`}
+                      }`}
                   >
                     Approve
                   </button>
                   <button
                     onClick={() => updateApplicationStatus(app.id, "REJECTED")}
                     disabled={app.status === "REJECTED"}
-                    className={`px-4 py-2 rounded ${
-                      app.status === "REJECTED"
+                    className={`px-4 py-2 rounded ${app.status === "REJECTED"
                         ? "bg-red-300 cursor-not-allowed"
                         : "bg-red-500 text-white hover:bg-red-600"
-                    }`}
+                      }`}
                   >
                     Reject
                   </button>
@@ -194,6 +239,87 @@ const InternshipApplications = () => {
             ))}
           </div>
         )}
+
+        {/* Modal for scheduling interview */}
+        {showModal && (
+          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+              <h2 className="text-xl font-bold mb-4">Schedule Interview</h2>
+              <form>
+              
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-sm font-medium">
+                    Student Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={studentEmail}
+                    onChange={(e) => setStudentEmail(e.target.value)}
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    required
+                  />
+                </div>
+
+                
+                <div className="mb-4">
+                  <label htmlFor="date" className="block text-sm font-medium">
+                    Interview Date
+                  </label>
+                  <input
+                    type="date"
+                    id="date"
+                    value={interviewDate}
+                    onChange={(e) => setInterviewDate(e.target.value)}
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    required
+                  />
+                </div>
+
+          
+                <div className="mb-4">
+                  <label htmlFor="time" className="block text-sm font-medium">
+                    Interview Time
+                  </label>
+                  <input
+                    type="time"
+                    id="time"
+                    value={interviewTime}
+                    onChange={(e) => setInterviewTime(e.target.value)}
+                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    required
+                  />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex justify-end gap-4">
+                  {/* Cancel Button */}
+                  <button
+                    type="button"
+                    onClick={() => setShowModal(false)} 
+                    className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                  >
+                    Cancel
+                  </button>
+
+                  {/* Schedule Button */}
+                  <button
+                    type="button"
+                    onClick={scheduleInterview} // Call scheduleInterview function
+                    disabled={loading}
+                    className={`px-4 py-2 rounded ${loading ? "bg-blue-300" : "bg-blue-600 text-white hover:bg-blue-700"
+                      }`}
+                  >
+                    {loading ? "Scheduling..." : "Schedule"}
+                  </button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        )}
+
+
       </div>
     </div>
   );
