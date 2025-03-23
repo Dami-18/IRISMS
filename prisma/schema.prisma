@@ -160,12 +160,6 @@ model ScholarshipApplication {
   createdAt DateTime @default(now())
 }
 
-// model AdminUser {
-//   id Int @id @default(autoincrement())
-
-//   scholarships Scholarship[]
-// }
-
 enum ApplicationStatus {
   PENDING
   APPROVED
