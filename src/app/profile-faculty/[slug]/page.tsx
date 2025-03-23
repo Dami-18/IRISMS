@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 const FacultyProfile = () => {
-  const router = useRouter();
   const { slug } = useParams();
 
   const uid = slug;
