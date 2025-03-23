@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     await writeFile(cvFilePath, cvBuffer);
 
-    const cvLink = process.cwd() + "/public/uploads/Prof/" + cvName;
+    const cvLink = "uploads/Prof/" + cvName;
 
     return NextResponse.json(
       { message: "file uploaded successfully", cvLink: cvLink },

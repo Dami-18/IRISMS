@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
           user: true,
           project: true, // include explicitly to also return non scalar fields
         },
-      }, 
+      },
     },
   });
 
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
           user: true,
           project: true, // include explicitly to also return non scalar fields
         },
-      }, 
+      },
     },
   });
 

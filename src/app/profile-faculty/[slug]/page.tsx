@@ -6,20 +6,19 @@ import { useRouter, useParams } from "next/navigation";
 const FacultyProfile = () => {
   const router = useRouter();
   const { slug } = useParams();
-  
+
   const uid = slug;
 
   const [profDetails, setProfDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-
   useEffect(() => {
     if (!uid) return;
 
     const fetchProfDetails = async () => {
       try {
-        const res = await fetch("/api/getProf", { 
+        const res = await fetch("/api/getProf", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ uid }),
@@ -27,12 +26,13 @@ const FacultyProfile = () => {
 
         if (!res.ok) {
           const errorData = await res.json();
-          throw new Error(errorData.message || "Failed to fetch professor details");
+          throw new Error(
+            errorData.message || "Failed to fetch professor details"
+          );
         }
 
         const data = await res.json();
         setProfDetails(data.data); // Set professor details in state
-        
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -76,7 +76,12 @@ const FacultyProfile = () => {
       {profDetails?.website && (
         <p className="text-lg text-gray-700 mb-2">
           <strong>Website:</strong>{" "}
-          <a href={profDetails.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+          <a
+            href={profDetails.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
             Visit Website
           </a>
         </p>
@@ -84,7 +89,12 @@ const FacultyProfile = () => {
       {profDetails?.gscholar && (
         <p className="text-lg text-gray-700 mb-2">
           <strong>Google Scholar:</strong>{" "}
-          <a href={profDetails.gscholar} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+          <a
+            href={profDetails.gscholar}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
             View Profile
           </a>
         </p>
@@ -106,7 +116,6 @@ const FacultyProfile = () => {
         <strong>Research Experience:</strong>{" "}
         {profDetails?.researchExp ? `${profDetails.researchExp} years` : "N/A"}
       </p>
-
     </div>
   );
 };
