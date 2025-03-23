@@ -11,6 +11,8 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@google-apps/meet": "^0.6.0",
+    "@google-cloud/local-auth": "^2.1.0",
     "@headlessui/react": "^2.2.0",
     "@prisma/client": "^6.5.0",
     "@types/cookie": "^0.6.0",
