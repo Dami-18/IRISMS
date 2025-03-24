@@ -31,7 +31,9 @@ const Login = () => {
       } else if (state?.success) {
         toast.success("Signed in successfully!", { id: toastId });
         if (state.student === true) router.push("/dashboard-students");
+        else if(state.student === false && state.admin === true) router.push("/admin-dashboard");
         else router.push("/dashboard-faculty");
+        
       } else if (state?.registerFirst) {
         toast.error("Email not found, Register first", { id: toastId });
       }
