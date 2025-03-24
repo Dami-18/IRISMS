@@ -109,8 +109,6 @@ export async function signin(formState: FormState, formData: FormData) {
   const adminEmail = process.env.NEXT_PUBLIC_USR;
   const adminPass = process.env.NEXT_PUBLIC_PASS;
 
-  console.log(adminEmail, adminPass);
-
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
   await delay(2000);
