@@ -13,19 +13,19 @@ export async function GET(req: NextRequest) {
   const location = searchParams.get("location") || "";
 
   try {
-    let projects = await prisma.project.findMany({
+    let projects = await prisma.scholarship.findMany({
       where: {
         OR: [
           { name: { contains: searchQuery, mode: "insensitive" } },
-          { facultyName: { contains: searchQuery, mode: "insensitive" } },
-          { location: { contains: searchQuery, mode: "insensitive" } },
+          { provider: { contains: searchQuery, mode: "insensitive" } },
+          { desc: { contains: searchQuery, mode: "insensitive" } },
         ],
       },
     });
 
     if (location) {
       projects = projects.filter((project) =>
-        project.location.toLowerCase().includes(location.toLowerCase())
+        project.provider.toLowerCase().includes(location.toLowerCase())
       );
     }
 
