@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
     );
   } catch (err) {
     console.error("Error scheduling interview:", err);
-    NextResponse.json(
+    return NextResponse.json(
       { message: "Failed to schedule interview" },
       { status: 500 }
     );
