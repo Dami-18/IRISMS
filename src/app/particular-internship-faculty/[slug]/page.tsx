@@ -41,7 +41,8 @@ const InternshipApplications = () => {
       if (!res.ok) throw new Error("Failed to schedule interview");
 
       const result = await res.json();
-      console.log(`Interview scheduled! Meeting Link: ${result.meetingLink}`);
+      console.log(`Interview scheduled! Room Name: ${result.roomName}`); // can also send meet link
+      router.push(`/interview/${result.roomName}`)
       setShowModal(false);
     } catch (err) {
 
