@@ -1,5 +1,3 @@
-// profile page
-// logic - in the stored token after login, check the uid and check if it is prof or student and display the profile details accordingly
 "use client";
 import Header from "@/Components/Header";
 import Link from "next/link";
@@ -24,11 +22,12 @@ interface UserProfile {
 
 const Profile = () => {
   const [userData, setUserData] = useState<UserProfile | null>(null);
-  console.log(userData);
+  const [editableData, setEditableData] = useState<UserProfile | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const res = await fetch("api/user", {
+      const res = await fetch("/api/user", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -37,11 +36,36 @@ const Profile = () => {
       });
       await res.json().then((obj) => {
         setUserData(obj.data);
+        setEditableData(obj.data); // Initialize editable data
       });
     };
 
     fetchDetails();
   }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditableData((prev) => (prev ? { ...prev, [name]: value } : null));
+  };
+
+  const saveChanges = async () => {
+    const res = await fetch("/api/updateUser", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(editableData),
+    });
+
+    if (res.ok) {
+      alert("Profile updated successfully!");
+      setUserData(editableData); // Update local state
+      setIsEditing(false); // Exit editing mode
+    } else {
+      alert("Failed to update profile. Please try again.");
+    }
+  };
 
   return (
     <div className="relative">
@@ -68,66 +92,121 @@ const Profile = () => {
             </h2>
             <p className="text-gray-600">{userData?.email}</p>
             <>
-              <p className="mt-2 text-indigo-600 font-semibold">
-                Student at {userData?.institution}
-              </p>
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                {userData?.contact && (
-                  <p>
-                    <strong>📞 Contact:</strong> {userData?.contact}
+              {!isEditing ? (
+                <>
+                  <p className="mt-2 text-indigo-600 font-semibold">
+                    Student at {editableData?.institution}
                   </p>
-                )}
-                {(userData?.address ||
-                  userData?.city ||
-                  userData?.state ||
-                  userData?.country) && (
-                  <p>
-                    <strong>🏠 Address:</strong>{" "}
-                    {[
-                      userData?.address,
-                      userData?.city,
-                      userData?.state,
-                      userData?.country,
-                    ]
-                      .filter(Boolean)
-                      .join(", ")}
-                  </p>
-                )}
-                {userData?.degree && (
-                  <p>
-                    <strong>🎓 Degree:</strong> {userData?.degree} (
-                    {userData?.gradYear})
-                  </p>
-                )}
-                {userData?.major && (
-                  <p>
-                    <strong>📖 Major:</strong> {userData?.major}
-                  </p>
-                )}
-              </div>
-              {(userData?.cvUrl || userData?.transcriptUrl) && (
-                <div className="mt-6 space-x-4">
-                  {userData?.cvUrl && (
-                    <Link
-                      href={userData?.cvUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition duration-300"
-                    >
-                      View CV 📄
-                    </Link>
-                  )}
-                  {userData?.transcriptUrl && (
-                    <Link
-                      href={userData?.transcriptUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition duration-300"
-                    >
-                      Transcript 🎓
-                    </Link>
-                  )}
-                </div>
+                  <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    {editableData?.contact && (
+                      <p>
+                        <strong>📞 Contact:</strong> {editableData?.contact}
+                      </p>
+                    )}
+                    {(editableData?.address ||
+                      editableData?.city ||
+                      editableData?.state ||
+                      editableData?.country) && (
+                      <p>
+                        <strong>🏠 Address:</strong>{" "}
+                        {[
+                          editableData?.address,
+                          editableData?.city,
+                          editableData?.state,
+                          editableData?.country,
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
+                      </p>
+                    )}
+                    {editableData?.degree && (
+                      <p>
+                        <strong>🎓 Degree:</strong> {editableData?.degree} (
+                        {editableData?.gradYear})
+                      </p>
+                    )}
+                    {editableData?.major && (
+                      <p>
+                        <strong>📖 Major:</strong> {editableData?.major}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="mt-6 px-5 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300"
+                  >
+                    Edit Profile ✏️
+                  </button>
+                </>
+              ) : (
+                <>
+                  {/* Editable Form */}
+                  <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                    {/* First Name and Last Name are view-only */}
+                    <input
+                      type="text"
+                      value={editableData?.firstName || ""}
+                      disabled
+                      placeholder="First Name"
+                      className="border border-gray-300 rounded p-2 w-full bg-gray-100 cursor-not-allowed"
+                    />
+                    <input
+                      type="text"
+                      value={editableData?.lastName || ""}
+                      disabled
+                      placeholder="Last Name"
+                      className="border border-gray-300 rounded p-2 w-full bg-gray-100 cursor-not-allowed"
+                    />
+                    {/* Editable fields */}
+                    <input
+                      type="text"
+                      name="contact"
+                      value={editableData?.contact || ""}
+                      onChange={handleInputChange}
+                      placeholder="Contact"
+                      className="border border-gray-300 rounded p-2 w-full"
+                    />
+                    <input
+                      type="text"
+                      name="address"
+                      value={editableData?.address || ""}
+                      onChange={handleInputChange}
+                      placeholder="Address"
+                      className="border border-gray-300 rounded p-2 w-full"
+                    />
+                    <input
+                      type="text"
+                      name="city"
+                      value={editableData?.city || ""}
+                      onChange={handleInputChange}
+                      placeholder="City"
+                      className="border border-gray-300 rounded p-2 w-full"
+                    />
+                    <input
+                      type="text"
+                      name="state"
+                      value={editableData?.state || ""}
+                      onChange={handleInputChange}
+                      placeholder="State"
+                      className="border border-gray-300 rounded p-2 w-full"
+                    />
+                    <input
+                      type="text"
+                      name="country"
+                      value={editableData?.country || ""}
+                      onChange={handleInputChange}
+                      placeholder="Country"
+                      className="border border-gray-300 rounded p-2 w-full"
+                    />
+                  </div>
+                  {/* Save Changes Button */}
+                  <button
+                    onClick={saveChanges}
+                    className="mt-6 px-5 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition duration-300"
+                  >
+                    Save Changes ✅
+                  </button>
+                </>
               )}
             </>
           </div>
@@ -136,5 +215,5 @@ const Profile = () => {
     </div>
   );
 };
+
 export default Profile;
-// this needs to be changed and display editable details of student or prof
