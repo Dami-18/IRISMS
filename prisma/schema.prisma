@@ -37,7 +37,7 @@ model User {
   // File Uploads
   cvUrl         String? // URL for CV document
   transcriptUrl String? // URL for transcript document
-  // incomeProof   String // family income certificate
+  incomeProof   String? // family income certificate
 
   applications            Application[] // Relation to applications submitted by the user
   scholarshipApplications ScholarshipApplication[]

@@ -224,6 +224,7 @@ export async function verifyStud(formData: FormData, otp: string) {
     const fd = new FormData();
     fd.append("cv", formData.get("cv") as File);
     fd.append("ts", formData.get("ts") as File);
+    fd.append("inc",formData.get("inc") as File);
 
     try {
       const res = await fetch("/api/upload", {
@@ -232,6 +233,7 @@ export async function verifyStud(formData: FormData, otp: string) {
         headers: {
           "X-Type": formData.get("email") + "student_cv.pdf",
           "Y-Type": formData.get("email") + "student_ts.pdf",
+          "Z-Type": formData.get("email") + "student_income.pdf",
         },
       });
 
@@ -240,7 +242,7 @@ export async function verifyStud(formData: FormData, otp: string) {
         return { success: false };
       }
 
-      const { cvLink, tsLink } = await res.json();
+      const { cvLink, tsLink, incLink } = await res.json();
 
       const data = {
         email: formData.get("email"),
@@ -258,6 +260,7 @@ export async function verifyStud(formData: FormData, otp: string) {
         institution: formData.get("insti"),
         cvUrl: cvLink,
         transcriptUrl: tsLink,
+        incomeProof: incLink,
       };
 
       try {

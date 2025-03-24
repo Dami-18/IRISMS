@@ -75,8 +75,9 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const cv = formData.get("cv") as File;
     const ts = formData.get("ts") as File;
+    const inc = formData.get("inc") as File;
 
-    if (!cv || !ts) {
+    if (!cv || !ts || !inc) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
@@ -104,6 +105,18 @@ export async function POST(req: NextRequest) {
 
     await writeFile(tsFilePath, tsBuffer);
 
+    const inName = req.headers.get("Z-Type");
+
+    const inBytes = await cv.arrayBuffer();
+    const inBuffer = Buffer.from(inBytes);
+    const inFilePath = path.join(
+      process.cwd(),
+      "public/uploads/Student/IncomeCertificate/",
+      inName
+    );
+
+    await writeFile(inFilePath, inBuffer);
+
     // const res = await uploadFile(
     //   filePath,
     //   file.name,
@@ -120,8 +133,10 @@ export async function POST(req: NextRequest) {
 
     const tsLink = "uploads/Student/Transcript/" + tsName;
 
+    const inLink = "uploads/Student/IncomeCertificate/" + inName
+
     return NextResponse.json(
-      { message: "file uploaded successfully", cvLink: cvLink, tsLink: tsLink },
+      { message: "file uploaded successfully", cvLink: cvLink, tsLink: tsLink, inLink: inLink },
       { status: 200 }
     );
   } catch (error) {

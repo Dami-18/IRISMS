@@ -284,13 +284,13 @@ const Register = () => {
             ))}
 
             {/* File Uploads */}
-            {["cv", "transcript"].map((doc) => (
+            {["cv", "transcript", "income"].map((doc) => (
               <div key={doc}>
                 <label
                   htmlFor={doc}
                   className={`block text-sm font-medium capitalize`}
                 >
-                  {doc === `cv` ? `Upload CV/Resume` : `Upload Transcript`}
+                  {doc === `cv` ? `Upload CV/Resume` : (doc === `transcript` ? `Upload Transcript` : `Upload Income Certificate`)}
                 </label>
                 <input
                   id={doc}
