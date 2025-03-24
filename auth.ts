@@ -6,6 +6,7 @@ import {
 } from "@/lib/definitions";
 
 import { hash, compare } from "bcrypt-ts";
+import { admin } from "googleapis/build/src/apis/admin";
 import jwt from "jsonwebtoken";
 import { NextRequest } from "next/server";
 
@@ -144,10 +145,11 @@ export async function signin(formState: FormState, formData: FormData) {
 
       if (res.status == 200) {
         console.log("yayy");
-        return { student: false, success: true };
+        return { student:false, admin:true, success: true };
       }
     } catch (error) {
       console.error(error);
+      return {student: false, admin: false, success: false};
     }
   }
 
@@ -185,14 +187,13 @@ export async function signin(formState: FormState, formData: FormData) {
       console.log(await res.json(), res.status);
 
       if (res.status == 200) {
-        // console.log(message);
         console.log("yayy");
 
         try {
           if (uid[0] == "S") {
-            return { student: true, success: true };
+            return { student: true, admin:false, success: true };
           } else {
-            return { student: false, success: true };
+            return { student: false, admin:false, success: true };
           }
         } catch (error) {
           console.error(error);
