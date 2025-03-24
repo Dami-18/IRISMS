@@ -1,4 +1,3 @@
-import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
@@ -7,8 +6,8 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: process.env.usr,
-    pass: process.env.pass,
+    user: process.env.NEXT_PUBLIC_USR,
+    pass: process.env.NEXT_PUBLIC_PASS,
   },
 });
 
@@ -23,51 +22,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-      },
-      scopes: ["https://www.googleapis.com/auth/calendar"],
-    });
+    const roomName = `interview-${email}`;
+    const meetingLink = `https://meet.jit.si/${roomName}`;
 
-    const calendar = google.calendar({ version: "v3", auth });
-
-    // Create a calendar event with Google Meet link
-    const obj = {
-      calendarId: "primary",
-      requestBody: {
-        summary: "Interview Schedule",
-        description: `Interview scheduled with ${email}`,
-        start: {
-          dateTime: `${date}T${time}:00`,
-          timeZone: "Asia/Kolkata",
-        },
-        end: {
-          //error in this upon entering 2 o clock cuz the time should be 03 but it's 3
-          dateTime: `${date}T${parseInt(time.split(":")[0]) + 1}:00:00`,
-          timeZone: "Asia/Kolkata",
-        },
-        attendees: [{ email }],
-        conferenceData: {
-          createRequest: { requestId: `meet-${Date.now()}` },
-        },
-      },
-      conferenceDataVersion: 1,
-    };
-
-    console.log(obj);
-
-    const eventResponse = await calendar.events.insert(obj);
-
-    console.log(eventResponse);
-
-    const meetingLink = eventResponse.data.hangoutLink;
-    console.log(`Meeting Link Generated: ${meetingLink}`);
+    console.log(`Generated Jitsi Meet link: ${meetingLink}`);
 
     // mail the google link to candidate
     // await transporter.sendMail({
-    //   from: process.env.usr,
+    //   from: process.env.NEXT_PUBLIC_USR,
     //   to: email,
     //   subject: "Interview Schedule",
     //   text: `Greetings,
@@ -88,7 +50,7 @@ export async function POST(req: NextRequest) {
     // });
 
     return NextResponse.json(
-      { message: "Sent meet link", meetingLink },
+      { message: "Sent meet link", roomName },
       { status: 200 }
     );
   } catch (err) {
