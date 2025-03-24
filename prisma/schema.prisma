@@ -37,6 +37,7 @@ model User {
   // File Uploads
   cvUrl         String? // URL for CV document
   transcriptUrl String? // URL for transcript document
+  // incomeProof   String // family income certificate
 
   applications            Application[] // Relation to applications submitted by the user
   scholarshipApplications ScholarshipApplication[]
@@ -134,7 +135,8 @@ model Scholarship {
   provider    String // Organization or institution offering the scholarship
   amount      String // Scholarship amount
   eligibility String // Eligibility criteria
-  duration    Int? // Duration of the scholarship in months (optional)
+  duration    Int? // Duration of the scholarship in months
+  desc        String // description
 
   applications ScholarshipApplication[] // Relation to applications submitted for the scholarship
 
