@@ -13,14 +13,14 @@ export async function POST(req: NextRequest) {
       where: {
         id: parseInt(id),
       },
-      include: {
-        applications: {
-          include: {
-            user: true, // include explicitly to also return non scalar fields
-            scholarship: true,
-          },
-        },
-      },
+      // include: {
+      //   applications: {
+      //     include: {
+      //       user: true, // include explicitly to also return non scalar fields
+      //       scholarship: true,
+      //     },
+      //   },
+      // },
     });
 
     if (!scholarship) {
