@@ -142,11 +142,11 @@ export async function signin(formState: FormState, formData: FormData) {
 
       if (res.status == 200) {
         console.log("yayy");
-        return { student:false, admin:true, success: true };
+        return { student: false, admin: true, success: true };
       }
     } catch (error) {
       console.error(error);
-      return {student: false, admin: false, success: false};
+      return { student: false, admin: false, success: false };
     }
   }
 
@@ -188,9 +188,9 @@ export async function signin(formState: FormState, formData: FormData) {
 
         try {
           if (uid[0] == "S") {
-            return { student: true, admin:false, success: true };
+            return { student: true, admin: false, success: true };
           } else {
-            return { student: false, admin:false, success: true };
+            return { student: false, admin: false, success: true };
           }
         } catch (error) {
           console.error(error);
