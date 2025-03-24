@@ -10,12 +10,7 @@ export async function GET(req: NextRequest) {
 
   // Extract query parameters
   const searchQuery = searchParams.get("search") || "";
-  const stipendMin = parseInt(searchParams.get("stipendMin") || "0", 10);
-  const stipendMax = parseInt(searchParams.get("stipendMax") || "50000", 10);
   const location = searchParams.get("location") || "";
-  const prerequisites = searchParams.get("prerequisites")?.split(",") || [];
-  const durationMin = parseInt(searchParams.get("durationMin") || "0", 10);
-  const durationMax = parseInt(searchParams.get("durationMax") || "12", 10);
 
   try {
     let projects = await prisma.project.findMany({
@@ -28,32 +23,11 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    projects = projects.filter( 
-      (project) =>
-        parseInt(project.stipend) >= stipendMin &&
-        parseInt(project.stipend) <= stipendMax
-    );
-
     if (location) {
       projects = projects.filter((project) =>
         project.location.toLowerCase().includes(location.toLowerCase())
       );
     }
-
-    if (prerequisites.length > 0) {
-      projects = projects.filter((project) =>
-        prerequisites.some((prerequisite) => 
-          project.prerequisites
-            ?.toLowerCase()
-            .includes(prerequisite.toLowerCase())
-        )
-      );
-    }
-
-    projects = projects.filter(
-      (project) =>
-        project.duration >= durationMin && project.duration <= durationMax
-    );
 
     // Return filtered results
     if (!projects || projects.length === 0) {
