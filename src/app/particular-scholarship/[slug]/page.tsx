@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Header from "@/Components/Header";
 
 const ScholarshipApplications = () => {
-  const router = useRouter();
   const Params = useParams();
   const slug = Params.slug;
 
@@ -113,7 +112,7 @@ const ScholarshipApplications = () => {
                   {new Date(app.createdAt).toLocaleDateString()}
                 </p>
 
-                {/* Links to CV and Transcript */}
+                {/* Links to Documents */}
                 <div className="flex gap-4 mt-2">
                   {app.user?.cvUrl && (
                     <a
@@ -122,7 +121,7 @@ const ScholarshipApplications = () => {
                       rel="noopener noreferrer"
                       className="text-blue-500 underline"
                     >
-                      View CV
+                      CV
                     </a>
                   )}
                   {app.user?.transcriptUrl && (
@@ -132,7 +131,17 @@ const ScholarshipApplications = () => {
                       rel="noopener noreferrer"
                       className="text-blue-500 underline"
                     >
-                      View Transcript
+                      Transcript
+                    </a>
+                  )}
+                  {app.user?.incomeProof && (
+                    <a
+                      href={app.user?.cvUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 underline"
+                    >
+                       Income Statement
                     </a>
                   )}
                 </div>
