@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Header from "@/Components/Header";
+import Link from "next/link";
 
 const InternshipApplications = () => {
   const router = useRouter();
@@ -18,7 +19,6 @@ const InternshipApplications = () => {
   const [studentEmail, setStudentEmail] = useState("");
   const [interviewDate, setInterviewDate] = useState("");
   const [interviewTime, setInterviewTime] = useState("");
-
 
   const scheduleInterview = async () => {
     if (!studentEmail || !interviewDate || !interviewTime) {
@@ -42,13 +42,11 @@ const InternshipApplications = () => {
 
       const result = await res.json();
       console.log(`Interview scheduled! Room Name: ${result.roomName}`); // can also send meet link
-      router.push(`/interview/${result.roomName}`)
+      router.push(`/interview/${result.roomName}`);
       setShowModal(false);
     } catch (err) {
-
       console.log("Error scheduling interview:", err);
       console.log("Failed to schedule interview. Please try again.");
-
     } finally {
       setLoading(false);
     }
@@ -152,7 +150,6 @@ const InternshipApplications = () => {
           Schedule Interview
         </button>
 
-
         {/* delete project button */}
         <div className="flex justify-end mb-6">
           <button
@@ -169,75 +166,84 @@ const InternshipApplications = () => {
           </p>
         ) : (
           <div className="space-y-6">
-            {applications.map((app) => (
-              <div key={app.id} className="bg-white p-4 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold">
-                  Applicant: {app.user?.firstName} {app.user?.lastName}
-                </h2>
-                <p>
-                  <strong>Email:</strong> {app.user?.email}
-                </p>
-                <p>
-                  <strong>SOP:</strong> {app.sop}
-                </p>
-                <p>
-                  <strong>Status:</strong>{" "}
-                  {app.status.charAt(0).toUpperCase() +
-                    app.status.slice(1).toLowerCase()}
-                </p>
-                <p>
-                  <strong>Applied On:</strong>{" "}
-                  {new Date(app.createdAt).toLocaleDateString()}
-                </p>
-
-                {/* Links to CV and Transcript */}
-                <div className="flex gap-4 mt-2">
-                  {app.user?.cvUrl && (
-                    <a
-                      href={app.user?.cvUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 underline"
-                    >
-                      View CV
-                    </a>
-                  )}
-                  {app.user?.transcriptUrl && (
-                    <a
-                      href={app.user?.transcriptUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 underline"
-                    >
-                      View Transcript
-                    </a>
-                  )}
-                </div>
-
-                <div className="flex gap-4 mt-4">
-                  <button
-                    onClick={() => updateApplicationStatus(app.id, "APPROVED")} // or can call different api for reject and approve
-                    disabled={app.status === "APPROVED"}
-                    className={`px-4 py-2 rounded ${app.status === "APPROVED"
-                        ? "bg-green-300 cursor-not-allowed"
-                        : "bg-green-500 text-white hover:bg-green-600"
+            {applications.map((app) => {
+              console.log(app.user.cvUrl);
+              return (
+                <div key={app.id} className="bg-white p-4 rounded-lg shadow-md">
+                  <h2 className="text-xl font-semibold">
+                    Applicant: {app.user?.firstName} {app.user?.lastName}
+                  </h2>
+                  <p>
+                    <strong>Email:</strong> {app.user?.email}
+                  </p>
+                  <p>
+                    <strong>SOP:</strong> {app.sop}
+                  </p>
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    {app.status.charAt(0).toUpperCase() +
+                      app.status.slice(1).toLowerCase()}
+                  </p>
+                  <p>
+                    <strong>Applied On:</strong>{" "}
+                    {new Date(app.createdAt).toLocaleDateString()}
+                  </p>
+                  {/* Links to CV and Transcript */}
+                  <div className="flex gap-4 mt-2">
+                    {app.user?.cvUrl && (
+                      <Link
+                        href={"http://localhost:3000/" + app.user?.cvUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        View CV
+                      </Link>
+                    )}
+                    {app.user?.transcriptUrl && (
+                      <Link
+                        href={
+                          "http://localhost:3000/" + app.user?.transcriptUrl
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        View Transcript
+                      </Link>
+                    )}
+                  </div>
+                  <div className="flex gap-4 mt-4">
+                    <button
+                      onClick={() =>
+                        updateApplicationStatus(app.id, "APPROVED")
+                      } // or can call different api for reject and approve
+                      disabled={app.status === "APPROVED"}
+                      className={`px-4 py-2 rounded ${
+                        app.status === "APPROVED"
+                          ? "bg-green-300 cursor-not-allowed"
+                          : "bg-green-500 text-white hover:bg-green-600"
                       }`}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    onClick={() => updateApplicationStatus(app.id, "REJECTED")}
-                    disabled={app.status === "REJECTED"}
-                    className={`px-4 py-2 rounded ${app.status === "REJECTED"
-                        ? "bg-red-300 cursor-not-allowed"
-                        : "bg-red-500 text-white hover:bg-red-600"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      onClick={() =>
+                        updateApplicationStatus(app.id, "REJECTED")
+                      }
+                      disabled={app.status === "REJECTED"}
+                      className={`px-4 py-2 rounded ${
+                        app.status === "REJECTED"
+                          ? "bg-red-300 cursor-not-allowed"
+                          : "bg-red-500 text-white hover:bg-red-600"
                       }`}
-                  >
-                    Reject
-                  </button>
+                    >
+                      Reject
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -247,7 +253,6 @@ const InternshipApplications = () => {
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
               <h2 className="text-xl font-bold mb-4">Schedule Interview</h2>
               <form>
-              
                 <div className="mb-4">
                   <label htmlFor="email" className="block text-sm font-medium">
                     Student Email
@@ -262,7 +267,6 @@ const InternshipApplications = () => {
                   />
                 </div>
 
-                
                 <div className="mb-4">
                   <label htmlFor="date" className="block text-sm font-medium">
                     Interview Date
@@ -277,7 +281,6 @@ const InternshipApplications = () => {
                   />
                 </div>
 
-          
                 <div className="mb-4">
                   <label htmlFor="time" className="block text-sm font-medium">
                     Interview Time
@@ -297,7 +300,7 @@ const InternshipApplications = () => {
                   {/* Cancel Button */}
                   <button
                     type="button"
-                    onClick={() => setShowModal(false)} 
+                    onClick={() => setShowModal(false)}
                     className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
                   >
                     Cancel
@@ -308,19 +311,19 @@ const InternshipApplications = () => {
                     type="button"
                     onClick={scheduleInterview} // Call scheduleInterview function
                     disabled={loading}
-                    className={`px-4 py-2 rounded ${loading ? "bg-blue-300" : "bg-blue-600 text-white hover:bg-blue-700"
-                      }`}
+                    className={`px-4 py-2 rounded ${
+                      loading
+                        ? "bg-blue-300"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                    }`}
                   >
                     {loading ? "Scheduling..." : "Schedule"}
                   </button>
                 </div>
-
               </form>
             </div>
           </div>
         )}
-
-
       </div>
     </div>
   );
