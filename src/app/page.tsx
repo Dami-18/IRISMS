@@ -23,22 +23,22 @@ const WelcomePage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
       {/* Header Navigation */}
       <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <div className="text-2xl font-bold text-indigo-600 transform transition duration-500 hover:scale-105">
+        <div className="text-2xl font-bold text-yellow-600 transform transition duration-500 hover:scale-105">
           IRISMS
         </div>
         <div className="flex space-x-4">
           <button
             onClick={() => router.push("/login")}
-            className="px-4 py-2 text-indigo-600 hover:text-indigo-800 transition-colors duration-300"
+            className="px-4 py-2 text-yellow-600 hover:text-indigo-800 transition-colors duration-300"
           >
             Login
           </button>
           <button
             onClick={() => setShowModal(true)}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            className="px-4 py-2 bg-yellow-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
           >
             Register
           </button>
@@ -67,7 +67,7 @@ const WelcomePage = () => {
             <h1 className="text-5xl font-bold mb-6 leading-tight">
               Discover Your Research Journey
             </h1>
-            <p className="text-xl mb-8 text-indigo-100">
+            <p className="text-xl mb-8 text-yellow-100">
               Connect with leading professors, find research internships, and
               explore scholarship opportunities.
             </p>
@@ -95,20 +95,20 @@ const WelcomePage = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-indigo-700 transform hover:scale-105">
+              <button className="bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-indigo-700 transform hover:scale-105">
                 Search
               </button>
             </div>
 
             {/* Popular Search Tags */}
             <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <span className="text-sm text-indigo-200 mr-2">
+              <span className="text-sm text-yellow-200 mr-2">
                 Popular Areas:
               </span>
               {researchAreas.map((area, index) => (
                 <button
                   key={index}
-                  className="px-3 py-1 bg-indigo-800 bg-opacity-50 rounded-full text-sm hover:bg-indigo-700 transition-colors duration-300"
+                  className="px-3 py-1 bg-yellow-800 bg-opacity-50 rounded-full text-sm hover:bg-indigo-700 transition-colors duration-300"
                   onClick={() => setSearchQuery(area)}
                 >
                   {area}
@@ -247,7 +247,7 @@ const WelcomePage = () => {
           </div>
 
           <div className="text-center mt-10">
-            <button className="px-6 py-3 bg-white border border-indigo-600 text-indigo-600 rounded-lg shadow-sm hover:bg-indigo-50 transition-colors duration-300">
+            <button className="px-6 py-3 bg-white border border-yellow-600 text-yellow-600 rounded-lg shadow-sm hover:bg-indigo-50 transition-colors duration-300">
               View All Professors
             </button>
           </div>
@@ -272,7 +272,7 @@ const WelcomePage = () => {
                 {[1, 2, 3].map((item) => (
                   <div
                     key={item}
-                    className="bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-indigo-500 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
+                    className="bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-500 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
                   >
                     <div className="flex-1">
                       <h3 className="font-medium text-lg">
@@ -293,14 +293,14 @@ const WelcomePage = () => {
                 ))}
               </div>
 
-              <button className="mt-8 px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">
+              <button className="mt-8 px-6 py-3 bg-yellow-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">
                 Browse All Opportunities
               </button>
             </div>
 
             <div className="md:w-2/5">
               <div className="relative">
-                <div className="absolute -inset-4 bg-indigo-200 rounded-lg transform rotate-3 transition-transform duration-700 group-hover:rotate-6"></div>
+                <div className="absolute -inset-4 bg-yellow-200 rounded-lg transform rotate-3 transition-transform duration-700 group-hover:rotate-6"></div>
                 <img
                   src="https://picsum.photos/500/600"
                   alt="Research"
@@ -313,12 +313,12 @@ const WelcomePage = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-yellow-600 to-purple-600 text-white">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Ready to Begin Your Research Journey?
           </h2>
-          <p className="text-xl mb-10 max-w-2xl mx-auto text-indigo-100">
+          <p className="text-xl mb-10 max-w-2xl mx-auto text-yellow-100">
             Join thousands of students and professors already using our platform
             to connect and collaborate.
           </p>
@@ -326,7 +326,7 @@ const WelcomePage = () => {
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <button
               onClick={() => router.push("/login")}
-              className="px-8 py-4 bg-white text-indigo-600 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+              className="px-8 py-4 bg-white text-yellow-600 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
             >
               Sign In
             </button>
