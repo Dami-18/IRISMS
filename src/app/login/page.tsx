@@ -195,21 +195,15 @@ const Login = () => {
       {/* Modal (unchanged) */}
       {showModal && (
         <Modal
-          title="Register As:"
+          title="Select User Type"
           options={[
             {
               label: "Student",
-              onClick: () => {
-                setShowModal(false);
-                router.push("/register-students");
-              },
+              onClick: () => router.push("/register-students"),
             },
             {
               label: "Professor",
-              onClick: () => {
-                setShowModal(false);
-                router.push("/register-faculty");
-              },
+              onClick: () => router.push("/register-faculty"),
             },
           ]}
           onClose={() => setShowModal(false)}
