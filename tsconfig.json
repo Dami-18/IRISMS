@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".", // import start from root project directory
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,8 +24,18 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"] // Maps @/ to the src directory
+      "@/*": [
+        "./src/*"
+      ] // Maps @/ to the src directory
     }
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }
