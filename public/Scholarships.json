@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Microsoft Research PhD Fellowship",
+        "provider": "Microsoft Research",
+        "amount": "2000 USD per month",
+        "eligibility": "Open to PhD students conducting research in computer science and related fields.",
+        "duration": 24,
+        "desc": "This fellowship supports PhD students with exceptional research potential in computer science."
+      },
+      {
+        "name": "Affiliated Fellowships Doctoral Program",
+        "provider": "University of British Columbia",
+        "amount": "1800 EUR per month",
+        "eligibility": "Available for doctoral students demonstrating strong research ability and achievements.",
+        "duration": 36,
+        "desc": "A prestigious fellowship program for doctoral students across all disciplines."
+      },
+      {
+        "name": "DST INSPIRE Fellowship",
+        "provider": "Department of Science and Technology, India",
+        "amount": "25,000 INR per month",
+        "eligibility": "Open to research scholars in science and technology pursuing full-time PhD programs.",
+        "duration": 60,
+        "desc": "Supports young researchers in science and technology with funding for their doctoral studies."
+      },
+      {
+        "name": "Fulbright-Nehru Doctoral Research Fellowships",
+        "provider": "United States-India Educational Foundation (USIEF)",
+        "amount": "1500 USD per month",
+        "eligibility": "PhD candidates from India conducting research at U.S. institutions.",
+        "duration": 12,
+        "desc": "Provides funding for Indian PhD scholars to conduct research in the United States."
+      },
+      {
+        "name": "Prime Minister Fellowship for Doctoral Research",
+        "provider": "Government of India",
+        "amount": "70,000 INR per month (first two years)",
+        "eligibility": "PhD candidates in Science or Technology streams with excellent academic records.",
+        "duration": 48,
+        "desc": "Aimed at promoting innovation and research in science and technology, this fellowship offers significant financial support to doctoral candidates."
+      },
+      {
+        "name": "ICSSR Doctoral Fellowship",
+        "provider": "Indian Council of Social Science Research (ICSSR)",
+        "amount": "20,000 INR per month",
+        "eligibility": "PhD scholars in social sciences with a first-class master's degree from a recognized university.",
+        "duration": 24,
+        "desc": "This fellowship supports doctoral research in social sciences by providing financial aid and contingency grants for academic resources."
+      },
+      {
+        "name": "Ramanujan Fellowship",
+        "provider": "Science and Engineering Research Board (SERB)",
+        "amount": "1,35,000 INR per month",
+        "eligibility": "Brilliant Indian scientists or engineers returning from abroad to take up research positions in India.",
+        "duration": 60,
+        "desc": "Designed for exceptional researchers returning to India, this fellowship supports innovative projects across various scientific disciplines."
+      }
+]
