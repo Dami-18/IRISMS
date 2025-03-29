@@ -8,7 +8,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
-const Register = () => {
+const RegisterFaculty = () => {
   const [showModal, setShowModal] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [ref, setRef] = useState<FormData | null>(null);
@@ -371,4 +371,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterFaculty;
