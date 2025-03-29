@@ -141,7 +141,7 @@ export async function signin(formState: FormState, formData: FormData) {
       console.log(await res.json(), res.status);
 
       if (res.status == 200) {
-        console.log("yayy");
+        console.log("yay");
         return { student: false, admin: true, success: true };
       }
     } catch (error) {
