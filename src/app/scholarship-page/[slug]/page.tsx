@@ -80,47 +80,64 @@ const Scholarship = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading)
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100 flex items-center justify-center">
+        <p className="text-xl font-semibold text-gray-700">Loading...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100 flex items-center justify-center">
+        <p className="text-xl font-semibold text-red-600">Error: {error}</p>
+      </div>
+    );
 
   return (
-    <div className="relative">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
       <Header isStudent={true} />
-      
+
       {/* React Hot Toast Toaster */}
       <Toaster position="top-center" reverseOrder={false} />
 
-      <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4">{scholarshipDetails?.name}</h1>
-        
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Offered By:</strong> {scholarshipDetails?.provider}
-        </p>
-        
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Amount:</strong> {scholarshipDetails?.amount}
-        </p>
-        
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Duration:</strong> {scholarshipDetails?.duration} months
-        </p>
-        
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Eligibility:</strong> {scholarshipDetails?.eligibility}
-        </p>
-        
-        <p className="text-lg text-gray-700 mb-4">
-          <strong>Description:</strong> {scholarshipDetails?.desc}
-        </p>
+      {/* Scholarship Details Section */}
+      <div className="container mx-auto px-6 py-10">
+        <div className="bg-white rounded-lg shadow-md p-8 max-w-4xl mx-auto relative">
+          {/* Scholarship Name */}
+          <h1 className="text-4xl font-bold text-indigo-700 mb-6 text-center">
+            {scholarshipDetails?.name}
+          </h1>
 
-        {/* Apply Button */}
-        <button
-          onClick={applyOnClick}
-          className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Apply
-        </button>
+          {/* Scholarship Details */}
+          <div className="space-y-4 text-gray-700">
+            <p>
+              <strong className="font-medium">Offered By:</strong> {scholarshipDetails?.provider}
+            </p>
+            <p>
+              <strong className="font-medium">Amount:</strong> {scholarshipDetails?.amount}
+            </p>
+            <p>
+              <strong className="font-medium">Duration:</strong> {scholarshipDetails?.duration} months
+            </p>
+            <p>
+              <strong className="font-medium">Eligibility:</strong> {scholarshipDetails?.eligibility}
+            </p>
+            <p>
+              <strong className="font-medium">Description:</strong> {scholarshipDetails?.desc}
+            </p>
+          </div>
+
+          {/* Apply Button */}
+          <button
+            onClick={applyOnClick}
+            className="mt-6 w-full px-6 py-3 bg-yellow-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+          >
+            Apply for Scholarship
+          </button>
+        </div>
       </div>
+
     </div>
   );
 };
