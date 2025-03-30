@@ -41,12 +41,11 @@ const InternshipApplications = () => {
       if (!res.ok) throw new Error("Failed to schedule interview");
 
       const result = await res.json();
-      console.log(`Interview scheduled! Room Name: ${result.roomName}`); // can also send meet link
+      console.log(`Interview scheduled! Room Name: ${result.roomName}`);
       router.push(`/interview/${result.roomName}`);
       setShowModal(false);
     } catch (err) {
       console.log("Error scheduling interview:", err);
-      console.log("Failed to schedule interview. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -70,7 +69,7 @@ const InternshipApplications = () => {
         }
 
         const result = await res.json();
-        setApplications(result.data.applications); // Populate applications state
+        setApplications(result.data.applications);
         setProject(result.data);
       } catch (err) {
         if (err instanceof Error) {
@@ -87,7 +86,7 @@ const InternshipApplications = () => {
   }, [slug]);
 
   const deleteProject = async () => {
-    if (!confirm("Are you sure you want to delete this project?")) return; // maybe here we can show a modal box, will do it later
+    if (!confirm("Are you sure you want to delete this project?")) return;
 
     try {
       const res = await fetch("/api/deleteProject", {
@@ -111,15 +110,12 @@ const InternshipApplications = () => {
   ) => {
     try {
       const res = await fetch("/api/updateApplicationStatus", {
-        // ye api banana baaki hai
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ applicationId, status: newStatus }),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to update application status");
-      }
+      if (!res.ok) throw new Error("Failed to update application status");
 
       // Update local state after successful API call
       setApplications((prevApplications) =>
@@ -132,45 +128,50 @@ const InternshipApplications = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p className="text-red-500">Error: {error}</p>;
+  if (loading)
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100 flex items-center justify-center">
+        <p className="text-xl font-semibold text-gray-700">Loading...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100 flex items-center justify-center">
+        <p className="text-xl font-semibold text-red-600">Error: {error}</p>
+      </div>
+    );
 
   return (
-    <div className="relative">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
       <Header isStudent={false} />
-      <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">
-          Applications for {project.name}
-        </h1>
 
-        <button
-          onClick={() => setShowModal(true)}
-          className="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700"
-        >
-          Schedule Interview
-        </button>
+      <div className="container mx-auto px-6 py-10">
+        <div className="bg-white rounded-lg shadow-md p-8 max-w-4xl mx-auto relative">
+          <h1 className="text-3xl font-bold text-indigo-700 mb-6">
+            Applications for {project?.name}
+          </h1>
 
-        {/* delete project button */}
-        <div className="flex justify-end mb-6">
-          <button
-            onClick={deleteProject}
-            className="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700"
-          >
-            Remove Project
-          </button>
-        </div>
+          {/* Delete Project Button */}
+          <div className="flex justify-end mb-6">
+            <button
+              onClick={deleteProject}
+              className="px-6 py-3 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Remove Project
+            </button>
+          </div>
 
-        {applications.length === 0 ? (
-          <p className="text-gray-600">
-            No applications have been submitted yet.
-          </p>
-        ) : (
-          <div className="space-y-6">
-            {applications.map((app) => {
-              console.log(app.user.cvUrl);
-              return (
-                <div key={app.id} className="bg-white p-4 rounded-lg shadow-md">
-                  <h2 className="text-xl font-semibold">
+          {applications.length === 0 ? (
+            <p className="text-gray-600">No applications have been submitted yet.</p>
+          ) : (
+            <div className="space-y-6">
+              {applications.map((app) => (
+                <div
+                  key={app.id}
+                  className="bg-white rounded-xl shadow-md transform transition-all duration-500 hover:-translate-y-1 hover:shadow-xl border-l-[5px] border-yellow-600 overflow-hidden cursor-pointer p-6"
+                >
+                  <h2 className="text-xl font-semibold text-indigo-700 mb-2">
                     Applicant: {app.user?.firstName} {app.user?.lastName}
                   </h2>
                   <p>
@@ -188,11 +189,12 @@ const InternshipApplications = () => {
                     <strong>Applied On:</strong>{" "}
                     {new Date(app.createdAt).toLocaleDateString()}
                   </p>
+
                   {/* Links to CV and Transcript */}
                   <div className="flex gap-4 mt-2">
                     {app.user?.cvUrl && (
                       <Link
-                        href={"http://localhost:3000/" + app.user?.cvUrl}
+                        href={app.user.cvUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
@@ -202,9 +204,7 @@ const InternshipApplications = () => {
                     )}
                     {app.user?.transcriptUrl && (
                       <Link
-                        href={
-                          "http://localhost:3000/" + app.user?.transcriptUrl
-                        }
+                        href={app.user.transcriptUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
@@ -213,11 +213,13 @@ const InternshipApplications = () => {
                       </Link>
                     )}
                   </div>
+
+                  {/* Approve and Reject Buttons */}
                   <div className="flex gap-4 mt-4">
                     <button
                       onClick={() =>
                         updateApplicationStatus(app.id, "APPROVED")
-                      } // or can call different api for reject and approve
+                      }
                       disabled={app.status === "APPROVED"}
                       className={`px-4 py-2 rounded ${
                         app.status === "APPROVED"
@@ -242,17 +244,18 @@ const InternshipApplications = () => {
                     </button>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
 
-        {/* Modal for scheduling interview */}
+        {/* Modal for Scheduling Interview */}
         {showModal && (
           <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
               <h2 className="text-xl font-bold mb-4">Schedule Interview</h2>
               <form>
+                {/* Email Input */}
                 <div className="mb-4">
                   <label htmlFor="email" className="block text-sm font-medium">
                     Student Email
@@ -267,6 +270,7 @@ const InternshipApplications = () => {
                   />
                 </div>
 
+                {/* Date Input */}
                 <div className="mb-4">
                   <label htmlFor="date" className="block text-sm font-medium">
                     Interview Date
@@ -281,6 +285,7 @@ const InternshipApplications = () => {
                   />
                 </div>
 
+                {/* Time Input */}
                 <div className="mb-4">
                   <label htmlFor="time" className="block text-sm font-medium">
                     Interview Time
@@ -295,7 +300,7 @@ const InternshipApplications = () => {
                   />
                 </div>
 
-                {/* Buttons */}
+                {/* Modal Buttons */}
                 <div className="flex justify-end gap-4">
                   {/* Cancel Button */}
                   <button
@@ -309,13 +314,10 @@ const InternshipApplications = () => {
                   {/* Schedule Button */}
                   <button
                     type="button"
-                    onClick={scheduleInterview} // Call scheduleInterview function
+                    onClick={scheduleInterview}
                     disabled={loading}
-                    className={`px-4 py-2 rounded ${
-                      loading
-                        ? "bg-blue-300"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }`}
+                    className={`px-4 py-2 rounded ${loading ? "bg-blue-300" : "bg-blue-600 text-white hover:bg-blue-700"
+                      }`}
                   >
                     {loading ? "Scheduling..." : "Schedule"}
                   </button>
