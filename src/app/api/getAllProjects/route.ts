@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
   const prerequisites = searchParams.get("prerequisites")?.split(",") || [];
   const durationMin = parseInt(searchParams.get("durationMin") || "0", 10);
   const durationMax = parseInt(searchParams.get("durationMax") || "12", 10);
+  const remoteOnsite = searchParams.get("remoteOnsite");
 
   try {
     let projects = await prisma.project.findMany({
@@ -28,7 +29,11 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    projects = projects.filter( 
+    if (remoteOnsite === "onsite")
+      projects = projects.filter((project) => project.mode === "onsite");
+    else if (remoteOnsite === "remote")
+      projects = projects.filter((project) => project.mode === "remote");
+    projects = projects.filter(
       (project) =>
         parseInt(project.stipend) >= stipendMin &&
         parseInt(project.stipend) <= stipendMax
@@ -42,7 +47,7 @@ export async function GET(req: NextRequest) {
 
     if (prerequisites.length > 0) {
       projects = projects.filter((project) =>
-        prerequisites.some((prerequisite) => 
+        prerequisites.some((prerequisite) =>
           project.prerequisites
             ?.toLowerCase()
             .includes(prerequisite.toLowerCase())
