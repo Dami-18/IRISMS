@@ -288,7 +288,7 @@ const Register = () => {
               ))}
 
               {/* File Uploads */}
-              {["cv", "transcript", "income"].map((doc) => (
+              {["cv", "ts", "inc"].map((doc) => (
                 <div key={doc}>
                   <label
                     htmlFor={doc}

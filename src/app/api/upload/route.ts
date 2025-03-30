@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
 
     const tsName = req.headers.get("Y-Type");
 
-    const tsBytes = await cv.arrayBuffer();
+    const tsBytes = await ts.arrayBuffer();
     const tsBuffer = Buffer.from(tsBytes);
     const tsFilePath = path.join(
       process.cwd(),
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
 
     const inName = req.headers.get("Z-Type");
 
-    const inBytes = await cv.arrayBuffer();
+    const inBytes = await inc.arrayBuffer();
     const inBuffer = Buffer.from(inBytes);
     const inFilePath = path.join(
       process.cwd(),
@@ -133,10 +133,15 @@ export async function POST(req: NextRequest) {
 
     const tsLink = "uploads/Student/Transcript/" + tsName;
 
-    const inLink = "uploads/Student/IncomeCertificate/" + inName
+    const inLink = "uploads/Student/IncomeCertificate/" + inName;
 
     return NextResponse.json(
-      { message: "file uploaded successfully", cvLink: cvLink, tsLink: tsLink, inLink: inLink },
+      {
+        message: "file uploaded successfully",
+        cvLink: cvLink,
+        tsLink: tsLink,
+        inLink: inLink,
+      },
       { status: 200 }
     );
   } catch (error) {
