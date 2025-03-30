@@ -8,31 +8,37 @@ import toast from "react-hot-toast";
 export default function Header({ isStudent }: { isStudent?: boolean }) {
   if (isStudent === undefined) return <></>;
   return (
-    <header className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center">
-      <div className="font-bold text-xl">
-        <Link href="/">IRISMS</Link>
+    <header className="bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
+      <div className="text-2xl font-bold text-yellow-600 transform transition duration-500 hover:scale-105">
+        IRISMS
       </div>
       <nav className="flex items-center gap-6">
         <Link
           href={isStudent ? "/dashboard-students" : "/dashboard-faculty"}
-          className="hover:text-gray-300"
+          className="text-yellow-100 hover:text-gray-300"
         >
           Home
         </Link>
         {isStudent && (
-          <Link href="/internships" className="hover:text-gray-300">
+          <Link
+            href="/internships"
+            className="text-yellow-100 hover:text-gray-300"
+          >
             Internships
           </Link>
         )}
 
         {isStudent && (
-          <Link href="/scholarships" className="hover:text-gray-300">
+          <Link
+            href="/scholarships"
+            className="text-yellow-100 hover:text-gray-300"
+          >
             Scholarships
           </Link>
         )}
 
         <Menu as="div" className="relative inline-block text-left">
-          <Menu.Button className="px-3 py-2 bg-gray-700 rounded">
+          <Menu.Button className="px-3 py-2 bg-gray-700 rounded text-yellow-100">
             Profile ▾
           </Menu.Button>
           <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white text-black rounded shadow-lg z-10">
