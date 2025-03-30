@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "@/Components/Header";
+import toast, { Toaster } from "react-hot-toast";
 
 const Scholarship = () => {
   const { slug } = useParams(); // Extract project ID (slug) from URL parameters
@@ -11,11 +12,11 @@ const Scholarship = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // details using the API
+  // Fetch scholarship details using the API
   useEffect(() => {
     if (!slug) return;
 
-    const fetchscholarshipDetails = async () => {
+    const fetchScholarshipDetails = async () => {
       try {
         const res = await fetch("/api/getScholarshipDetails", {
           method: "POST",
@@ -43,19 +44,21 @@ const Scholarship = () => {
       }
     };
 
-    fetchscholarshipDetails();
+    fetchScholarshipDetails();
   }, [slug]);
 
-  // Apply for internship
+  // Apply for scholarship
   const applyOnClick = async () => {
     try {
       const res = await fetch("/api/user", {
-        method: "GET", // if gives error, accordingly change in api to GET() or change here to POST
+        method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // Include cookies
       });
 
-      const { message, data } = await res.json();
+      if (!res.ok) throw new Error("Failed to fetch user details");
+
+      const { data } = await res.json();
 
       const result = await fetch("/api/applyScholarship", {
         method: "POST",
@@ -68,10 +71,12 @@ const Scholarship = () => {
       });
 
       if (result.status === 200) {
-        console.log("Successfully applied for the scholarship!"); // show react hot toast
+        toast.success("Successfully applied for the scholarship!");
+      } else {
+        throw new Error("Failed to apply for the scholarship");
       }
     } catch (error) {
-      console.log("Unexpected error:", error);
+      toast.error(error instanceof Error ? error.message : "Unexpected error occurred");
     }
   };
 
@@ -81,25 +86,34 @@ const Scholarship = () => {
   return (
     <div className="relative">
       <Header isStudent={true} />
+      
+      {/* React Hot Toast Toaster */}
+      <Toaster position="top-center" reverseOrder={false} />
+
       <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-4">{scholarshipDetails?.name}</h1>
+        
         <p className="text-lg text-gray-700 mb-2">
           <strong>Offered By:</strong> {scholarshipDetails?.provider}
         </p>
+        
         <p className="text-lg text-gray-700 mb-2">
           <strong>Amount:</strong> {scholarshipDetails?.amount}
         </p>
+        
         <p className="text-lg text-gray-700 mb-2">
           <strong>Duration:</strong> {scholarshipDetails?.duration} months
         </p>
+        
         <p className="text-lg text-gray-700 mb-2">
           <strong>Eligibility:</strong> {scholarshipDetails?.eligibility}
         </p>
+        
         <p className="text-lg text-gray-700 mb-4">
           <strong>Description:</strong> {scholarshipDetails?.desc}
         </p>
 
-        {/* Apply */}
+        {/* Apply Button */}
         <button
           onClick={applyOnClick}
           className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600"
