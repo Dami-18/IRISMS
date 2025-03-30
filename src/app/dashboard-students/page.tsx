@@ -15,7 +15,7 @@ export default function StudDashboard() {
     const fetchUserDetails = async () => {
       try {
         const res = await fetch("/api/user", {
-          method: "POST",
+          method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
         });
@@ -24,7 +24,7 @@ export default function StudDashboard() {
 
         const result = await res.json();
         setApplications(result.data.applications || []);
-        // setScholarships(result.data.scholarships || []); // Assuming scholarships are fetched here
+        setScholarships(result.data.scholarshipApplications || []); // Assuming scholarships are fetched here
         setUser(result.data);
 
         setLoading(false);
@@ -124,7 +124,7 @@ export default function StudDashboard() {
                 {scholarships.map((scholarship) => (
                   <tr key={scholarship.id}>
                     <td className="border border-gray-300 p-2">
-                      {scholarship.name}
+                      {scholarship.scholarship.name}
                     </td>
                     <td className="border border-gray-300 p-2">
                       {scholarship.status === "APPROVED" && (

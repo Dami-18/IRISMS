@@ -24,6 +24,12 @@ export async function GET(req: NextRequest) {
           project: true, // include explicitly to also return non scalar fields
         },
       },
+      scholarshipApplications: {
+        include: {
+          user: true,
+          scholarship: true,
+        },
+      }
     },
   });
 
@@ -37,8 +43,6 @@ export async function GET(req: NextRequest) {
     },
     { status: 200 }
   );
-  // using above userData we fetch all the details of user from database and then send it as json
-  // then further with this api call, all such details can be displayed on dahsboard or whatever
 }
 
 // 2 methods just to debug in case one doesn't work
@@ -59,6 +63,12 @@ export async function POST(req: NextRequest) {
           project: true, // include explicitly to also return non scalar fields
         },
       },
+      scholarshipApplications: {
+        include: {
+          user: true,
+          scholarship: true,
+        },
+      },
     },
   });
 
@@ -72,6 +82,4 @@ export async function POST(req: NextRequest) {
     },
     { status: 200 }
   );
-  // using above userData we fetch all the details of user from database and then send it as json
-  // then further with this api call, all such details can be displayed on dahsboard or whatever
 }
