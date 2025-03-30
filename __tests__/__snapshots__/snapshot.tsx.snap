@@ -30,6 +30,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
     </header>
     <section
       class="jsx-723bb9ff0809bb37 relative bg-indigo-900 text-white py-20 overflow-hidden"
+      id="main-header"
     >
       <div
         class="jsx-723bb9ff0809bb37 absolute inset-0 overflow-hidden"
@@ -69,6 +70,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
     </section>
     <section
       class="jsx-723bb9ff0809bb37 py-16 bg-white"
+      id="academic-journey"
     >
       <div
         class="jsx-723bb9ff0809bb37 container mx-auto px-6"
@@ -197,7 +199,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
         <p
           class="jsx-723bb9ff0809bb37 text-center text-gray-600 mb-12 max-w-2xl mx-auto"
         >
-          Connect with leading researchers and academics who are at the forefront of innovation and discovery.
+          Connect with leading researchers and professors who are at the forefront of innovation and discovery.
         </p>
         <div
           class="jsx-723bb9ff0809bb37 grid grid-cols-2 md:grid-cols-4 gap-6"
@@ -209,20 +211,20 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
               class="jsx-723bb9ff0809bb37 w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden"
             >
               <img
-                alt="Professor"
+                alt="Prof. Debasis Samanta"
                 class="jsx-723bb9ff0809bb37 w-full h-full object-cover"
-                src="https://picsum.photos/200/200?random=1"
+                src="https://cse.iitkgp.ac.in/facimg/DSMsmall.jpg?1743340966"
               />
             </div>
             <h3
               class="jsx-723bb9ff0809bb37 font-medium text-lg mb-1"
             >
-              Prof. Sarah Johnson
+              Prof. Debasis Samanta
             </h3>
             <p
               class="jsx-723bb9ff0809bb37 text-sm text-gray-500 mb-2"
             >
-              Quantum Computing
+              Biometric Security, Brain Computing, Human Computer Interaction
             </p>
           </div>
           <div
@@ -232,20 +234,20 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
               class="jsx-723bb9ff0809bb37 w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden"
             >
               <img
-                alt="Professor"
+                alt="Prof. Jibesh Patra"
                 class="jsx-723bb9ff0809bb37 w-full h-full object-cover"
-                src="https://picsum.photos/200/200?random=2"
+                src="https://cse.iitkgp.ac.in/facimg/JBPsmall.jpg?1743340966"
               />
             </div>
             <h3
               class="jsx-723bb9ff0809bb37 font-medium text-lg mb-1"
             >
-              Prof. Sarah Johnson
+              Prof. Jibesh Patra
             </h3>
             <p
               class="jsx-723bb9ff0809bb37 text-sm text-gray-500 mb-2"
             >
-              Quantum Computing
+              AI for SE, Software Security
             </p>
           </div>
           <div
@@ -255,20 +257,20 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
               class="jsx-723bb9ff0809bb37 w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden"
             >
               <img
-                alt="Professor"
+                alt="Prof. Animesh Mukherjee"
                 class="jsx-723bb9ff0809bb37 w-full h-full object-cover"
-                src="https://picsum.photos/200/200?random=3"
+                src="https://cse.iitkgp.ac.in/~animeshm/mypic.jpg"
               />
             </div>
             <h3
               class="jsx-723bb9ff0809bb37 font-medium text-lg mb-1"
             >
-              Prof. Sarah Johnson
+              Prof. Animesh Mukherjee
             </h3>
             <p
               class="jsx-723bb9ff0809bb37 text-sm text-gray-500 mb-2"
             >
-              Quantum Computing
+              Complex and Social Networks, Data and Web Mining
             </p>
           </div>
           <div
@@ -278,20 +280,20 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
               class="jsx-723bb9ff0809bb37 w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden"
             >
               <img
-                alt="Professor"
+                alt="Prof. Abir Das"
                 class="jsx-723bb9ff0809bb37 w-full h-full object-cover"
-                src="https://picsum.photos/200/200?random=4"
+                src="https://cse.iitkgp.ac.in/facimg/ADASsmall.jpg?1743340966"
               />
             </div>
             <h3
               class="jsx-723bb9ff0809bb37 font-medium text-lg mb-1"
             >
-              Prof. Sarah Johnson
+              Prof. Abir Das
             </h3>
             <p
               class="jsx-723bb9ff0809bb37 text-sm text-gray-500 mb-2"
             >
-              Quantum Computing
+              Machine Learning, Computer Vision
             </p>
           </div>
         </div>
@@ -308,6 +310,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
     </section>
     <section
       class="jsx-723bb9ff0809bb37 py-16 bg-white"
+      id="opport"
     >
       <div
         class="jsx-723bb9ff0809bb37 container mx-auto px-6"
@@ -332,7 +335,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
               class="jsx-723bb9ff0809bb37 space-y-4"
             >
               <div
-                class="jsx-723bb9ff0809bb37 bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-500 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
+                class="jsx-723bb9ff0809bb37 bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-600 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
               >
                 <div
                   class="jsx-723bb9ff0809bb37 flex-1"
@@ -340,12 +343,12 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                   <h3
                     class="jsx-723bb9ff0809bb37 font-medium text-lg"
                   >
-                    Research Assistant in Data Science
+                    Natural Language Processing
                   </h3>
                   <p
                     class="jsx-723bb9ff0809bb37 text-gray-500 text-sm mb-2"
                   >
-                    Department of Computer Science
+                    NLP Lab, CSE Department
                   </p>
                   <div
                     class="jsx-723bb9ff0809bb37 flex items-center text-xs text-gray-500"
@@ -353,18 +356,20 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                     <span
                       class="jsx-723bb9ff0809bb37 mr-3"
                     >
-                      Duration: 6 months
+                      Duration: 
+                      3 months
                     </span>
                     <span
                       class="jsx-723bb9ff0809bb37"
                     >
-                      Stipend: $1000/month
+                      Stipend: 
+                      ₹25,000/month
                     </span>
                   </div>
                 </div>
               </div>
               <div
-                class="jsx-723bb9ff0809bb37 bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-500 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
+                class="jsx-723bb9ff0809bb37 bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-600 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
               >
                 <div
                   class="jsx-723bb9ff0809bb37 flex-1"
@@ -372,12 +377,12 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                   <h3
                     class="jsx-723bb9ff0809bb37 font-medium text-lg"
                   >
-                    Research Assistant in Data Science
+                    Computer Vision Research Internship
                   </h3>
                   <p
                     class="jsx-723bb9ff0809bb37 text-gray-500 text-sm mb-2"
                   >
-                    Department of Computer Science
+                    AI Research Lab, CSE Department
                   </p>
                   <div
                     class="jsx-723bb9ff0809bb37 flex items-center text-xs text-gray-500"
@@ -385,18 +390,20 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                     <span
                       class="jsx-723bb9ff0809bb37 mr-3"
                     >
-                      Duration: 6 months
+                      Duration: 
+                      6 months
                     </span>
                     <span
                       class="jsx-723bb9ff0809bb37"
                     >
-                      Stipend: $1000/month
+                      Stipend: 
+                      ₹30,000/month
                     </span>
                   </div>
                 </div>
               </div>
               <div
-                class="jsx-723bb9ff0809bb37 bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-500 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
+                class="jsx-723bb9ff0809bb37 bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-600 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
               >
                 <div
                   class="jsx-723bb9ff0809bb37 flex-1"
@@ -404,12 +411,12 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                   <h3
                     class="jsx-723bb9ff0809bb37 font-medium text-lg"
                   >
-                    Research Assistant in Data Science
+                    Cybersecurity Research Internship
                   </h3>
                   <p
                     class="jsx-723bb9ff0809bb37 text-gray-500 text-sm mb-2"
                   >
-                    Department of Computer Science
+                    Network Security Group, CSE Department
                   </p>
                   <div
                     class="jsx-723bb9ff0809bb37 flex items-center text-xs text-gray-500"
@@ -417,12 +424,14 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                     <span
                       class="jsx-723bb9ff0809bb37 mr-3"
                     >
-                      Duration: 6 months
+                      Duration: 
+                      6 months
                     </span>
                     <span
                       class="jsx-723bb9ff0809bb37"
                     >
-                      Stipend: $1000/month
+                      Stipend: 
+                      ₹35,000/month
                     </span>
                   </div>
                 </div>
