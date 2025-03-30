@@ -46,7 +46,7 @@ const WelcomePage = () => {
       </header>
 
       {/* Hero Section with Animated Background */}
-      <section className="relative bg-indigo-900 text-white py-20 overflow-hidden">
+      <section className="relative bg-indigo-900 text-white py-20 overflow-hidden" id="main-header">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 opacity-50">
             {/* Animated background elements */}
@@ -120,7 +120,7 @@ const WelcomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" id="academic-journey">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
             How We Help In Your Academic Journey
@@ -206,6 +206,7 @@ const WelcomePage = () => {
               </p>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -253,7 +254,7 @@ const WelcomePage = () => {
       </section>
 
       {/* Recent Opportunities Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white" id="opport">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="md:w-1/2 mb-10 md:mb-0">
@@ -347,6 +348,11 @@ const WelcomePage = () => {
                 <li>
                   <a
                     href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('opport');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="hover:text-white transition-colors duration-300"
                   >
                     Research Internships
@@ -355,6 +361,11 @@ const WelcomePage = () => {
                 <li>
                   <a
                     href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('opport');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="hover:text-white transition-colors duration-300"
                   >
                     Scholarships
@@ -368,6 +379,11 @@ const WelcomePage = () => {
                 <li>
                   <a
                     href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('academic-journey');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="hover:text-white transition-colors duration-300"
                   >
                     Post Opportunities
@@ -376,6 +392,11 @@ const WelcomePage = () => {
                 <li>
                   <a
                     href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('academic-journey');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="hover:text-white transition-colors duration-300"
                   >
                     Find Research Assistants
@@ -412,6 +433,11 @@ const WelcomePage = () => {
                 <li>
                   <a
                     href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById('main-header');
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="hover:text-white transition-colors duration-300"
                   >
                     About Us
