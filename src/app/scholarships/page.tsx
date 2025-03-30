@@ -34,33 +34,37 @@ export default function InternshipsPage() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
       <Header isStudent={true} />
-      <main className="max-w-screen-xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-4">Explore Internships</h1>
 
-        {/* Search & Filter */}
-        <div className="mb-6">
-          <div className="flex gap-4 mb-4">
+      <main className="max-w-screen-xl mx-auto p-6">
+        {/* Page Title */}
+        <h1 className="text-4xl font-bold text-left text-indigo-700 mb-8">
+          Explore Internships
+        </h1>
+
+        {/* Search & Filter Section */}
+        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            {/* Search Input */}
             <input
               type="text"
               placeholder="Search internships..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border border-gray-300 rounded p-2 w-full"
+              className="flex-grow border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none"
             />
+            {/* Clear Filters Button */}
             <button
               onClick={clearFilters}
-              className="bg-red-500 text-white px-4 py-2 rounded"
+              className="px-6 py-3 bg-red-500 text-white font-medium rounded-lg shadow-md hover:bg-red-600 transition-all duration-300"
             >
               Clear Filters
             </button>
           </div>
 
-          {/* Filters */}
+          {/* Location Filter */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-
-            {/* Location Filter */}
             <input
               type="text"
               placeholder="Location"
@@ -68,25 +72,33 @@ export default function InternshipsPage() {
               onChange={(e) =>
                 setFilter({ ...filter, location: e.target.value })
               }
-              className="border border-gray-300 rounded p-2 w-full"
+              className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none"
             />
           </div>
         </div>
 
-        {/* Internship Cards */}
+        {/* Internship Cards Section */}
         {projects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="border rounded-lg shadow-sm p-4 hover:bg-gray-50 transition"
+                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 border-l-4 border-yellow-500"
               >
-                <h3 className="text-lg font-semibold">{project.name}</h3>
-                <p>{project.provider}</p>
-                <p>{project.amount}</p>
+                {/* Internship Details */}
+                <h3 className="text-xl font-semibold text-indigo-700 mb-2">
+                  {project.name}
+                </h3>
+                <p className="text-gray-600 mb-1">
+                  <span className="font-medium">Provider:</span> {project.provider}
+                </p>
+                <p className="text-gray-600 mb-4">
+                  <span className="font-medium">Amount:</span> {project.amount}
+                </p>
 
+                {/* Show Details Button */}
                 <Link href={`/scholarship-page/${project.id}`}>
-                  <button className="mt-2 bg-blue-500 text-white px-3 py-1 rounded">
+                  <button className="mt-auto px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300">
                     Show Details
                   </button>
                 </Link>
@@ -94,9 +106,11 @@ export default function InternshipsPage() {
             ))}
           </div>
         ) : (
-          <p>No scholarships found.</p>
+          <p className="text-center text-gray-600 mt-10">
+            No internships found. Try adjusting your filters.
+          </p>
         )}
       </main>
-    </>
+    </div>
   );
 }
