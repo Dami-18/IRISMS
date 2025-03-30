@@ -49,6 +49,30 @@ const WelcomePage = () => {
     }
   ];
 
+  const internships = [
+    {
+      id: 1,
+      title: "Natural Language Processing",
+      department: "NLP Lab, CSE Department",
+      duration: "3 months",
+      stipend: "₹25,000/month",
+    },
+    {
+      id: 2,
+      title: "Computer Vision Research Internship",
+      department: "AI Research Lab, CSE Department",
+      duration: "6 months",
+      stipend: "₹30,000/month",
+    },
+    {
+      id: 3,
+      title: "Cybersecurity Research Internship",
+      department: "Network Security Group, CSE Department",
+      duration: "6 months",
+      stipend: "₹35,000/month",
+    }
+  ];
+
   const handleRedirect = (url: string) => {
     window.open(url, '_blank');
   };
@@ -252,7 +276,7 @@ const WelcomePage = () => {
             Featured Professors
           </h2>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-            Connect with leading researchers and academics who are at the
+            Connect with leading researchers and professors who are at the
             forefront of innovation and discovery.
           </p>
 
@@ -302,22 +326,21 @@ const WelcomePage = () => {
               </p>
 
               <div className="space-y-4">
-                {/* Opportunity Items with Hover Effect */}
-                {[1, 2, 3].map((item) => (
+                {internships.map((internship) => (
                   <div
-                    key={item}
-                    className="bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-500 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md"
+                    key={internship.id}
+                    className={`bg-gray-50 rounded-lg p-5 flex items-start border-l-4 border-yellow-600 transform transition-all duration-300 hover:-translate-x-1 hover:shadow-md`}
                   >
                     <div className="flex-1">
                       <h3 className="font-medium text-lg">
-                        Research Assistant in Data Science
+                        {internship.title}
                       </h3>
                       <p className="text-gray-500 text-sm mb-2">
-                        Department of Computer Science
+                        {internship.department}
                       </p>
                       <div className="flex items-center text-xs text-gray-500">
-                        <span className="mr-3">Duration: 6 months</span>
-                        <span>Stipend: $1000/month</span>
+                        <span className="mr-3">Duration: {internship.duration}</span>
+                        <span>Stipend: {internship.stipend}</span>
                       </div>
                     </div>
                   </div>
