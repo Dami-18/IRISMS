@@ -153,7 +153,7 @@ const InternshipApplications = () => {
 
           <button
             onClick={() => setShowModal(true)}
-            className="fixed bottom-7 right-6 mr-20 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-indigo-700"
+            className="fixed bottom-7 left-6 mr-20 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-indigo-700"
           >
             Schedule Interview
           </button>
