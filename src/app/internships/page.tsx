@@ -75,24 +75,27 @@ export default function InternshipsPage() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
       <Header isStudent={true} />
+
       <main className="max-w-screen-xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-4">Explore Internships</h1>
+        <h1 className="text-4xl font-bold text-left text-indigo-700 mb-8">
+          Explore Internships
+        </h1>
 
         {/* Search & Filter */}
-        <div className="mb-6">
-          <div className="flex gap-4 mb-4">
+        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
             <input
               type="text"
               placeholder="Search internships..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border border-gray-300 rounded p-2 w-full"
+              className="flex-grow border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none"
             />
             <button
               onClick={clearFilters}
-              className="bg-red-500 text-white px-4 py-2 rounded"
+              className="px-6 py-3 bg-red-500 text-white font-medium rounded-lg shadow-md hover:bg-red-600 transition-all duration-300"
             >
               Clear Filters
             </button>
@@ -106,7 +109,7 @@ export default function InternshipsPage() {
               onChange={(e) =>
                 setFilter({ ...filter, remoteOnsite: e.target.value })
               }
-              className="border border-gray-300 rounded p-2 w-full"
+              className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none"
             >
               <option value="all">All</option>
               <option value="remote">Remote</option>
@@ -121,12 +124,12 @@ export default function InternshipsPage() {
               onChange={(e) =>
                 setFilter({ ...filter, location: e.target.value })
               }
-              className="border border-gray-300 rounded p-2 w-full"
+              className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none"
             />
 
             {/* Stipend Slider */}
             <div>
-              <label className="block text-sm font-medium mb-1">Stipend</label>
+              <label className="block text-sm font-medium">Stipend</label>
               <input
                 type="range"
                 min={0}
@@ -139,7 +142,7 @@ export default function InternshipsPage() {
                     stipend: [filter.stipend[0], parseInt(e.target.value)],
                   })
                 }
-                className="w-full"
+                className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 outline-none"
               />
               <p className="text-sm text-gray-600">
                 ₹{filter.stipend[0]} - ₹{filter.stipend[1]}
@@ -148,7 +151,7 @@ export default function InternshipsPage() {
 
             {/* Duration Slider */}
             <div>
-              <label className="block text-sm font-medium mb-1">Duration</label>
+              <label className="block text-sm font-medium ">Duration</label>
               <input
                 type="range"
                 min={0}
@@ -161,7 +164,7 @@ export default function InternshipsPage() {
                     duration: [filter.duration[0], parseInt(e.target.value)],
                   })
                 }
-                className="w-full"
+                className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 outline-none"
               />
               <p className="text-sm text-gray-600">
                 {filter.duration[0]} - {filter.duration[1]} months
@@ -173,7 +176,7 @@ export default function InternshipsPage() {
               <label className="block text-sm font-medium mb-2">
                 Prerequisites
               </label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex gap-4">
                 {prerequisiteOptions.map((prerequisite) => (
                   <label key={prerequisite} className="flex items-center gap-2">
                     <input
@@ -192,15 +195,17 @@ export default function InternshipsPage() {
 
         {/* Internship Cards */}
         {projects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="border rounded-lg shadow-sm p-4 hover:bg-gray-50 transition"
+                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 border-l-4 border-yellow-500"
               >
-                <h3 className="text-lg font-semibold">{project.name}</h3>
-                <p>{project.facultyName}</p>
-                <p>{project.location}</p>
+                <h3 className="text-xl font-semibold text-indigo-700 mb-2">
+                  {project.name}
+                </h3>
+                <p className="text-gray-600 mb-1">{project.facultyName}</p>
+                <p className="text-gray-600 mb-1">{project.location}</p>
 
                 {/* skill/topic tagging */}
                 <div className="flex flex-wrap gap-2 my-2">
@@ -216,7 +221,7 @@ export default function InternshipsPage() {
                 </div>
 
                 <Link href={`/particular-internship/${project.id}`}>
-                  <button className="mt-2 bg-blue-500 text-white px-3 py-1 rounded">
+                  <button className="mt-auto px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300">
                     Show Details
                   </button>
                 </Link>
@@ -224,9 +229,11 @@ export default function InternshipsPage() {
             ))}
           </div>
         ) : (
-          <p>No internships found.</p>
+          <p className="text-center text-gray-600 mt-10">
+            No internships found.
+          </p>
         )}
       </main>
-    </>
+    </div>
   );
 }

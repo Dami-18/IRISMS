@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "@/Components/Header";
 import Link from "next/link";
 
-export default function InternshipsPage() {
+export default function ScholarshipPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [projects, setProjects] = useState<any[]>([]);
   const [filter, setFilter] = useState<{
@@ -90,7 +90,8 @@ export default function InternshipsPage() {
                   {project.name}
                 </h3>
                 <p className="text-gray-600 mb-1">
-                  <span className="font-medium">Provider:</span> {project.provider}
+                  <span className="font-medium">Provider:</span>{" "}
+                  {project.provider}
                 </p>
                 <p className="text-gray-600 mb-4">
                   <span className="font-medium">Amount:</span> {project.amount}
@@ -107,7 +108,7 @@ export default function InternshipsPage() {
           </div>
         ) : (
           <p className="text-center text-gray-600 mt-10">
-            No internships found. Try adjusting your filters.
+            No Scholarships found. Try adjusting your filters.
           </p>
         )}
       </main>

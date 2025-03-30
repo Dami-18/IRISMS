@@ -128,7 +128,7 @@ const ScholarshipApplications = () => {
                   <div className="flex gap-4 mt-2">
                     {app.user?.cvUrl && (
                       <a
-                        href={app.user?.cvUrl}
+                        href={"http://localhost:3000/" + app.user?.cvUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
@@ -138,7 +138,9 @@ const ScholarshipApplications = () => {
                     )}
                     {app.user?.transcriptUrl && (
                       <a
-                        href={app.user?.transcriptUrl}
+                        href={
+                          "http://localhost:3000/" + app.user?.transcriptUrl
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
@@ -148,7 +150,7 @@ const ScholarshipApplications = () => {
                     )}
                     {app.user?.incomeProof && (
                       <a
-                        href={app.user?.incomeProof}
+                        href={"http://localhost:3000/" + app.user?.incomeProof}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
