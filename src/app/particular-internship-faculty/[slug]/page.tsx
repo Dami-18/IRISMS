@@ -163,7 +163,9 @@ const InternshipApplications = () => {
           </div>
 
           {applications.length === 0 ? (
-            <p className="text-gray-600">No applications have been submitted yet.</p>
+            <p className="text-gray-600">
+              No applications have been submitted yet.
+            </p>
           ) : (
             <div className="space-y-6">
               {applications.map((app) => (
@@ -194,7 +196,7 @@ const InternshipApplications = () => {
                   <div className="flex gap-4 mt-2">
                     {app.user?.cvUrl && (
                       <Link
-                        href={app.user.cvUrl}
+                        href={"http://localhost:3000/" + app.user.cvUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
@@ -204,7 +206,7 @@ const InternshipApplications = () => {
                     )}
                     {app.user?.transcriptUrl && (
                       <Link
-                        href={app.user.transcriptUrl}
+                        href={"http://localhost:3000/" + app.user.transcriptUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
@@ -316,8 +318,11 @@ const InternshipApplications = () => {
                     type="button"
                     onClick={scheduleInterview}
                     disabled={loading}
-                    className={`px-4 py-2 rounded ${loading ? "bg-blue-300" : "bg-blue-600 text-white hover:bg-blue-700"
-                      }`}
+                    className={`px-4 py-2 rounded ${
+                      loading
+                        ? "bg-blue-300"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                    }`}
                   >
                     {loading ? "Scheduling..." : "Schedule"}
                   </button>
