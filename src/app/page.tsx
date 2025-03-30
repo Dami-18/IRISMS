@@ -18,6 +18,41 @@ const WelcomePage = () => {
     "Computer Vision",
   ];
 
+  const professors = [
+    {
+      id: 1,
+      name: "Prof. Debasis Samanta",
+      specialization: "Biometric Security, Brain Computing, Human Computer Interaction",
+      image: "https://cse.iitkgp.ac.in/facimg/DSMsmall.jpg?1743340966",
+      webPage: "https://cse.iitkgp.ac.in/~dsamanta/"
+    },
+    {
+      id: 2,
+      name: "Prof. Jibesh Patra",
+      specialization: "AI for SE, Software Security",
+      image: "https://cse.iitkgp.ac.in/facimg/JBPsmall.jpg?1743340966",
+      webPage: "https://jibesh.com/"
+    },
+    {
+      id: 3,
+      name: "Prof. Animesh Mukherjee",
+      specialization: "Complex and Social Networks, Data and Web Mining",
+      image: "https://cse.iitkgp.ac.in/~animeshm/mypic.jpg",
+      webPage: "https://cse.iitkgp.ac.in/~animeshm/"
+    },
+    {
+      id: 4,
+      name: "Prof. Abir Das",
+      specialization: "Machine Learning, Computer Vision",
+      image: "https://cse.iitkgp.ac.in/facimg/ADASsmall.jpg?1743340966",
+      webPage: "https://cse.iitkgp.ac.in/~adas/"
+    }
+  ];
+
+  const handleRedirect = (url: string) => {
+    window.open(url, '_blank');
+  };
+
   useEffect(() => {
     setIsLoaded(true);
   }, []);
@@ -59,8 +94,8 @@ const WelcomePage = () => {
         <div className="container mx-auto px-6 relative z-10">
           <div
             className={`max-w-3xl mx-auto text-center transform transition-all duration-1000 ${isLoaded
-                ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+              ? "translate-y-0 opacity-100"
+              : "translate-y-10 opacity-0"
               }`}
           >
             <h1 className="text-5xl font-bold mb-6 leading-tight">
@@ -222,23 +257,23 @@ const WelcomePage = () => {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {/* Professor Cards with Hover Effects */}
-            {[1, 2, 3, 4].map((item) => (
+            {professors.map((professor) => (
               <div
-                key={item}
+                key={professor.id}
                 className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center text-center transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl"
+                onClick={() => handleRedirect(professor.webPage)}
               >
                 <div className="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden">
                   <img
-                    src={`https://picsum.photos/200/200?random=${item}`}
-                    alt="Professor"
+                    src={professor.image}
+                    alt={professor.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="font-medium text-lg mb-1">
-                  Prof. Sarah Johnson
+                  {professor.name}
                 </h3>
-                <p className="text-sm text-gray-500 mb-2">Quantum Computing</p>
+                <p className="text-sm text-gray-500 mb-2">{professor.specialization}</p>
               </div>
             ))}
           </div>
