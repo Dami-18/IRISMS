@@ -52,6 +52,7 @@ export default function StudDashboard() {
         <p className="text-xl font-semibold text-gray-700">Loading...</p>
       </div>
     );
+
   if (error)
     return (
       <div className="flex justify-center items-center h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
@@ -60,13 +61,12 @@ export default function StudDashboard() {
     );
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
       <Header isStudent={true} />
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Dashboard Content */}
-      <div className="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
-
+      <div className="container mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg relative z-10">
         {/* Internship Applications */}
         {activeTab === "internships" && (
           <>
@@ -157,6 +157,6 @@ export default function StudDashboard() {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }

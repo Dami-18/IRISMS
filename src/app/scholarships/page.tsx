@@ -40,7 +40,7 @@ export default function InternshipsPage() {
       <main className="max-w-screen-xl mx-auto p-6">
         {/* Page Title */}
         <h1 className="text-4xl font-bold text-left text-indigo-700 mb-8">
-          Explore Internships
+          Explore Scholarships
         </h1>
 
         {/* Search & Filter Section */}
@@ -49,7 +49,7 @@ export default function InternshipsPage() {
             {/* Search Input */}
             <input
               type="text"
-              placeholder="Search internships..."
+              placeholder="Search scholarships..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-grow border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none"
