@@ -61,7 +61,7 @@ const Scholarship = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          projectId: slug, // Use the project ID from the URL
+          schoId: slug, // Use the project ID from the URL
           studentId: data.id,
           email: data.email,
         }),
