@@ -150,8 +150,13 @@ const InternshipApplications = () => {
         <div className="bg-white rounded-lg shadow-md p-8 max-w-4xl mx-auto relative">
           <h1 className="text-3xl font-bold text-indigo-700 mb-6">
             Applications for {project?.name}
-          </h1>
-
+          </h1>{" "}
+          <button
+            onClick={() => setShowModal(true)}
+            className="fixed bottom-7 right-6 mr-20 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-indigo-700"
+          >
+            Schedule Interview
+          </button>
           {/* Delete Project Button */}
           <div className="flex justify-end mb-6">
             <button
@@ -161,7 +166,6 @@ const InternshipApplications = () => {
               Remove Project
             </button>
           </div>
-
           {applications.length === 0 ? (
             <p className="text-gray-600">
               No applications have been submitted yet.
