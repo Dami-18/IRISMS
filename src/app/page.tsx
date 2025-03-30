@@ -13,9 +13,9 @@ const WelcomePage = () => {
     "Artificial Intelligence",
     "Machine Learning",
     "Quantum Computing",
-    "Climate Science",
-    "Biotechnology",
-    "Renewable Energy",
+    "Mathematics",
+    "Robotics",
+    "Computer Vision",
   ];
 
   useEffect(() => {
@@ -26,13 +26,13 @@ const WelcomePage = () => {
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
       {/* Header Navigation */}
       <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-        <div className="text-2xl font-bold text-yellow-600 transform transition duration-500 hover:scale-105">
+        <div className="text-3xl font-extrabold text-yellow-600 transform transition duration-500 hover:scale-105">
           IRISMS
         </div>
         <div className="flex space-x-4">
           <button
             onClick={() => router.push("/login")}
-            className="px-4 py-2 text-yellow-600 hover:text-indigo-800 transition-colors duration-300"
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-yellow-600 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
           >
             Login
           </button>
@@ -58,11 +58,10 @@ const WelcomePage = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <div
-            className={`max-w-3xl mx-auto text-center transform transition-all duration-1000 ${
-              isLoaded
+            className={`max-w-3xl mx-auto text-center transform transition-all duration-1000 ${isLoaded
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"
-            }`}
+              }`}
           >
             <h1 className="text-5xl font-bold mb-6 leading-tight">
               Discover Your Research Journey
@@ -73,7 +72,7 @@ const WelcomePage = () => {
             </p>
 
             {/* Search Bar (inspired by Naukri) */}
-            <div className="bg-white rounded-lg shadow-xl p-2 flex items-center transition-all duration-500 hover:shadow-2xl">
+            {/* <div className="bg-white rounded-lg shadow-xl p-2 flex items-center transition-all duration-500 hover:shadow-2xl">
               <svg
                 className="ml-3 h-5 w-5 text-gray-400"
                 xmlns="http://www.w3.org/2000/svg"
@@ -98,12 +97,12 @@ const WelcomePage = () => {
               <button className="bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-indigo-700 transform hover:scale-105">
                 Search
               </button>
-            </div>
+            </div> */}
 
             {/* Popular Search Tags */}
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {/* <div className="mt-6 flex flex-wrap justify-center gap-2">
               <span className="text-sm text-yellow-200 mr-2">
-                Popular Areas:
+                Popular Research Areas:
               </span>
               {researchAreas.map((area, index) => (
                 <button
@@ -114,7 +113,8 @@ const WelcomePage = () => {
                   {area}
                 </button>
               ))}
-            </div>
+            </div> */}
+
           </div>
         </div>
       </section>
@@ -123,7 +123,7 @@ const WelcomePage = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            How We Help Your Academic Journey
+            How We Help In Your Academic Journey
           </h2>
 
           <div className="grid md:grid-cols-3 gap-12">
@@ -176,7 +176,7 @@ const WelcomePage = () => {
               </h3>
               <p className="text-gray-600 text-center">
                 Find and apply for research internships that match your academic
-                interests and career goals with our advanced matching system.
+                interests and career goals.
               </p>
             </div>
 
@@ -202,8 +202,7 @@ const WelcomePage = () => {
               </h3>
               <p className="text-gray-600 text-center">
                 Discover scholarships and grants to fund your education and
-                research endeavors from national and international
-                organizations.
+                research endeavors from different organizations.
               </p>
             </div>
           </div>
@@ -239,15 +238,14 @@ const WelcomePage = () => {
                   Prof. Sarah Johnson
                 </h3>
                 <p className="text-sm text-gray-500 mb-2">Quantum Computing</p>
-                <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                  3 Open Positions
-                </span>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-10">
-            <button className="px-6 py-3 bg-white border border-yellow-600 text-yellow-600 rounded-lg shadow-sm hover:bg-indigo-50 transition-colors duration-300">
+            <button
+              onClick={() => router.push("/login")}
+              className="px-6 py-3 bg-white border border-yellow-600 text-yellow-600 rounded-lg shadow-sm hover:bg-yellow-600 hover:text-white transition-all duration-300 transform hover:scale-105">
               View All Professors
             </button>
           </div>
@@ -286,23 +284,22 @@ const WelcomePage = () => {
                         <span>Stipend: $1000/month</span>
                       </div>
                     </div>
-                    <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                      New
-                    </span>
                   </div>
                 ))}
               </div>
 
-              <button className="mt-8 px-6 py-3 bg-yellow-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105">
+              <button
+                onClick={() => router.push("/login")}
+                className="mt-8 px-6 py-3 bg-yellow-600 text-white rounded-lg shadow-md hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105">
                 Browse All Opportunities
               </button>
             </div>
 
             <div className="md:w-2/5">
               <div className="relative">
-                <div className="absolute -inset-4 bg-yellow-200 rounded-lg transform rotate-3 transition-transform duration-700 group-hover:rotate-6"></div>
+                <div className="absolute -inset-4 bg-yellow-500 rounded-lg transform rotate-3 transition-transform duration-700 group-hover:rotate-6"></div>
                 <img
-                  src="https://picsum.photos/500/600"
+                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Research"
                   className="relative rounded-lg shadow-xl w-full h-auto"
                 />
@@ -352,7 +349,7 @@ const WelcomePage = () => {
                     href="#"
                     className="hover:text-white transition-colors duration-300"
                   >
-                    Find Internships
+                    Research Internships
                   </a>
                 </li>
                 <li>
@@ -361,14 +358,6 @@ const WelcomePage = () => {
                     className="hover:text-white transition-colors duration-300"
                   >
                     Scholarships
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-white transition-colors duration-300"
-                  >
-                    Research Projects
                   </a>
                 </li>
               </ul>
@@ -392,14 +381,6 @@ const WelcomePage = () => {
                     Find Research Assistants
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-white transition-colors duration-300"
-                  >
-                    Grants
-                  </a>
-                </li>
               </ul>
             </div>
             <div>
@@ -407,7 +388,8 @@ const WelcomePage = () => {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="#"
+                    href="https://www.connectedpapers.com/"
+                    target="_blank"
                     className="hover:text-white transition-colors duration-300"
                   >
                     Academic Papers
@@ -415,18 +397,11 @@ const WelcomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="https://fellowships.gov.in/Fellowships-Calculator"
+                    target="_blank"
                     className="hover:text-white transition-colors duration-300"
                   >
-                    Research Guides
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-white transition-colors duration-300"
-                  >
-                    Webinars
+                    Fellowships
                   </a>
                 </li>
               </ul>
@@ -444,19 +419,12 @@ const WelcomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="mailto:irisms.portal@gmail.com"
                     className="hover:text-white transition-colors duration-300"
                   >
                     Contact
                   </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-white transition-colors duration-300"
-                  >
-                    Privacy Policy
-                  </a>
+
                 </li>
               </ul>
             </div>
@@ -464,29 +432,8 @@ const WelcomePage = () => {
 
           <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
             <p>
-              © 2025 Integrated Research Internship and Scholarship Management
-              System
+              © 2025 IRISMS
             </p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <a
-                href="#"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Terms
-              </a>
-              <a
-                href="#"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Privacy
-              </a>
-              <a
-                href="#"
-                className="hover:text-white transition-colors duration-300"
-              >
-                Support
-              </a>
-            </div>
           </div>
         </div>
       </footer>
