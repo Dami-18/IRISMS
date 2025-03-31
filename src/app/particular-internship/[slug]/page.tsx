@@ -180,6 +180,26 @@ const Internship = () => {
                     className="border border-gray-300 p-3 w-full rounded-lg h-[100px] resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
 
+                  {/* Terms and Conditions */}
+                  <div className="bg-gray-100 p-4 rounded-lg border border-gray-300">
+                    <p className="text-sm text-gray-700 mb-2">
+                      By applying for this internship, you agree to the following terms:
+                    </p>
+                    <ul className="list-disc list-inside text-sm text-gray-600 mb-4">
+                      <li>Your CV and transcript will be shared with the organization.</li>
+                      <li>Your personal information may be used for evaluation purposes.</li>
+                      <li>You confirm that all provided information is accurate and up-to-date.</li>
+                    </ul>
+                    <label className="flex items-center space-x-2 text-sm text-gray-700">
+                      <input
+                        type="checkbox"
+                        required
+                        className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                      />
+                      <span>I agree to the terms and conditions.</span>
+                    </label>
+                  </div>
+
                   {/* Modal Buttons */}
                   <div className="flex justify-end gap-4 mt-6">
                     {/* Cancel Button */}
@@ -203,6 +223,7 @@ const Internship = () => {
               </div>
             </div>
           )}
+
 
 
         </div>
