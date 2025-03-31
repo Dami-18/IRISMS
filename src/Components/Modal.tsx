@@ -62,8 +62,8 @@ const Modal: React.FC<{
                   option.onClick();
                   onClose();
                 }}
-                className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-medium
-                          hover:from-blue-600 hover:to-blue-700 transition-all duration-200
+                className="w-full px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white rounded-xl font-medium
+                          hover:from-indigo-600 hover:to-indigo-700 transition-all duration-200
                           active:scale-95 transform shadow-sm hover:shadow-md"
               >
                 {option.label}

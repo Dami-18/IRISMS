@@ -180,35 +180,6 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* Dashboard Actions
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Link href="/past-projects">
-            <div className="bg-purple-50 rounded-xl p-8 shadow-lg transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-              <div className="w-16 h-16 bg-purple-500 text-white rounded-lg flex items-center justify-center mb-6">
-                <svg className="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">View Past Projects</h3>
-              <p className="text-gray-600">Access your completed research projects and internships.</p>
-            </div>
-          </Link>
-          
-          <Link href="/applications">
-            <div className="bg-blue-50 rounded-xl p-8 shadow-lg transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-              <div className="w-16 h-16 bg-blue-500 text-white rounded-lg flex items-center justify-center mb-6">
-                <svg className="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Student Applications</h3>
-              <p className="text-gray-600">Review and manage incoming student applications.</p>
-            </div>
-          </Link>
-        </div>
-      </div> */}
-
       {showModal && (
         <AddProjectModal
           onClose={() => setShowModal(false)}

@@ -153,10 +153,11 @@ const InternshipApplications = () => {
 
           <button
             onClick={() => setShowModal(true)}
-            className="fixed bottom-7 left-6 mr-20 bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-indigo-700"
+            className="fixed bottom-7 left-6 mr-20 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1"
           >
             Schedule Interview
           </button>
+
 
           {/* Delete Project Button */}
           <div className="flex justify-end mb-6">
@@ -228,11 +229,10 @@ const InternshipApplications = () => {
                         updateApplicationStatus(app.id, "APPROVED")
                       }
                       disabled={app.status === "APPROVED"}
-                      className={`px-4 py-2 rounded ${
-                        app.status === "APPROVED"
-                          ? "bg-green-300 cursor-not-allowed"
-                          : "bg-green-500 text-white hover:bg-green-600"
-                      }`}
+                      className={`px-4 py-2 rounded ${app.status === "APPROVED"
+                        ? "bg-green-300 cursor-not-allowed"
+                        : "bg-green-500 text-white hover:bg-green-600"
+                        }`}
                     >
                       Approve
                     </button>
@@ -241,11 +241,10 @@ const InternshipApplications = () => {
                         updateApplicationStatus(app.id, "REJECTED")
                       }
                       disabled={app.status === "REJECTED"}
-                      className={`px-4 py-2 rounded ${
-                        app.status === "REJECTED"
-                          ? "bg-red-300 cursor-not-allowed"
-                          : "bg-red-500 text-white hover:bg-red-600"
-                      }`}
+                      className={`px-4 py-2 rounded ${app.status === "REJECTED"
+                        ? "bg-red-300 cursor-not-allowed"
+                        : "bg-red-500 text-white hover:bg-red-600"
+                        }`}
                     >
                       Reject
                     </button>
@@ -258,13 +257,18 @@ const InternshipApplications = () => {
 
         {/* Modal for Scheduling Interview */}
         {showModal && (
-          <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-              <h2 className="text-xl font-bold mb-4">Schedule Interview</h2>
+          <div className="fixed inset-0 bg-gray-800 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md transform transition-all duration-300 ease-in-out">
+              {/* Modal Header */}
+              <h2 className="text-2xl font-bold mb-6 text-gradient bg-gradient-to-r from-indigo-500 to-purple-600 text-transparent bg-clip-text">
+                Schedule Interview
+              </h2>
+
+              {/* Form */}
               <form>
                 {/* Email Input */}
                 <div className="mb-4">
-                  <label htmlFor="email" className="block text-sm font-medium">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                     Student Email
                   </label>
                   <input
@@ -272,14 +276,14 @@ const InternshipApplications = () => {
                     id="email"
                     value={studentEmail}
                     onChange={(e) => setStudentEmail(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                     required
                   />
                 </div>
 
                 {/* Date Input */}
                 <div className="mb-4">
-                  <label htmlFor="date" className="block text-sm font-medium">
+                  <label htmlFor="date" className="block text-sm font-medium text-gray-700">
                     Interview Date
                   </label>
                   <input
@@ -287,14 +291,14 @@ const InternshipApplications = () => {
                     id="date"
                     value={interviewDate}
                     onChange={(e) => setInterviewDate(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                     required
                   />
                 </div>
 
                 {/* Time Input */}
                 <div className="mb-4">
-                  <label htmlFor="time" className="block text-sm font-medium">
+                  <label htmlFor="time" className="block text-sm font-medium text-gray-700">
                     Interview Time
                   </label>
                   <input
@@ -302,18 +306,18 @@ const InternshipApplications = () => {
                     id="time"
                     value={interviewTime}
                     onChange={(e) => setInterviewTime(e.target.value)}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                     required
                   />
                 </div>
 
                 {/* Modal Buttons */}
-                <div className="flex justify-end gap-4">
+                <div className="flex justify-end gap-4 mt-6">
                   {/* Cancel Button */}
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                    className="px-4 py-2 bg-red-300 rounded-lg hover:bg-red-400 transition duration-200 ease-in-out"
                   >
                     Cancel
                   </button>
@@ -323,11 +327,10 @@ const InternshipApplications = () => {
                     type="button"
                     onClick={scheduleInterview}
                     disabled={loading}
-                    className={`px-4 py-2 rounded ${
-                      loading
-                        ? "bg-blue-300"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }`}
+                    className={`px-4 py-2 rounded-lg transition-all duration-300 ease-in-out ${loading
+                        ? "bg-blue-300 cursor-not-allowed"
+                        : "bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:from-indigo-600 hover:to-purple-700"
+                      }`}
                   >
                     {loading ? "Scheduling..." : "Schedule"}
                   </button>
@@ -336,6 +339,7 @@ const InternshipApplications = () => {
             </div>
           </div>
         )}
+
       </div>
     </div>
   );

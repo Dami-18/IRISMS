@@ -22,7 +22,7 @@ const ChatIcon: React.FC<ChatIconProps> = ({
       }`}
       onClick={toggleChat}
     >
-      <div className="bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300">
+      <div className="bg-indigo-600 text-white rounded-full p-4 shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all duration-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"

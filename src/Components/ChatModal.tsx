@@ -36,11 +36,11 @@ const ChatModal: React.FC<ChatModalProps> = ({
       }`}
     >
       {/* Chat Header */}
-      <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
+      <div className="bg-indigo-600 text-white p-4 flex justify-between items-center">
         <h3 className="font-semibold">Research & Scholarship Assistant</h3>
         <button
           onClick={toggleChat}
-          className="text-white hover:bg-blue-700 rounded-full p-1 transition-colors duration-200"
+          className="text-white hover:bg-indigo-700 rounded-full p-1 transition-colors duration-200"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
