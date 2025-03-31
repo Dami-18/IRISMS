@@ -127,69 +127,82 @@ export default function InternshipsPage() {
               className="border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none"
             />
 
-            {/* Stipend Slider */}
-            <div>
-              <label className="block text-sm font-medium">Stipend</label>
-              <input
-                type="range"
-                min={0}
-                max={50000}
-                step={1000}
-                value={filter.stipend[1]}
-                onChange={(e) =>
-                  setFilter({
-                    ...filter,
-                    stipend: [filter.stipend[0], parseInt(e.target.value)],
-                  })
-                }
-                className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 outline-none"
-              />
-              <p className="text-sm text-gray-600">
-                ₹{filter.stipend[0]} - ₹{filter.stipend[1]}
-              </p>
+            {/* Stipend Slider - with custom styling for the filled portion */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Stipend</label>
+              <div className="relative">
+                <input
+                  type="range"
+                  min={0}
+                  max={50000}
+                  step={1000}
+                  value={filter.stipend[1]}
+                  onChange={(e) =>
+                    setFilter({
+                      ...filter,
+                      stipend: [filter.stipend[0], parseInt(e.target.value)],
+                    })
+                  }
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                  style={{
+                    background: `linear-gradient(to right, rgb(79, 70, 229) 0%, rgb(79, 70, 229) ${(filter.stipend[1] / 50000) * 100}%, #e5e7eb ${(filter.stipend[1] / 50000) * 100}%, #e5e7eb 100%)`
+                  }}
+                />
+              </div>
+              <div className="flex justify-between mt-2">
+                <p className="text-sm font-medium text-indigo-700">₹{filter.stipend[0]}</p>
+                <p className="text-sm font-medium text-indigo-700">₹{filter.stipend[1]}</p>
+              </div>
             </div>
 
-            {/* Duration Slider */}
-            <div>
-              <label className="block text-sm font-medium ">Duration</label>
-              <input
-                type="range"
-                min={0}
-                max={12}
-                step={1}
-                value={filter.duration[1]}
-                onChange={(e) =>
-                  setFilter({
-                    ...filter,
-                    duration: [filter.duration[0], parseInt(e.target.value)],
-                  })
-                }
-                className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 outline-none"
-              />
-              <p className="text-sm text-gray-600">
-                {filter.duration[0]} - {filter.duration[1]} months
-              </p>
+            {/* Duration Slider - with custom styling for the filled portion */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+              <div className="relative">
+                <input
+                  type="range"
+                  min={0}
+                  max={12}
+                  step={1}
+                  value={filter.duration[1]}
+                  onChange={(e) =>
+                    setFilter({
+                      ...filter,
+                      duration: [filter.duration[0], parseInt(e.target.value)],
+                    })
+                  }
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                  style={{
+                    background: `linear-gradient(to right, rgb(79, 70, 229) 0%, rgb(79, 70, 229) ${(filter.duration[1] / 12) * 100}%, #e5e7eb ${(filter.duration[1] / 12) * 100}%, #e5e7eb 100%)`
+                  }}
+                />
+              </div>
+              <div className="flex justify-between mt-2">
+                <p className="text-sm font-medium text-indigo-700">{filter.duration[0]} months</p>
+                <p className="text-sm font-medium text-indigo-700">{filter.duration[1]} months</p>
+              </div>
             </div>
 
             {/* Prerequisites Checkbox */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Prerequisites
               </label>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 {prerequisiteOptions.map((prerequisite) => (
-                  <label key={prerequisite} className="flex items-center gap-2">
+                  <label key={prerequisite} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={filter.prerequisites.includes(prerequisite)}
                       onChange={() => handleCheckboxChange(prerequisite)}
-                      className="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded"
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
-                    {prerequisite}
+                    <span className="text-sm text-gray-700">{prerequisite}</span>
                   </label>
                 ))}
               </div>
             </div>
+
           </div>
         </div>
 

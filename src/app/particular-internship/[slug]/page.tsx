@@ -102,7 +102,7 @@ const Internship = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100 relative">
       <Header isStudent={true} />
-      
+
       {/* React Hot Toast Toaster */}
       <Toaster position="top-center" reverseOrder={false} />
 
@@ -155,9 +155,14 @@ const Internship = () => {
 
           {/* Modal */}
           {showModal && (
-            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-              <div className="bg-white p-6 rounded-xl shadow-lg w-[500px] max-h-[90vh] overflow-auto">
-                <h2 className="text-xl font-bold mb-4">Apply for Internship</h2>
+            <div className="fixed inset-0 bg-gray-700 bg-opacity-30 flex justify-center items-center z-50">
+              <div className="bg-white p-6 rounded-xl shadow-xl w-[500px] max-h-[90vh] overflow-auto transform transition-transform duration-300 ease-in-out">
+                {/* Modal Header */}
+                <h2 className="text-2xl font-bold mb-6 text-gradient bg-gradient-to-r from-indigo-600 to-purple-700 text-transparent bg-clip-text">
+                  Apply for Internship
+                </h2>
+
+                {/* Form */}
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -172,21 +177,24 @@ const Internship = () => {
                     placeholder="Write a statement of purpose in around 100-150 words..."
                     value={extraDetails}
                     onChange={(e) => setExtraDetails(e.target.value)}
-                    className="border p-2 w-full rounded h-[100px]"
+                    className="border border-gray-300 p-3 w-full rounded-lg h-[100px] resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
 
                   {/* Modal Buttons */}
-                  <div className="flex justify-end gap-4">
+                  <div className="flex justify-end gap-4 mt-6">
+                    {/* Cancel Button */}
                     <button
                       type="button"
                       onClick={() => setShowModal(false)}
-                      className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                      className="px-4 py-2 bg-red-300 text-black rounded-lg hover:bg-red-400 transition duration-[200ms] ease-in-out shadow-md"
                     >
                       Cancel
                     </button>
+
+                    {/* Apply Button */}
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                      className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition duration-[200ms] ease-in-out shadow-md"
                     >
                       Apply
                     </button>
@@ -195,6 +203,8 @@ const Internship = () => {
               </div>
             </div>
           )}
+
+
         </div>
       </div>
     </div>

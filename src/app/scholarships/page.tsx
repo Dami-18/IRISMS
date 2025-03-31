@@ -67,7 +67,7 @@ export default function ScholarshipPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <input
               type="text"
-              placeholder="Location"
+              placeholder="Organization"
               value={filter.location}
               onChange={(e) =>
                 setFilter({ ...filter, location: e.target.value })
