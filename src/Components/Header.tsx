@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 export default function Header({ isStudent }: { isStudent?: boolean }) {
   if (isStudent === undefined) return <></>;
+
   return (
     <header className="bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
       <div className="text-2xl font-bold text-yellow-600 transform transition duration-500 hover:scale-105">
@@ -42,7 +43,8 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
             Profile ▾
           </Menu.Button>
           <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white text-black rounded shadow-lg z-10">
-            <Menu.Item>
+
+            {isStudent && <Menu.Item>
               {({ active }) => (
                 <Link
                   href="/profile"
@@ -51,7 +53,22 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
                   My Profile
                 </Link>
               )}
-            </Menu.Item>
+            </Menu.Item>}
+
+           
+
+            {!isStudent && 
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  href="/profile-faculty/personal"
+                  className={`block px-4 py-2 ${active ? "bg-gray-100" : ""}`}
+                >
+                  My Profile
+                </Link>
+              )}
+            </Menu.Item>}
+            
             <Menu.Item>
               {({ active }) => (
                 <button
