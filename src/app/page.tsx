@@ -304,6 +304,15 @@ const WelcomePage = () => {
               </div>
             ))}
           </div>
+
+          <div className="text-center mt-10">
+            <button
+              onClick={() => router.push("/login")}
+              className="px-6 py-3 bg-white border border-yellow-600 text-yellow-600 rounded-lg shadow-sm hover:bg-yellow-600 hover:text-white transition-all duration-300 transform hover:scale-105"
+            >
+              View All Professors
+            </button>
+          </div>
         </div>
       </section>
 
