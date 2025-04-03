@@ -9,7 +9,6 @@ export async function PUT(req: NextRequest) {
   try {
     const body = await req.json(); // Parse incoming JSON data
 
-    // Update user details in the database
     const updatedUser = await prisma.user.update({
       where: { email: body.email }, // Use email as identifier (assuming it's unique)
       data: {
@@ -18,6 +17,9 @@ export async function PUT(req: NextRequest) {
         city: body.city,
         state: body.state,
         country: body.country,
+        cvUrl: body.cvUrl,
+        transcriptUrl: body.transcriptUrl,
+        incomeProof: body.incomeProof,
       },
     });
 

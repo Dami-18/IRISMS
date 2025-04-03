@@ -296,7 +296,7 @@ const Register = () => {
                   >
                     {doc === `cv`
                       ? `Upload CV/Resume`
-                      : doc === `transcript`
+                      : doc === `ts`
                       ? `Upload Transcript`
                       : `Upload Income Certificate`}
                   </label>

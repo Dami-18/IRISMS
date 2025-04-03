@@ -77,45 +77,48 @@ export async function POST(req: NextRequest) {
     const ts = formData.get("ts") as File;
     const inc = formData.get("inc") as File;
 
-    if (!cv || !ts || !inc) {
+    if (!cv && !ts && !inc) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
     const cvName = req.headers.get("X-Type");
-
-    const cvBytes = await cv.arrayBuffer();
-    const cvBuffer = Buffer.from(cvBytes);
-    const cvFilePath = path.join(
-      process.cwd(),
-      "public/uploads/Student/CV/",
-      cvName
-    );
-
-    await writeFile(cvFilePath, cvBuffer);
+    if (cv) {
+      const cvBytes = await cv.arrayBuffer();
+      const cvBuffer = Buffer.from(cvBytes);
+      const cvFilePath = path.join(
+        process.cwd(),
+        "public/uploads/Student/CV/",
+        cvName
+      );
+      await writeFile(cvFilePath, cvBuffer);
+    }
+    const cvLink = "uploads/Student/CV/" + cvName;
 
     const tsName = req.headers.get("Y-Type");
-
-    const tsBytes = await ts.arrayBuffer();
-    const tsBuffer = Buffer.from(tsBytes);
-    const tsFilePath = path.join(
-      process.cwd(),
-      "public/uploads/Student/Transcript/",
-      tsName
-    );
-
-    await writeFile(tsFilePath, tsBuffer);
+    if (ts) {
+      const tsBytes = await ts.arrayBuffer();
+      const tsBuffer = Buffer.from(tsBytes);
+      const tsFilePath = path.join(
+        process.cwd(),
+        "public/uploads/Student/Transcript/",
+        tsName
+      );
+      await writeFile(tsFilePath, tsBuffer);
+    }
+    const tsLink = "uploads/Student/Transcript/" + tsName;
 
     const inName = req.headers.get("Z-Type");
-
-    const inBytes = await inc.arrayBuffer();
-    const inBuffer = Buffer.from(inBytes);
-    const inFilePath = path.join(
-      process.cwd(),
-      "public/uploads/Student/IncomeCertificate/",
-      inName
-    );
-
-    await writeFile(inFilePath, inBuffer);
+    if (inc) {
+      const inBytes = await inc.arrayBuffer();
+      const inBuffer = Buffer.from(inBytes);
+      const inFilePath = path.join(
+        process.cwd(),
+        "public/uploads/Student/IncomeCertificate/",
+        inName
+      );
+      await writeFile(inFilePath, inBuffer);
+    }
+    const inLink = "uploads/Student/IncomeCertificate/" + inName;
 
     // const res = await uploadFile(
     //   filePath,
@@ -128,14 +131,6 @@ export async function POST(req: NextRequest) {
     //     console.log(err);
     //   });
     // }
-
-    const cvLink = "uploads/Student/CV/" + cvName;
-
-    const tsLink = "uploads/Student/Transcript/" + tsName;
-
-    const inLink = "uploads/Student/IncomeCertificate/" + inName;
-
-    console.log("logged from upload", inLink);
 
     return NextResponse.json(
       {
