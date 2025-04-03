@@ -18,7 +18,6 @@ export default function InternshipsPage() {
     duration: [0, 12], // Duration in months
   });
 
-  const prerequisiteOptions = ["React", "Node.js", "Python", "Java"]; // List of available prerequisites
 
   // Fetch projects based on filters
   useEffect(() => {
