@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     institution,
     cvUrl,
     transcriptUrl,
+    incomeProof,
   } = await req.json();
 
   const lastStud = await prisma.user.findFirst({
@@ -68,6 +69,7 @@ export async function POST(req: NextRequest) {
         institution: institution,
         cvUrl: cvUrl,
         transcriptUrl: transcriptUrl,
+        incomeProof: incomeProof,
       },
     });
     await redis.del(email);

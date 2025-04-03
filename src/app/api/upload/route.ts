@@ -135,6 +135,8 @@ export async function POST(req: NextRequest) {
 
     const inLink = "uploads/Student/IncomeCertificate/" + inName;
 
+    console.log("logged from upload", inLink);
+
     return NextResponse.json(
       {
         message: "file uploaded successfully",
