@@ -81,7 +81,6 @@ const Register = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  defaultValue={"fwehfw@kgpian.iitkgp.ac.in"}
                   // required
                   className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-600 transition-colors duration-1000"
                 />
@@ -103,7 +102,6 @@ const Register = () => {
                   id="password"
                   name="password"
                   type="password"
-                  defaultValue="hello123@"
                   // required
                   autoComplete="new-password"
                   className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-600 transition-colors duration-1000"
@@ -128,39 +126,33 @@ const Register = () => {
                   id: "firstName",
                   label: "First Name",
                   type: "text",
-                  defaultValue: "sam",
                 },
                 {
                   id: "lastName",
                   label: "Last Name",
                   type: "text",
-                  defaultValue: "wilson",
                 },
                 {
                   id: "contact",
                   label: "Contact Number",
                   type: "tel",
-                  defaultValue: "1245678912",
                   pattern: "[0–9]{10}",
                 },
                 {
                   id: "address",
                   label: "Residential Address",
                   type: "text",
-                  defaultValue: "address",
                   autoComplete: "address",
                 },
                 {
                   id: "city",
                   label: "City",
-                  defaultValue: "address",
                   type: "text",
                   autoComplete: "address-level2",
                 },
                 {
                   id: "state",
                   label: "State / Province",
-                  defaultValue: "address",
                   type: "text",
                   autoComplete: "address-level1",
                 },
@@ -177,7 +169,6 @@ const Register = () => {
                     name={field.id}
                     type={field.type}
                     autoComplete={field.autoComplete || undefined}
-                    defaultValue={field.defaultValue}
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border--500 focus:ring-2 focus:ring-indigo-500 transition-all duration-1000"
                   />
                   {/*@ts-ignore*/}
@@ -244,20 +235,17 @@ const Register = () => {
                   label: "Year of Graduation",
                   type: "text",
                   placeholder: "YYYY",
-                  defaultValue: "2200",
                   pattern: "[0-9]{4}",
                 },
                 {
                   id: "majors",
                   label: "Majors",
                   type: "text",
-                  defaultValue: "address",
                 },
                 {
                   id: "insti",
                   label: "Institution Name",
                   type: "text",
-                  defaultValue: "address",
                 },
               ].map((field) => (
                 <div key={field.id}>
@@ -273,7 +261,6 @@ const Register = () => {
                     name={field.id}
                     type={field.type}
                     placeholder={field.placeholder || undefined}
-                    defaultValue={field.defaultValue}
                     // required
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border--500 focus:ring-2 focus:ring-indigo-500 transition-all duration-1000"
                   />
