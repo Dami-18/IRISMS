@@ -24,7 +24,8 @@ const FacultyProfile = () => {
           credentials: "include", // Include cookies to identify logged-in user
         });
 
-        if (resUid.status == 401) { // if not logged in
+        if (resUid.status == 401) {
+          // if not logged in
           setIsLoggedIn(false); // prof is not logged in, so we display the public profile by calling the public end point
 
           const resProfDetails = await fetch("/api/getProf", {
@@ -42,17 +43,12 @@ const FacultyProfile = () => {
 
           const dataProfDetails = await resProfDetails.json();
           setProfDetails(dataProfDetails.data); // Set professor details in state
-        }
-
-        else if (resUid.ok) {
+        } else if (resUid.ok) {
           const dataUid = await resUid.json();
-          setProfDetails(dataUid.data)
+          setProfDetails(dataUid.data);
+        } else {
+          console.log("Failed to fetch prof details!");
         }
-
-        else{
-          console.log("Failed to fetch prof details!")
-        }
-
       } finally {
         setLoading(false);
       }
@@ -77,21 +73,19 @@ const FacultyProfile = () => {
 
   return (
     <div className="relative">
-      {isLoggedIn && <Header isStudent={false} />}
+      {isLoggedIn && <Header isProf={true} />}
       <div className="min-h-screen bg-gradient-to-r from-indigo-500 to-purple-500 py-10">
         <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
-          <div
-            className="bg-cover bg-center h-40"
-          ></div>
+          <div className="bg-cover bg-center h-40"></div>
           {/* Profile Photo */}
           <div className="-mt-16 flex justify-center">
             <img
-              src={photoLinks[uid as keyof typeof photoLinks]} 
+              src={photoLinks[uid as keyof typeof photoLinks]}
               alt={`${profDetails?.firstName} ${profDetails?.lastName}`}
               className="w-32 h-34 rounded-full border-4 border-white shadow-lg"
             />
           </div>
-          
+
           <div className="px-6 py-4 text-center">
             {/* Professor Details */}
             <h2 className="text-3xl font-bold text-gray-800">
@@ -101,7 +95,7 @@ const FacultyProfile = () => {
             <p className="mt-2 text-indigo-600 font-semibold">
               Faculty at {profDetails?.institution || "N/A"}
             </p>
-            
+
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
               {profDetails?.contact && (
                 <p>
@@ -141,17 +135,20 @@ const FacultyProfile = () => {
               )}
               {profDetails?.specialization && (
                 <p>
-                  <strong>📚 Specialization:</strong> {profDetails.specialization}
+                  <strong>📚 Specialization:</strong>{" "}
+                  {profDetails.specialization}
                 </p>
               )}
               {profDetails?.teachingExp && (
                 <p>
-                  <strong>👨‍🏫 Teaching Experience:</strong> {profDetails.teachingExp} years
+                  <strong>👨‍🏫 Teaching Experience:</strong>{" "}
+                  {profDetails.teachingExp} years
                 </p>
               )}
               {profDetails?.researchExp && (
                 <p>
-                  <strong>🔬 Research Experience:</strong> {profDetails.researchExp} years
+                  <strong>🔬 Research Experience:</strong>{" "}
+                  {profDetails.researchExp} years
                 </p>
               )}
             </div>

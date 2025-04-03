@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "@/Components/Modal";
+import Link from "next/link";
 
 const WelcomePage = () => {
   const router = useRouter();
@@ -133,7 +134,6 @@ const WelcomePage = () => {
               Connect with leading professors, find research internships, and
               explore scholarship opportunities.
             </p>
-
           </div>
         </div>
       </section>
@@ -367,7 +367,7 @@ const WelcomePage = () => {
               <h3 className="text-white font-medium mb-4">For Students</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
+                  <Link
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
@@ -377,10 +377,10 @@ const WelcomePage = () => {
                     className="hover:text-white transition-colors duration-300"
                   >
                     Research Internships
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
@@ -390,7 +390,7 @@ const WelcomePage = () => {
                     className="hover:text-white transition-colors duration-300"
                   >
                     Scholarships
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -398,7 +398,7 @@ const WelcomePage = () => {
               <h3 className="text-white font-medium mb-4">For Professors</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
+                  <Link
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
@@ -409,10 +409,10 @@ const WelcomePage = () => {
                     className="hover:text-white transition-colors duration-300"
                   >
                     Post Opportunities
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
@@ -423,7 +423,7 @@ const WelcomePage = () => {
                     className="hover:text-white transition-colors duration-300"
                   >
                     Find Research Assistants
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -431,22 +431,22 @@ const WelcomePage = () => {
               <h3 className="text-white font-medium mb-4">Resources</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
+                  <Link
                     href="https://www.connectedpapers.com/"
                     target="_blank"
                     className="hover:text-white transition-colors duration-300"
                   >
                     Academic Papers
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="https://fellowships.gov.in/Fellowships-Calculator"
                     target="_blank"
                     className="hover:text-white transition-colors duration-300"
                   >
                     Fellowships
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -454,7 +454,7 @@ const WelcomePage = () => {
               <h3 className="text-white font-medium mb-4">About</h3>
               <ul className="space-y-2">
                 <li>
-                  <a
+                  <Link
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
@@ -464,15 +464,15 @@ const WelcomePage = () => {
                     className="hover:text-white transition-colors duration-300"
                   >
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="mailto:irisms.portal@gmail.com"
                     className="hover:text-white transition-colors duration-300"
                   >
                     Contact
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

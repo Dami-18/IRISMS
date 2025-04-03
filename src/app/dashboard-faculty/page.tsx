@@ -99,7 +99,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
-      <Header isStudent={false} />
+      <Header isProf={true} />
 
       {/* Dashboard Content */}
       <div className="container mx-auto px-6 py-8">

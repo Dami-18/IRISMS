@@ -9,11 +9,13 @@ import { useState, useEffect } from "react";
 export default function Header({
   isStudent = false,
   isAdmin = false,
+  isProf = false,
 }: {
   isStudent?: boolean;
   isAdmin?: boolean;
+  isProf?: boolean;
 }) {
-  if (isStudent === undefined) return <></>;
+  if (!isStudent && !isProf && !isAdmin) return <></>;
 
   const [profDetails, setProfDetails] = useState<any>(null);
 
@@ -33,7 +35,7 @@ export default function Header({
     }
   };
 
-  if (isStudent === false && isAdmin === false) {
+  if (isProf) {
     useEffect(() => {
       fetchProfDetails();
     }, []);
@@ -96,7 +98,7 @@ export default function Header({
               </Menu.Item>
             )}
 
-            {!isStudent && !isAdmin && (
+            {isProf && (
               <Menu.Item>
                 {({ active }) => (
                   <Link
