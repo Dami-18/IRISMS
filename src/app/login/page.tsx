@@ -84,7 +84,6 @@ const Login = () => {
                   name="email"
                   required
                   autoComplete="email"
-                  defaultValue="okthisisit@kgpian.iitkgp.ac.in"
                   className="w-full px-4 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-yellow-400"
                 />
               </div>
@@ -104,7 +103,6 @@ const Login = () => {
                     type={showPassword ? "text" : "password"}
                     required
                     autoComplete="current-password"
-                    defaultValue="hello123@"
                     className="w-full px-4 py-2.5 rounded-md border border-gray-300 focus:outline-none focus:border-yellow-400"
                   />
                   <button
