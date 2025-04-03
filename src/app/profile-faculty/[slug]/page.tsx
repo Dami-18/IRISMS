@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "@/Components/Header";
 import photoLinks from "@/../public/photoLinks.json";
+import { verifyToken } from "auth";
+import { NextRequest } from "next/server";
 
 const FacultyProfile = () => {
   const { slug } = useParams(); // Extract `uid` from URL parameters
@@ -12,43 +14,34 @@ const FacultyProfile = () => {
   const [profDetails, setProfDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [stud, setStud] = useState<boolean>(false);
+  const [prof, setProf] = useState<boolean>(false);
 
   // Combined API calls
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resUid = await fetch("/api/prof", {
+        const res = await fetch("/api/studentorprof", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include", // Include cookies to identify logged-in user
         });
 
-        if (resUid.status == 401) {
-          // if not logged in
-          setIsLoggedIn(false); // prof is not logged in, so we display the public profile by calling the public end point
+        const { student, prof } = await res.json();
+        const resProfDetails = await fetch("/api/getProf", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ uid: uid }),
+        });
+        const dataProfDetails = await resProfDetails.json();
+        setProfDetails(dataProfDetails.data); // Set professor details in state
 
-          const resProfDetails = await fetch("/api/getProf", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ uid: uid }),
-          });
-
-          if (!resProfDetails.ok) {
-            const errorData = await resProfDetails.json();
-            throw new Error(
-              errorData.message || "Failed to fetch professor details"
-            );
-          }
-
-          const dataProfDetails = await resProfDetails.json();
-          setProfDetails(dataProfDetails.data); // Set professor details in state
-        } else if (resUid.ok) {
-          const dataUid = await resUid.json();
-          setProfDetails(dataUid.data);
-        } else {
-          console.log("Failed to fetch prof details!");
+        if (student) {
+          setStud(true);
+          return;
         }
+        if (!prof) return;
+        setProf(true);
       } finally {
         setLoading(false);
       }
@@ -73,9 +66,11 @@ const FacultyProfile = () => {
 
   return (
     <div className="relative">
-      {isLoggedIn && <Header isProf={true} />}
-      <div className="min-h-screen bg-gradient-to-r from-indigo-500 to-purple-500 py-10">
-        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+      {prof && <Header isProf={true} />}
+      {stud && <Header isStudent={true} />}
+      {!prof && !stud && <Header />}
+      <div className="min-h-screen bg-gradient-to-br to-indigo-500 from-yellow-500 py-10">
+        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-4xl overflow-hidden">
           <div className="bg-cover bg-center h-40"></div>
           {/* Profile Photo */}
           <div className="-mt-16 flex justify-center">

@@ -100,8 +100,9 @@ const Profile = () => {
   return (
     <div className="relative">
       <Header isStudent={true} />
-      <div className="min-h-screen bg-gradient-to-r from-indigo-500 to-purple-500 py-10">
-        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br to-indigo-500 from-yellow-500 py-10">
+        {/* bg-gradient-to-br to-indigo-50 from-yellow-100 py-12 px-4 sm:px-6 lg:px-8 */}
+        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-4xl overflow-hidden">
           <div
             className="bg-cover bg-center h-40"
             style={{

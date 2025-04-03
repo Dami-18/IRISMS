@@ -31,9 +31,8 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  }
-  catch(error){
-    NextResponse.json({error: "internal server error"}, {status: 500});
+  } catch (error) {
+    NextResponse.json({ error: "internal server error" }, { status: 500 });
   }
   // using above userData we fetch all the details of user from database and then send it as json
   // then further with this api call, all such details can be displayed on dahsboard or whatever

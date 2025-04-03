@@ -15,8 +15,17 @@ export default function Header({
   isAdmin?: boolean;
   isProf?: boolean;
 }) {
-  if (!isStudent && !isProf && !isAdmin) return <></>;
-
+  if (!isStudent && !isProf && !isAdmin)
+    return (
+      <header className="bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
+        <Link
+          className="text-2xl font-bold text-yellow-600 transform transition duration-500 hover:scale-105"
+          href="/"
+        >
+          IRISMS
+        </Link>
+      </header>
+    );
   const [profDetails, setProfDetails] = useState<any>(null);
 
   const fetchProfDetails = async () => {
