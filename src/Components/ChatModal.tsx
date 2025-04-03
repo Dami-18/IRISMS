@@ -71,7 +71,7 @@ const ChatModal: React.FC<ChatModalProps> = ({
             <div
               className={`rounded-lg px-4 py-2 max-w-[80%] ${
                 msg.isUser
-                  ? "bg-blue-600 text-white"
+                  ? "bg-indigo-600 text-white"
                   : "bg-gray-200 text-gray-800"
               }`}
             >
