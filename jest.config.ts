@@ -5,6 +5,7 @@
 
 import type {Config} from 'jest';
 import nextJest from 'next/jest.js'
+/** @type {import('ts-jest').JestConfigWithTsJest} **/
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
@@ -180,8 +181,9 @@ const config: Config = {
   // This option allows use of a custom test runner
   // testRunner: "jest-circus/runner",
 
-  // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  transform: {
+    "^.+\.tsx?$": ["ts-jest",{}],
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [

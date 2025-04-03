@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import { useRouter } from 'next/navigation'; // Use next/navigation for App Router
 import WelcomePage from '../src/app/page';
 
 jest.mock('next/navigation', () => ({
@@ -15,6 +14,7 @@ jest.mock('next/navigation', () => ({
 describe('WelcomePage', () => {
   it('renders homepage unchanged', () => {
     const { container } = render(<WelcomePage />);
+    
     expect(container).toMatchSnapshot();
   });
 });
