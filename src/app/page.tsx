@@ -6,7 +6,6 @@ import Modal from "@/Components/Modal";
 const WelcomePage = () => {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
 
   const researchAreas = [
@@ -25,14 +24,14 @@ const WelcomePage = () => {
       specialization:
         "Biometric Security, Brain Computing, Human Computer Interaction",
       image: "https://cse.iitkgp.ac.in/facimg/DSMsmall.jpg?1743340966",
-      webPage: "https://cse.iitkgp.ac.in/~dsamanta/",
+      webPage: "http://localhost:3000/profile-faculty/P1",
     },
     {
       id: 2,
       name: "Prof. Jibesh Patra",
       specialization: "AI for SE, Software Security",
       image: "https://cse.iitkgp.ac.in/facimg/JBPsmall.jpg?1743340966",
-      webPage: "https://jibesh.com/",
+      webPage: "http://localhost:3000/profile-faculty/P2",
     },
     {
       id: 3,
@@ -135,49 +134,6 @@ const WelcomePage = () => {
               explore scholarship opportunities.
             </p>
 
-            {/* Search Bar (inspired by Naukri) */}
-            {/* <div className="bg-white rounded-lg shadow-xl p-2 flex items-center transition-all duration-500 hover:shadow-2xl">
-              <svg
-                className="ml-3 h-5 w-5 text-gray-400"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search by research area, professor, or keyword..."
-                className="w-full py-3 px-4 outline-none text-gray-700 rounded-lg"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button className="bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-indigo-700 transform hover:scale-105">
-                Search
-              </button>
-            </div> */}
-
-            {/* Popular Search Tags */}
-            {/* <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <span className="text-sm text-yellow-200 mr-2">
-                Popular Research Areas:
-              </span>
-              {researchAreas.map((area, index) => (
-                <button
-                  key={index}
-                  className="px-3 py-1 bg-yellow-800 bg-opacity-50 rounded-full text-sm hover:bg-indigo-700 transition-colors duration-300"
-                  onClick={() => setSearchQuery(area)}
-                >
-                  {area}
-                </button>
-              ))}
-            </div> */}
           </div>
         </div>
       </section>
@@ -307,7 +263,7 @@ const WelcomePage = () => {
 
           <div className="text-center mt-10">
             <button
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/display-faculty")}
               className="px-6 py-3 bg-white border border-yellow-600 text-yellow-600 rounded-lg shadow-sm hover:bg-yellow-600 hover:text-white transition-all duration-300 transform hover:scale-105"
             >
               View All Professors
