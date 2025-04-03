@@ -18,6 +18,7 @@ interface UserProfile {
   institution?: string;
   cvUrl?: string;
   transcriptUrl?: string;
+  incomeProof?: string;
 }
 
 const Profile = () => {

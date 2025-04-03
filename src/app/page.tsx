@@ -22,31 +22,32 @@ const WelcomePage = () => {
     {
       id: 1,
       name: "Prof. Debasis Samanta",
-      specialization: "Biometric Security, Brain Computing, Human Computer Interaction",
+      specialization:
+        "Biometric Security, Brain Computing, Human Computer Interaction",
       image: "https://cse.iitkgp.ac.in/facimg/DSMsmall.jpg?1743340966",
-      webPage: "https://cse.iitkgp.ac.in/~dsamanta/"
+      webPage: "https://cse.iitkgp.ac.in/~dsamanta/",
     },
     {
       id: 2,
       name: "Prof. Jibesh Patra",
       specialization: "AI for SE, Software Security",
       image: "https://cse.iitkgp.ac.in/facimg/JBPsmall.jpg?1743340966",
-      webPage: "https://jibesh.com/"
+      webPage: "https://jibesh.com/",
     },
     {
       id: 3,
       name: "Prof. Animesh Mukherjee",
       specialization: "Complex and Social Networks, Data and Web Mining",
       image: "https://cse.iitkgp.ac.in/~animeshm/mypic.jpg",
-      webPage: "https://cse.iitkgp.ac.in/~animeshm/"
+      webPage: "https://cse.iitkgp.ac.in/~animeshm/",
     },
     {
       id: 4,
       name: "Prof. Abir Das",
       specialization: "Machine Learning, Computer Vision",
       image: "https://cse.iitkgp.ac.in/facimg/ADASsmall.jpg?1743340966",
-      webPage: "https://cse.iitkgp.ac.in/~adas/"
-    }
+      webPage: "https://cse.iitkgp.ac.in/~adas/",
+    },
   ];
 
   const internships = [
@@ -70,11 +71,11 @@ const WelcomePage = () => {
       department: "Network Security Group, CSE Department",
       duration: "6 months",
       stipend: "₹35,000/month",
-    }
+    },
   ];
 
   const handleRedirect = (url: string) => {
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   useEffect(() => {
@@ -105,7 +106,10 @@ const WelcomePage = () => {
       </header>
 
       {/* Hero Section with Animated Background */}
-      <section className="relative bg-indigo-900 text-white py-20 overflow-hidden" id="main-header">
+      <section
+        className="relative bg-indigo-900 text-white py-20 overflow-hidden"
+        id="main-header"
+      >
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 opacity-50">
             {/* Animated background elements */}
@@ -117,10 +121,11 @@ const WelcomePage = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <div
-            className={`max-w-3xl mx-auto text-center transform transition-all duration-1000 ${isLoaded
-              ? "translate-y-0 opacity-100"
-              : "translate-y-10 opacity-0"
-              }`}
+            className={`max-w-3xl mx-auto text-center transform transition-all duration-1000 ${
+              isLoaded
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
           >
             <h1 className="text-5xl font-bold mb-6 leading-tight">
               Discover Your Research Journey
@@ -173,7 +178,6 @@ const WelcomePage = () => {
                 </button>
               ))}
             </div> */}
-
           </div>
         </div>
       </section>
@@ -265,7 +269,6 @@ const WelcomePage = () => {
               </p>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -294,20 +297,12 @@ const WelcomePage = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="font-medium text-lg mb-1">
-                  {professor.name}
-                </h3>
-                <p className="text-sm text-gray-500 mb-2">{professor.specialization}</p>
+                <h3 className="font-medium text-lg mb-1">{professor.name}</h3>
+                <p className="text-sm text-gray-500 mb-2">
+                  {professor.specialization}
+                </p>
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <button
-              onClick={() => router.push("/login")}
-              className="px-6 py-3 bg-white border border-yellow-600 text-yellow-600 rounded-lg shadow-sm hover:bg-yellow-600 hover:text-white transition-all duration-300 transform hover:scale-105">
-              View All Professors
-            </button>
           </div>
         </div>
       </section>
@@ -339,7 +334,9 @@ const WelcomePage = () => {
                         {internship.department}
                       </p>
                       <div className="flex items-center text-xs text-gray-500">
-                        <span className="mr-3">Duration: {internship.duration}</span>
+                        <span className="mr-3">
+                          Duration: {internship.duration}
+                        </span>
                         <span>Stipend: {internship.stipend}</span>
                       </div>
                     </div>
@@ -349,7 +346,8 @@ const WelcomePage = () => {
 
               <button
                 onClick={() => router.push("/login")}
-                className="mt-8 px-6 py-3 bg-yellow-600 text-white rounded-lg shadow-md hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105">
+                className="mt-8 px-6 py-3 bg-yellow-600 text-white rounded-lg shadow-md hover:bg-yellow-600 transition-all duration-300 transform hover:scale-105"
+              >
                 Browse All Opportunities
               </button>
             </div>
@@ -408,8 +406,8 @@ const WelcomePage = () => {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      const element = document.getElementById('opport');
-                      element?.scrollIntoView({ behavior: 'smooth' });
+                      const element = document.getElementById("opport");
+                      element?.scrollIntoView({ behavior: "smooth" });
                     }}
                     className="hover:text-white transition-colors duration-300"
                   >
@@ -421,8 +419,8 @@ const WelcomePage = () => {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      const element = document.getElementById('opport');
-                      element?.scrollIntoView({ behavior: 'smooth' });
+                      const element = document.getElementById("opport");
+                      element?.scrollIntoView({ behavior: "smooth" });
                     }}
                     className="hover:text-white transition-colors duration-300"
                   >
@@ -439,8 +437,9 @@ const WelcomePage = () => {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      const element = document.getElementById('academic-journey');
-                      element?.scrollIntoView({ behavior: 'smooth' });
+                      const element =
+                        document.getElementById("academic-journey");
+                      element?.scrollIntoView({ behavior: "smooth" });
                     }}
                     className="hover:text-white transition-colors duration-300"
                   >
@@ -452,8 +451,9 @@ const WelcomePage = () => {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      const element = document.getElementById('academic-journey');
-                      element?.scrollIntoView({ behavior: 'smooth' });
+                      const element =
+                        document.getElementById("academic-journey");
+                      element?.scrollIntoView({ behavior: "smooth" });
                     }}
                     className="hover:text-white transition-colors duration-300"
                   >
@@ -493,8 +493,8 @@ const WelcomePage = () => {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
-                      const element = document.getElementById('main-header');
-                      element?.scrollIntoView({ behavior: 'smooth' });
+                      const element = document.getElementById("main-header");
+                      element?.scrollIntoView({ behavior: "smooth" });
                     }}
                     className="hover:text-white transition-colors duration-300"
                   >
@@ -508,16 +508,13 @@ const WelcomePage = () => {
                   >
                     Contact
                   </a>
-
                 </li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-            <p>
-              © 2025 IRISMS
-            </p>
+            <p>© 2025 IRISMS</p>
           </div>
         </div>
       </footer>

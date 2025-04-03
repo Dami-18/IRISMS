@@ -4,9 +4,34 @@ import { Menu } from "@headlessui/react";
 import { logout } from "auth";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
+import { useState, useEffect } from "react";
 
 export default function Header({ isStudent }: { isStudent?: boolean }) {
   if (isStudent === undefined) return <></>;
+
+  const [profDetails, setProfDetails] = useState<any>(null);
+
+  const fetchProfDetails = async () => {
+    try {
+      const res = await fetch("/api/prof", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to fetch professor details");
+
+      const data = await res.json();
+      setProfDetails(data.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  if (isStudent === false) {
+    useEffect(() => {
+      fetchProfDetails();
+    }, []);
+  }
 
   return (
     <header className="bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
@@ -43,32 +68,32 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
             Profile ▾
           </Menu.Button>
           <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right bg-white text-black rounded shadow-lg z-10">
+            {isStudent && (
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    href="/profile"
+                    className={`block px-4 py-2 ${active ? "bg-gray-100" : ""}`}
+                  >
+                    My Profile
+                  </Link>
+                )}
+              </Menu.Item>
+            )}
 
-            {isStudent && <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/profile"
-                  className={`block px-4 py-2 ${active ? "bg-gray-100" : ""}`}
-                >
-                  My Profile
-                </Link>
-              )}
-            </Menu.Item>}
+            {!isStudent && (
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    href={`/profile-faculty/${profDetails.uid}`}
+                    className={`block px-4 py-2 ${active ? "bg-gray-100" : ""}`}
+                  >
+                    My Profile
+                  </Link>
+                )}
+              </Menu.Item>
+            )}
 
-           
-
-            {!isStudent && 
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/profile-faculty/personal"
-                  className={`block px-4 py-2 ${active ? "bg-gray-100" : ""}`}
-                >
-                  My Profile
-                </Link>
-              )}
-            </Menu.Item>}
-            
             <Menu.Item>
               {({ active }) => (
                 <button
