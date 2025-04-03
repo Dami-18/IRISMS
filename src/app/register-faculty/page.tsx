@@ -77,7 +77,6 @@ const RegisterFaculty = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  defaultValue="debais@iitkgp.ac.in"
                   // required
                   className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-600 transition-colors duration-1000"
                 />
@@ -99,8 +98,6 @@ const RegisterFaculty = () => {
                   id="password"
                   name="password"
                   type="password"
-                  defaultValue="hello123@"
-                  // required
                   autoComplete="new-password"
                   className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-600 transition-colors duration-1000"
                 />
@@ -124,31 +121,26 @@ const RegisterFaculty = () => {
                   id: "firstName",
                   label: "First Name",
                   type: "text",
-                  d: "jibby",
                 },
                 {
                   id: "lastName",
                   label: "Last Name",
                   type: "text",
-                  d: "jibby",
                 },
                 {
                   id: "contact",
                   label: "Contact Number",
                   type: "tel",
-                  d: "9321144145",
                 },
                 {
                   id: "linkedin",
                   label: "Personal Website/Linkedin",
                   type: "url",
-                  d: "https://hello.com",
                 },
                 {
                   id: "scholar",
                   label: "Google Scholar Profile",
                   type: "url",
-                  d: "https://hello.com",
                 },
               ].map((field) => (
                 <div key={field.id} className="relative group">
@@ -162,7 +154,6 @@ const RegisterFaculty = () => {
                     id={field.id}
                     name={field.id}
                     type={field.type}
-                    defaultValue={field.d}
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border--500 focus:ring-2 focus:ring-indigo-500 transition-all duration-1000"
                   />
                   {/*@ts-ignore*/}
@@ -206,31 +197,26 @@ const RegisterFaculty = () => {
                   label: "Year of Degree Completion",
                   type: "text",
                   placeholder: "YYYY",
-                  d: "2005",
                 },
                 {
                   id: "insti",
                   label: "Institution Name",
                   type: "text",
-                  d: "jibby",
                 },
                 {
                   id: "special",
                   label: "Area of Specialization",
                   type: "text",
-                  d: "jibby",
                 },
                 {
                   id: "teachingExp",
                   label: "Total Teaching Experience (Years)",
                   type: "number",
-                  d: "123",
                 },
                 {
                   id: "researchExp",
                   label: "Total Research Experience (Years)",
                   type: "number",
-                  d: "12",
                 },
               ].map((field) => (
                 <div key={field.id}>
@@ -246,7 +232,6 @@ const RegisterFaculty = () => {
                     name={field.id}
                     type={field.type}
                     placeholder={field.placeholder || undefined}
-                    defaultValue={field.d}
                     // required
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border--500 focus:ring-2 focus:ring-indigo-500 transition-all duration-1000"
                   />
