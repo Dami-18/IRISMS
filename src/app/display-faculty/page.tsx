@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import photoLinks from "@/../public/photoLinks.json"; // Adjust the path based on where you place the JSON file
+import photoLinks from "@/../public/photoLinks.json"; 
 
 const ProfessorsPage = () => {
   const router = useRouter();

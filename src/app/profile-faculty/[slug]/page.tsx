@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "@/Components/Header";
+import photoLinks from "@/../public/photoLinks.json";
 
 const FacultyProfile = () => {
   const { slug } = useParams(); // Extract `uid` from URL parameters
@@ -17,7 +18,6 @@ const FacultyProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let fetchedUid = slug
         const resUid = await fetch("/api/prof", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -82,7 +82,7 @@ const FacultyProfile = () => {
         {/* Profile Photo */}
         <div className="flex justify-center mb-6">
           <img
-            src="./api/upload/FIG-1.png" // Placeholder image; replace with dynamic source if needed
+            src={photoLinks[uid as keyof typeof photoLinks]} 
             alt={`${profDetails?.firstName} ${profDetails?.lastName}`}
             className="w-32 h-32 rounded-full border-2 border-gray-300"
           />
