@@ -6,7 +6,13 @@ import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
 
-export default function Header({ isStudent }: { isStudent?: boolean }) {
+export default function Header({
+  isStudent = false,
+  isAdmin = false,
+}: {
+  isStudent?: boolean;
+  isAdmin?: boolean;
+}) {
   if (isStudent === undefined) return <></>;
 
   const [profDetails, setProfDetails] = useState<any>(null);
@@ -27,7 +33,7 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
     }
   };
 
-  if (isStudent === false) {
+  if (isStudent === false && isAdmin === false) {
     useEffect(() => {
       fetchProfDetails();
     }, []);
@@ -35,12 +41,21 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
 
   return (
     <header className="bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center">
-      <div className="text-2xl font-bold text-yellow-600 transform transition duration-500 hover:scale-105">
+      <Link
+        className="text-2xl font-bold text-yellow-600 transform transition duration-500 hover:scale-105"
+        href="/"
+      >
         IRISMS
-      </div>
+      </Link>
       <nav className="flex items-center gap-6">
         <Link
-          href={isStudent ? "/dashboard-students" : "/dashboard-faculty"}
+          href={
+            isStudent
+              ? "/dashboard-students"
+              : isAdmin
+              ? "/admin-dashboard"
+              : "/dashboard-faculty"
+          }
           className="text-yellow-100 hover:text-gray-300"
         >
           Home
@@ -81,7 +96,7 @@ export default function Header({ isStudent }: { isStudent?: boolean }) {
               </Menu.Item>
             )}
 
-            {!isStudent && (
+            {!isStudent && !isAdmin && (
               <Menu.Item>
                 {({ active }) => (
                   <Link
