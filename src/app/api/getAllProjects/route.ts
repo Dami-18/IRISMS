@@ -13,7 +13,6 @@ export async function GET(req: NextRequest) {
   const stipendMin = parseInt(searchParams.get("stipendMin") || "0", 10);
   const stipendMax = parseInt(searchParams.get("stipendMax") || "50000", 10);
   const location = searchParams.get("location") || "";
-  const prerequisites = searchParams.get("prerequisites")?.split(",") || [];
   const durationMin = parseInt(searchParams.get("durationMin") || "0", 10);
   const durationMax = parseInt(searchParams.get("durationMax") || "12", 10);
   const remoteOnsite = searchParams.get("remoteOnsite");
@@ -25,6 +24,7 @@ export async function GET(req: NextRequest) {
           { name: { contains: searchQuery, mode: "insensitive" } },
           { facultyName: { contains: searchQuery, mode: "insensitive" } },
           { location: { contains: searchQuery, mode: "insensitive" } },
+          { topics: { has: searchQuery } },
         ],
       },
     });
@@ -42,16 +42,6 @@ export async function GET(req: NextRequest) {
     if (location) {
       projects = projects.filter((project) =>
         project.location.toLowerCase().includes(location.toLowerCase())
-      );
-    }
-
-    if (prerequisites.length > 0) {
-      projects = projects.filter((project) =>
-        prerequisites.some((prerequisite) =>
-          project.prerequisites
-            ?.toLowerCase()
-            .includes(prerequisite.toLowerCase())
-        )
       );
     }
 

@@ -10,13 +10,11 @@ export default function InternshipsPage() {
     remoteOnsite: string;
     stipend: Array<number>;
     location: string;
-    prerequisites: Array<string>;
     duration: Array<number>;
   }>({
     remoteOnsite: "all", // "remote", "onsite", or "all"
     stipend: [0, 50000], // Slider range
     location: "",
-    prerequisites: [], // Default empty array for filtering
     duration: [0, 12], // Duration in months
   });
 
@@ -30,7 +28,6 @@ export default function InternshipsPage() {
       stipendMin: filter.stipend[0].toString(),
       stipendMax: filter.stipend[1].toString(),
       location: filter.location,
-      prerequisites: filter.prerequisites.join(","),
       durationMin: filter.duration[0].toString(),
       durationMax: filter.duration[1].toString(),
     });
@@ -41,27 +38,6 @@ export default function InternshipsPage() {
       .catch((err) => console.error("Error fetching projects:", err));
   }, [searchQuery, filter]);
 
-  // Handle checkbox changes for prerequisites
-  const handleCheckboxChange = (prerequisite: string) => {
-    setFilter((prevFilter) => {
-      if (prevFilter.prerequisites.includes(prerequisite)) {
-        // If already selected, remove it
-        return {
-          ...prevFilter,
-          prerequisites: prevFilter.prerequisites.filter(
-            (item) => item !== prerequisite
-          ),
-        };
-      } else {
-        // Otherwise, add it to the list
-        return {
-          ...prevFilter,
-          prerequisites: [...prevFilter.prerequisites, prerequisite],
-        };
-      }
-    });
-  };
-
   // Clear all filters
   const clearFilters = () => {
     setSearchQuery("");
@@ -69,7 +45,6 @@ export default function InternshipsPage() {
       remoteOnsite: "all",
       stipend: [0, 50000],
       location: "",
-      prerequisites: [],
       duration: [0, 12],
     });
   };
@@ -180,26 +155,6 @@ export default function InternshipsPage() {
               <div className="flex justify-between mt-2">
                 <p className="text-sm font-medium text-indigo-700">{filter.duration[0]} months</p>
                 <p className="text-sm font-medium text-indigo-700">{filter.duration[1]} months</p>
-              </div>
-            </div>
-
-            {/* Prerequisites Checkbox */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Prerequisites
-              </label>
-              <div className="flex flex-wrap gap-4">
-                {prerequisiteOptions.map((prerequisite) => (
-                  <label key={prerequisite} className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={filter.prerequisites.includes(prerequisite)}
-                      onChange={() => handleCheckboxChange(prerequisite)}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                    />
-                    <span className="text-sm text-gray-700">{prerequisite}</span>
-                  </label>
-                ))}
               </div>
             </div>
 
