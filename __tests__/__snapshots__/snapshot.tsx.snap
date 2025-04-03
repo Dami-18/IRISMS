@@ -518,7 +518,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="#"
                 >
                   Research Internships
@@ -528,7 +528,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="#"
                 >
                   Scholarships
@@ -551,7 +551,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="#"
                 >
                   Post Opportunities
@@ -561,7 +561,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="#"
                 >
                   Find Research Assistants
@@ -584,7 +584,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="https://www.connectedpapers.com/"
                   target="_blank"
                 >
@@ -595,7 +595,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="https://fellowships.gov.in/Fellowships-Calculator"
                   target="_blank"
                 >
@@ -619,7 +619,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="#"
                 >
                   About Us
@@ -629,7 +629,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
                 class="jsx-723bb9ff0809bb37"
               >
                 <a
-                  class="jsx-723bb9ff0809bb37 hover:text-white transition-colors duration-300"
+                  class="hover:text-white transition-colors duration-300"
                   href="mailto:irisms.portal@gmail.com"
                 >
                   Contact
