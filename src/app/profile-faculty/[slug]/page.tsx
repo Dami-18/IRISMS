@@ -63,91 +63,100 @@ const FacultyProfile = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-100">
-        <p className="text-xl font-semibold text-gray-700">Loading...</p>
+      <div className="flex justify-center items-center h-screen bg-gradient-to-r from-indigo-500 to-purple-500">
+        <p className="text-xl font-semibold text-white">Loading...</p>
       </div>
     );
 
   if (error)
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-100">
-        <p className="text-xl font-semibold text-red-500">Error: {error}</p>
+      <div className="flex justify-center items-center h-screen bg-gradient-to-r from-indigo-500 to-purple-500">
+        <p className="text-xl font-semibold text-white">Error: {error}</p>
       </div>
     );
 
   return (
     <div className="relative">
       {isLoggedIn && <Header isStudent={false} />}
-      <div className="p-8 bg-gray-100 rounded-lg shadow-md max-w-4xl mx-auto">
-        {/* Profile Photo */}
-        <div className="flex justify-center mb-6">
-          <img
-            src={photoLinks[uid as keyof typeof photoLinks]} 
-            alt={`${profDetails?.firstName} ${profDetails?.lastName}`}
-            className="w-32 h-32 rounded-full border-2 border-gray-300"
-          />
+      <div className="min-h-screen bg-gradient-to-r from-indigo-500 to-purple-500 py-10">
+        <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden">
+          <div
+            className="bg-cover bg-center h-40"
+          ></div>
+          {/* Profile Photo */}
+          <div className="-mt-16 flex justify-center">
+            <img
+              src={photoLinks[uid as keyof typeof photoLinks]} 
+              alt={`${profDetails?.firstName} ${profDetails?.lastName}`}
+              className="w-32 h-34 rounded-full border-4 border-white shadow-lg"
+            />
+          </div>
+          
+          <div className="px-6 py-4 text-center">
+            {/* Professor Details */}
+            <h2 className="text-3xl font-bold text-gray-800">
+              {profDetails?.firstName} {profDetails?.lastName}
+            </h2>
+            <p className="text-gray-600">{profDetails?.email}</p>
+            <p className="mt-2 text-indigo-600 font-semibold">
+              Faculty at {profDetails?.institution || "N/A"}
+            </p>
+            
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+              {profDetails?.contact && (
+                <p>
+                  <strong>📞 Contact:</strong> {profDetails.contact}
+                </p>
+              )}
+              {profDetails?.website && (
+                <p>
+                  <strong>🌐 Website:</strong>{" "}
+                  <a
+                    href={profDetails.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 transition duration-300"
+                  >
+                    Visit Website
+                  </a>
+                </p>
+              )}
+              {profDetails?.gscholar && (
+                <p>
+                  <strong>🎓 Google Scholar:</strong>{" "}
+                  <a
+                    href={profDetails.gscholar}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-700 transition duration-300"
+                  >
+                    View Profile
+                  </a>
+                </p>
+              )}
+              {profDetails?.qualification && (
+                <p>
+                  <strong>🏆 Qualification:</strong> {profDetails.qualification}
+                </p>
+              )}
+              {profDetails?.specialization && (
+                <p>
+                  <strong>📚 Specialization:</strong> {profDetails.specialization}
+                </p>
+              )}
+              {profDetails?.teachingExp && (
+                <p>
+                  <strong>👨‍🏫 Teaching Experience:</strong> {profDetails.teachingExp} years
+                </p>
+              )}
+              {profDetails?.researchExp && (
+                <p>
+                  <strong>🔬 Research Experience:</strong> {profDetails.researchExp} years
+                </p>
+              )}
+            </div>
+          </div>
         </div>
-
-        {/* Professor Details */}
-        <h1 className="text-3xl font-bold mb-4">
-          {profDetails?.firstName} {profDetails?.lastName}
-        </h1>
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Email:</strong> {profDetails?.email}
-        </p>
-        {profDetails?.contact && (
-          <p className="text-lg text-gray-700 mb-2">
-            <strong>Contact:</strong> {profDetails.contact}
-          </p>
-        )}
-        {profDetails?.website && (
-          <p className="text-lg text-gray-700 mb-2">
-            <strong>Website:</strong>{" "}
-            <a
-              href={profDetails.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline"
-            >
-              Visit Website
-            </a>
-          </p>
-        )}
-        {profDetails?.gscholar && (
-          <p className="text-lg text-gray-700 mb-2">
-            <strong>Google Scholar:</strong>{" "}
-            <a
-              href={profDetails.gscholar}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline"
-            >
-              View Profile
-            </a>
-          </p>
-        )}
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Qualification:</strong> {profDetails?.qualification || "N/A"}
-        </p>
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Specialization:</strong>{" "}
-          {profDetails?.specialization || "N/A"}
-        </p>
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Institution:</strong> {profDetails?.institution || "N/A"}
-        </p>
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Teaching Experience:</strong>{" "}
-          {profDetails?.teachingExp
-            ? `${profDetails.teachingExp} years`
-            : "N/A"}
-        </p>
-        <p className="text-lg text-gray-700 mb-2">
-          <strong>Research Experience:</strong>{" "}
-          {profDetails?.researchExp
-            ? `${profDetails.researchExp} years`
-            : "N/A"}
-        </p>
       </div>
     </div>
   );
