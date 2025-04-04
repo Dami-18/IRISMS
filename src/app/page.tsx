@@ -45,7 +45,8 @@ const WelcomePage = () => {
       id: 4,
       name: "Prof. Justin Solomon",
       specialization: "Machine Learning, Computer Vision, Graphs, Robotics",
-      image: "https://people.csail.mit.edu/jsolomon/assets/Justin_Solomon_3_small.jpg",
+      image:
+        "https://people.csail.mit.edu/jsolomon/assets/Justin_Solomon_3_small.jpg",
       webPage: "http://localhost:3000/profile-faculty/P4",
     },
   ];

@@ -1,6 +1,5 @@
 "use client";
 
-// Comment out all the required in the inputs to get final submission form
 import { useActionState, useState, useRef, useEffect } from "react";
 import Form from "next/form";
 import { validationStud, verifyStud } from "auth";
@@ -81,7 +80,8 @@ const Register = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  // required
+                  defaultValue={"krishcharniya007@kgpian.iitkgp.ac.in"}
+                  required
                   className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-600 transition-colors duration-1000"
                 />
                 {state && "errors" in state && state?.errors?.email && (
@@ -102,7 +102,8 @@ const Register = () => {
                   id="password"
                   name="password"
                   type="password"
-                  // required
+                  required
+                  defaultValue={"hello@123"}
                   autoComplete="new-password"
                   className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-indigo-600 transition-colors duration-1000"
                 />
@@ -126,35 +127,41 @@ const Register = () => {
                   id: "firstName",
                   label: "First Name",
                   type: "text",
+                  def: "Krish",
                 },
                 {
                   id: "lastName",
                   label: "Last Name",
                   type: "text",
+                  def: "Charniya",
                 },
                 {
                   id: "contact",
                   label: "Contact Number",
                   type: "tel",
                   pattern: "[0–9]{10}",
+                  def: "9871234567",
                 },
                 {
                   id: "address",
                   label: "Residential Address",
                   type: "text",
                   autoComplete: "address",
+                  def: "Azad Hall",
                 },
                 {
                   id: "city",
                   label: "City",
                   type: "text",
                   autoComplete: "address-level2",
+                  def: "Kharagpur",
                 },
                 {
                   id: "state",
                   label: "State / Province",
                   type: "text",
                   autoComplete: "address-level1",
+                  def: "West Bengal",
                 },
               ].map((field) => (
                 <div key={field.id} className="relative group">
@@ -169,6 +176,7 @@ const Register = () => {
                     name={field.id}
                     type={field.type}
                     autoComplete={field.autoComplete || undefined}
+                    defaultValue={field.def}
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border--500 focus:ring-2 focus:ring-indigo-500 transition-all duration-1000"
                   />
                   {/*@ts-ignore*/}
@@ -261,7 +269,7 @@ const Register = () => {
                     name={field.id}
                     type={field.type}
                     placeholder={field.placeholder || undefined}
-                    // required
+                    required
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border--500 focus:ring-2 focus:ring-indigo-500 transition-all duration-1000"
                   />
                   {/*@ts-ignore*/}
@@ -292,7 +300,7 @@ const Register = () => {
                     name={doc}
                     type={`file`}
                     accept=".pdf,.docx,.doc"
-                    // required
+                    required
                     className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border--500 focus:ring-2 focus:ring-indigo-500 transition-all duration-1000"
                   />
                 </div>
