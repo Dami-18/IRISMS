@@ -259,7 +259,7 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
               <img
                 alt="Prof. Animesh Mukherjee"
                 class="jsx-723bb9ff0809bb37 w-full h-full object-cover"
-                src="https://cse.iitkgp.ac.in/~animeshm/mypic.jpg"
+                src="https://cse.iitkgp.ac.in/facimg/AMsmall.jpg?1743744045"
               />
             </div>
             <h3
@@ -280,20 +280,20 @@ exports[`WelcomePage renders homepage unchanged 1`] = `
               class="jsx-723bb9ff0809bb37 w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden"
             >
               <img
-                alt="Prof. Abir Das"
+                alt="Prof. Justin Solomon"
                 class="jsx-723bb9ff0809bb37 w-full h-full object-cover"
-                src="https://cse.iitkgp.ac.in/facimg/ADASsmall.jpg?1743340966"
+                src="https://people.csail.mit.edu/jsolomon/assets/Justin_Solomon_3_small.jpg"
               />
             </div>
             <h3
               class="jsx-723bb9ff0809bb37 font-medium text-lg mb-1"
             >
-              Prof. Abir Das
+              Prof. Justin Solomon
             </h3>
             <p
               class="jsx-723bb9ff0809bb37 text-sm text-gray-500 mb-2"
             >
-              Machine Learning, Computer Vision
+              Machine Learning, Computer Vision, Graphs, Robotics
             </p>
           </div>
         </div>
