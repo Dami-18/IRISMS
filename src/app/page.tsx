@@ -38,15 +38,15 @@ const WelcomePage = () => {
       id: 3,
       name: "Prof. Animesh Mukherjee",
       specialization: "Complex and Social Networks, Data and Web Mining",
-      image: "https://cse.iitkgp.ac.in/~animeshm/mypic.jpg",
-      webPage: "https://cse.iitkgp.ac.in/~animeshm/",
+      image: "https://cse.iitkgp.ac.in/facimg/AMsmall.jpg?1743744045",
+      webPage: "http://localhost:3000/profile-faculty/P3",
     },
     {
       id: 4,
-      name: "Prof. Abir Das",
-      specialization: "Machine Learning, Computer Vision",
-      image: "https://cse.iitkgp.ac.in/facimg/ADASsmall.jpg?1743340966",
-      webPage: "https://cse.iitkgp.ac.in/~adas/",
+      name: "Prof. Justin Solomon",
+      specialization: "Machine Learning, Computer Vision, Graphs, Robotics",
+      image: "https://people.csail.mit.edu/jsolomon/assets/Justin_Solomon_3_small.jpg",
+      webPage: "http://localhost:3000/profile-faculty/P4",
     },
   ];
 
