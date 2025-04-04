@@ -29,12 +29,12 @@ export async function POST(request: NextRequest) {
 
     await redis.setex(email, 300, otp); // OTP valid for 5 minutes
 
-    // await transporter.sendMail({
-    //   from: process.env.usr,
-    //   to: email,
-    //   subject: "OTP for registration on IRISMS",
-    //   text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
-    // });
+    await transporter.sendMail({
+      from: process.env.usr,
+      to: email,
+      subject: "OTP for registration on IRISMS",
+      text: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+    });
 
     console.log("email is senttttt");
 

@@ -28,26 +28,26 @@ export async function POST(req: NextRequest) {
     console.log(`Generated Jitsi Meet link: ${meetingLink}`);
 
     // mail the google link to candidate
-    // await transporter.sendMail({
-    //   from: process.env.NEXT_PUBLIC_USR,
-    //   to: email,
-    //   subject: "Interview Schedule",
-    //   text: `Greetings,
+    await transporter.sendMail({
+      from: process.env.NEXT_PUBLIC_USR,
+      to: email,
+      subject: "Interview Schedule",
+      text: `Greetings,
 
-    //   Your interview has been scheduled as follows:
+      Your interview has been scheduled as follows:
 
-    //   - Date: ${date}
-    //   - Time: ${time} (IST)
-    //   - Meeting Link: ${meetingLink}
+      - Date: ${date}
+      - Time: ${time} (IST)
+      - Meeting Link: ${meetingLink}
 
-    //   Please ensure you have a stable internet connection and a quiet environment for the interview.
+      Please ensure you have a stable internet connection and a quiet environment for the interview.
 
-    //   If you have any questions, feel free to reply to this email.
+      If you have any questions, feel free to reply to this email.
 
-    //   Regards,
-    //   IRISMS
-    //   `,
-    // });
+      Regards,
+      IRISMS
+      `,
+    });
 
     return NextResponse.json(
       { message: "Sent meet link", roomName },
