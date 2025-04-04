@@ -33,11 +33,11 @@ export async function GET(req: NextRequest) {
       projects = projects.filter((project) => project.mode === "onsite");
     else if (remoteOnsite === "remote")
       projects = projects.filter((project) => project.mode === "remote");
-    projects = projects.filter(
-      (project) =>
-        parseInt(project.stipend) >= stipendMin &&
-        parseInt(project.stipend) <= stipendMax
-    );
+    // projects = projects.filter(
+    //   (project) =>
+    //     parseInt(project.stipend) >= stipendMin &&
+    //     parseInt(project.stipend) <= stipendMax
+    // );
 
     if (location) {
       projects = projects.filter((project) =>

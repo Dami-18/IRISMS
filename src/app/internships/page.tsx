@@ -8,24 +8,19 @@ export default function InternshipsPage() {
   const [projects, setProjects] = useState<any[]>([]);
   const [filter, setFilter] = useState<{
     remoteOnsite: string;
-    stipend: Array<number>;
     location: string;
     duration: Array<number>;
   }>({
     remoteOnsite: "all", // "remote", "onsite", or "all"
-    stipend: [0, 50000], // Slider range
     location: "",
     duration: [0, 12], // Duration in months
   });
-
 
   // Fetch projects based on filters
   useEffect(() => {
     const query = new URLSearchParams({
       search: searchQuery,
       remoteOnsite: filter.remoteOnsite,
-      stipendMin: filter.stipend[0].toString(),
-      stipendMax: filter.stipend[1].toString(),
       location: filter.location,
       durationMin: filter.duration[0].toString(),
       durationMax: filter.duration[1].toString(),
@@ -42,7 +37,6 @@ export default function InternshipsPage() {
     setSearchQuery("");
     setFilter({
       remoteOnsite: "all",
-      stipend: [0, 50000],
       location: "",
       duration: [0, 12],
     });
@@ -102,9 +96,11 @@ export default function InternshipsPage() {
             />
 
             {/* Stipend Slider - with custom styling for the filled portion */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Stipend</label>
-              <div className="relative">
+            {/* <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Stipend
+              </label> */}
+            {/* <div className="relative">
                 <input
                   type="range"
                   min={0}
@@ -126,12 +122,14 @@ export default function InternshipsPage() {
               <div className="flex justify-between mt-2">
                 <p className="text-sm font-medium text-indigo-700">₹{filter.stipend[0]}</p>
                 <p className="text-sm font-medium text-indigo-700">₹{filter.stipend[1]}</p>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
             {/* Duration Slider - with custom styling for the filled portion */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Duration
+              </label>
               <div className="relative">
                 <input
                   type="range"
@@ -147,16 +145,23 @@ export default function InternshipsPage() {
                   }
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                   style={{
-                    background: `linear-gradient(to right, rgb(79, 70, 229) 0%, rgb(79, 70, 229) ${(filter.duration[1] / 12) * 100}%, #e5e7eb ${(filter.duration[1] / 12) * 100}%, #e5e7eb 100%)`
+                    background: `linear-gradient(to right, rgb(79, 70, 229) 0%, rgb(79, 70, 229) ${
+                      (filter.duration[1] / 12) * 100
+                    }%, #e5e7eb ${
+                      (filter.duration[1] / 12) * 100
+                    }%, #e5e7eb 100%)`,
                   }}
                 />
               </div>
               <div className="flex justify-between mt-2">
-                <p className="text-sm font-medium text-indigo-700">{filter.duration[0]} months</p>
-                <p className="text-sm font-medium text-indigo-700">{filter.duration[1]} months</p>
+                <p className="text-sm font-medium text-indigo-700">
+                  {filter.duration[0]} months
+                </p>
+                <p className="text-sm font-medium text-indigo-700">
+                  {filter.duration[1]} months
+                </p>
               </div>
             </div>
-
           </div>
         </div>
 

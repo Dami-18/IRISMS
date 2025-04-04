@@ -143,7 +143,7 @@ const InternshipApplications = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-purple-100">
-      <Header isStudent={false} />
+      <Header isProf={true} />
 
       <div className="container mx-auto px-6 py-10">
         <div className="bg-white rounded-lg shadow-md p-8 max-w-4xl mx-auto relative">
