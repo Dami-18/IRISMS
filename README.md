@@ -2,6 +2,8 @@
 
 ### Software Engineering Course Project
 
+![Home page preview](/public/assets/localhost_3000%20-%20Google%20Chrome_001.png)
+
 ### Local Setup:
 
 Clone:
