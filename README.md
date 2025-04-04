@@ -26,7 +26,6 @@ Then add `DATABASE_URL` and Admin password and username accordindgly in `.env` f
 
 Run prisma migration:
 ```
-npx prisma migrate
 npx prisma migrate --name dev
 ```
 
